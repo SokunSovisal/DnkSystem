@@ -1,0 +1,316 @@
+@font-face{
+  src: url('/fonts/Lato-Regular.ttf');
+  font-family: 'lato_r';
+}
+@font-face{
+  src: url('/fonts/OpenSans-Regular.ttf');
+  font-family: 'openSans_r';
+}
+@font-face{
+  src: url('/fonts/roboto/Roboto-Regular.ttf');
+  font-family: 'roboto_r';
+}
+@font-face{
+  src: url('/fonts/roboto/Roboto-Light.ttf');
+  font-family: 'roboto_l';
+}
+@font-face {
+    font-family: 'khmerKoulen';
+    src: url('/fonts/KhmerOSKoulen.ttf');
+}
+@font-face {
+    font-family: 'khmerOs';
+    src: url('/fonts/KhmerOS.ttf');
+}
+@font-face {
+    font-family: 'KhmerOSbattambang';
+    src: url('/fonts/KhmerOSbattambang.ttf');
+}
+@font-face {
+    src: url('/fonts/OpenSans-Regular.ttf');
+    font-family: 'opensans_l';
+}
+.roboto_r{
+  font-family: 'roboto_r' !important;
+}
+.roboto_l{
+  font-family: 'roboto_l' !important;
+}
+.lato_r{
+  font-family: 'lato_r' !important;
+}
+.openSans_r{
+  font-family: 'openSans_r' !important;
+}
+.KHMERBTB{
+  font-family: 'KhmerOSbattambang' !important;
+}
+.breadcrumb li,.breadcrumb li a,.sidebar-text{
+  font-family: 'KhmerOSbattambang' !important;
+}
+div,h1,h2,h3,h4,h5,h6,.panel-body a,.next a,.previous a,a.btn,th,label,li,option,button,span.label{
+  font-family: 'KhmerOSbattambang','roboto_l' !important;
+}
+.breadcrumb{
+  background: none;
+}
+.alert{
+  display:block;
+}
+small{ color: red; font-size: 12px; }
+.bg-white{background: #fff; box-shadow: 0 3px 3px rgba(0,0,0,0.25); padding: 20px;}
+.nbr{border-radius: 0;}
+.bb{border-bottom: 1px solid #E91E63;}
+.pt-0{padding-top: 0;}
+.pt-1{padding-top: 5px;}
+.pt-2{padding-top: 10px;}
+.pt-3{padding-top: 15px;}
+.pt-4{padding-top: 20px;}
+.pt-5{padding-top: 25px;}
+.pb-0{padding-bottom: 0;}
+.pb-1{padding-bottom: 5px;}
+.pb-2{padding-bottom: 10px;}
+.pb-3{padding-bottom: 15px;}
+.pb-4{padding-bottom: 20px;}
+.pb-5{padding-bottom: 25px;}
+.mt-0{margin-top: 0;}
+.mt-05{margin-top: 3px;}
+.mt-1{margin-top: 5px;}
+.mt-2{margin-top: 10px;}
+.mt-3{margin-top: 15px;}
+.mt-4{margin-top: 20px;}
+.mt-5{margin-top: 25px;}
+.mb-0{margin-bottom: 0 !important;}
+.mb-1{margin-bottom: 5px;}
+.mb-2{margin-bottom: 10px;}
+.mb-3{margin-bottom: 15px;}
+.mb-4{margin-bottom: 20px;}
+.mb-5{margin-bottom: 25px;}
+.badge-warning{background-color: #E91E63;}
+input,select{box-shadow: none !important;}
+a{transition: 0.2s linear;}
+a:focus{text-decoration: none !important;}
+img{max-width: 100%;}
+a:hover{text-decoration: none;}
+h1,h2,h3,h4,h5,h6{margin: 0;}
+body{
+  background: #EEEEEE;
+}
+/*====== Sidebar Left ======*/
+#sidebar-left{
+  /*transition: 0.3s linear;*/
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  padding: 0;
+  height: calc(100vh);
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+  background: url('../img/bg-sidebar.jpg') center center;
+  background-size: cover;
+}
+#sidebar-left .sidebar-sticky{
+  background: rgba(255, 255, 255,0.88);
+  height: 100%;
+  position: relative;
+  top: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+#sidebar-left .sidebar-brand h3 a{
+  display: block;
+  padding: 15px 0;
+  text-align: center;
+  color: #636D79;
+  margin: 5px 10px;
+  border-bottom: 1px solid #E91E63;
+}
+#sidebar-left .sidebar-brand h3 a .sidebar-icon{
+  color: #E91E63;
+}
+#sidebar-left .sidebar-brand h3 a .sidebar-text{
+  padding-left: 10px;
+  font-size: 20px;
+}
+#sidebar-left .panel{
+  border: none;
+  background: none;
+  box-shadow: none;
+}
+#sidebar-left .panel-heading{
+  background: none;
+  padding: 0;
+}
+#sidebar-left .panel-heading h4 a{
+  display: block;
+  padding: 15px 10px;
+  margin: 10px 12px;
+  border-radius: 3px;
+  color: #636D79;
+}
+#sidebar-left .panel-body ul.nav li.active a:hover,
+#sidebar-left .panel-body ul.nav li.active a,
+#sidebar-left .panel-heading h4.active a:hover,
+#sidebar-left .panel-heading h4.active a{
+  background: rgba(255,255,255,0.9);
+  box-shadow: 0 3px 5px rgba(0,0,0,0.25);
+}
+#sidebar-left .panel-body ul.nav li a:hover,
+#sidebar-left .panel-heading h4 a:hover{
+  background: rgba(214, 214, 214,0.5);
+}
+#sidebar-left .sidebar-sub-icon{
+  width: 30px;
+  text-align: center;
+  font-size: 16px;
+  color: #E91E63;
+}
+#sidebar-left .sidebar-icon{
+  width: 30px;
+  text-align: center;
+  font-size: 20px;
+}
+#sidebar-left .panel-body{
+  border: none !important;
+  padding: 0;
+}
+#sidebar-left .panel-body ul.nav li a{
+  display: block;
+  padding: 12px 15px;
+  margin: 0 12px 10px 12px;
+  border-radius: 3px;
+  color: #636D79;
+}
+/*====== Sidebar Small ======*/
+#sidebar-left.sidebar-small{
+  width: auto;
+}
+#sidebar-left.sidebar-small .panel-body ul.nav li a,
+#sidebar-left.sidebar-small .panel-heading h4 a{
+  display: inline-block;
+  padding: 12px 10px;
+  margin-bottom: 5px;
+}
+#sidebar-left.sidebar-small .sidebar-text{
+  display: none;
+}
+/*============= Sidebar Cloae =========*/
+#sidebar-left #sidebar-close{
+  background: rgba(0,0,0,0.5);
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  opacity: 0.5;
+  position: absolute;
+  padding-top: 5px;
+  right: 10px;
+  top: 5px;
+  color: #fff;
+  transition: 0.3s linear;
+  text-shadow: 2px 2px 3px rgba(0,0,0,0.9);
+}
+#sidebar-left #sidebar-close:hover{
+  opacity: 0.9;
+}
+/*====== Account Dropdown ======*/
+#account-dropdown{
+  border: none;
+  box-shadow: 2px 2px 9px rgba(0,0,0,0.3);
+  background: #fff;
+  width: 55px;
+  height: 55px;
+  line-height: 55px;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 25px;
+  color: #E91E63;
+  border: 2px solid #fff;
+  transition: 0.2s linear;
+}
+#account-dropdown:hover{
+  box-shadow: 2px 2px 17px rgba(0,0,0,0.6);
+}
+/*====== Main ======*/
+#main{
+  /*transition: 0.1s linear;*/
+}
+#main #sidebar-toggle{
+  background: #fff;
+  box-shadow: 2px 2px 9px rgba(0,0,0,0.3);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: block;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  transition: 0.3s linear;
+}
+#main #sidebar-toggle:hover{
+  background: #f9f9f9;
+}
+/*Main Body Section*/
+#main{
+  padding: 0 25px;
+}
+/*============= Clock ==============*/
+#clock{
+  margin-top: -1vh;
+  text-align: center;
+  color: #222;
+  font-family: 'roboto_r' !important;
+}
+#clock .time .hour-min{
+  line-height: 170px;
+  font-size: 150px;
+  margin-right: 20px;
+}
+#clock .time ul{
+  display: inline-block;
+}
+#clock .time ul li{
+  line-height: 60px;
+  font-size: 65px;
+}
+#clock .time ul .am-pm{
+  font-size: 60px;
+}
+#clock .date{
+  line-height: 35px;
+  font-size: 42px;
+}
+
+@media (max-width: 768px) {
+  #main{
+    padding: 0 15px;
+  }
+  /*====== When sidebar Mobile ======*/
+  /*============= Clock ===============*/
+  #clock{
+    margin-top: 0;
+  }
+  #clock .time .hour-min{
+    line-height: 1em;
+    font-size: 85px;
+    margin-right: 10px;
+    padding: 0;
+  }
+  #clock .time ul{
+    display: inline-block;
+  }
+  #clock .time ul .am-pm{
+    font-size: 35px;
+    line-height: 60px;
+  }
+  #clock .time ul .sec{
+    line-height: 10px;
+    font-size: 45px;
+  }
+  #clock .date{
+    line-height: 20px;
+    font-size: 25px;
+  }
+
+}

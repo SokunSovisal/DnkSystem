@@ -1,0 +1,177 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Districts;
+use App\Models\Provinces;
+use Illuminate\Http\Request;
+use Validator;
+use DB;
+
+class districtsController extends Controller
+{
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+
+	private $date;
+
+	public function __construct()
+	{
+  	$today = date("Y-m-d", time());
+  	$timeNow = date("h:i:s", time());
+  	
+		$this->data=[
+			'title'=>'ទីតាំងស្រុក',
+			'm'=>'manage_location',
+			'sm'=>'districts',
+      // Notification Appointments
+      'app_alert' => DB::table('appointments')
+                          ->whereDate('app_datetime','<=', $today)
+                          ->whereTime('app_datetime', '<=', $timeNow)
+                          ->where('app_status',1)
+                          ->get(),
+		];
+	}
+
+	public function index()
+	{
+		$this->data += [
+			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li class="active"><i class="fa fa-heart"></i> ទីតាំងស្រុក</li>',
+
+			// Select Data From Table
+			'districts' => Districts::orderBy('dist_province_id', 'asc')->get(),
+		];
+		return view('districts.index',$this->data);
+	}
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function create()
+	{
+		$this->data+=[
+			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('districts.index') .'"><i class="fa fa-heart"></i> ទីតាំងស្រុក</a></li><li class="active"><i class="fa fa-plus"></i> បន្ថែមថ្មី</li>',
+			'provinces' => Provinces::orderBy('pro_description', 'asc')->get(),
+		];
+		return view('districts.create',$this->data);
+	}
+
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function store(Request $r)
+	{
+		// Validate Post Data
+		$validator = Validator::make($r->all(), [
+			'dist_name' => 'required',
+			'dist_code' => 'required|numeric',
+			'dist_province_id' => 'required',
+		]);
+
+		// if Validate Errors
+		if ($validator->fails()) {
+			return redirect()->back()
+				->withErrors($validator)
+				->withInput();
+		}
+
+		// Insert to Table
+		$districts = new districts;
+		$districts->dist_name = $r->dist_name;
+		$districts->dist_code = $r->dist_code;
+		$districts->dist_province_id = $r->dist_province_id;
+		$districts->dist_description = $r->dist_description;
+		$districts->save();
+
+		// Redirect
+		return redirect()->route('districts.index')
+			->with('success', 'ទីតាំងស្រុកបានបញ្ចូលដោយជោគជ័យ: ' . $r->dist_name);
+	}
+
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  \App\Models\districts  $districts
+	 * @return \Illuminate\Http\Response
+	 */
+	public function show(districts $districts)
+	{
+		//
+	}
+
+	/**
+	 * Show the form for editing the specified resource.
+	 *
+	 * @param  \App\Models\districts  $districts
+	 * @return \Illuminate\Http\Response
+	 */
+	public function edit(districts $districts, $id)
+	{
+		$this->data+=[
+			'dist' => Districts::find($id),
+			'provinces' => Provinces::orderBy('pro_description', 'asc')->get(),
+			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('districts.index') .'"><i class="fa fa-heart"></i> ទីតាំងស្រុក</a></li><li class="active"><i class="fa fa-pencil"></i> កែប្រែ៖ '. Districts::find($id)->dist_name.'</li>',
+		];
+		return view('districts.edit',$this->data);
+	}
+
+	/**
+	 * Update the specified resource in storage.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \App\Models\districts  $districts
+	 * @return \Illuminate\Http\Response
+	 */
+	public function update(Request $r, districts $districts, $id)
+	{
+		// Validate Post Data
+		$validator = Validator::make($r->all(), [
+			'dist_name' => 'required',
+			'dist_code' => 'required|numeric',
+			'dist_province_id' => 'required',
+		]);
+		if ($validator->fails()) {
+			return redirect()->back()
+				->withErrors($validator)
+				->withInput();
+		}
+
+		// Update Item
+		$districts = Districts::find($id);
+		$districts->dist_name = $r->dist_name;
+		$districts->dist_code = $r->dist_code;
+		$districts->dist_province_id = $r->dist_province_id;
+		$districts->dist_description = $r->dist_description;
+		$districts->save();
+
+		// redirect
+		return redirect()->route('districts.index')
+			->with('success', 'ទីតាំងស្រុកបានកែប្រែដោយជោគជ័យ៖ ' . $r->dist_name);
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  \App\Models\districts  $districts
+	 * @return \Illuminate\Http\Response
+	 */
+	public function destroy(districts $districts, $id)
+	{
+		// delete
+		$s = Districts::find($id);
+		$dist_name = $s->dist_name;
+		$s->delete();
+
+		// redirect
+		return redirect()->route('districts.index')
+			->with('success', 'ទីតាំងស្រុកបានលុបចោលដោយជោគជ័យ៖ '. $dist_name);
+	}
+}

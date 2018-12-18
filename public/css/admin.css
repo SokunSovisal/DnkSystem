@@ -1,0 +1,94 @@
+span.bg-alert{
+  font-family: 'opensans_l';
+  background: #E91E63;
+  margin-top: -5px;
+}
+.img_column{
+  position: relative;
+  display: block;
+  width: 80px;
+  height: 40px;
+}
+.img_column .img{
+  width: 80px;
+  height: 40px;
+  display: block;
+}
+.img_column .img_icon{
+  position: absolute;
+  width: 80px;
+  height: 40px;
+  text-align: center;
+  line-height: 37px;
+  transition: 0.3s linear;
+  opacity: 0;
+  color: #fff;
+}
+.img_column .img_icon:hover{
+  background: rgba(0,0,0,0.4);
+  opacity: 1;
+}
+.action form {
+  display: inline;
+}
+.action .delete{
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline;
+  padding: 0 2px;
+}
+.status{
+  margin: 0;
+  display: inline;
+}
+.swal2-popup {
+  font-size: 1.6rem !important;
+}
+
+.badge-danger {
+  background: #D9534F;
+  font-size: 11px;
+}
+
+
+/*============ DashBoard ===========*/
+#dashboard{
+  padding: 50px 0 30px 0;
+
+}
+#dashboard .dash-card{
+  background: #fff;
+  padding: 10px 15px;
+  border-radius: 7px;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+  margin-top: 80px;
+}
+#dashboard .dash-card header{
+
+}
+#dashboard .dash-card header .dash-card-icon{
+  border-radius: 3px;
+  width: 85px;
+  height: 85px;
+  display: block;
+  padding-bottom: 20px;
+  line-height: 86px;
+  text-align: center;
+  font-size: 25px;
+  margin-top: -30px;
+  color: #fff;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+#dashboard .dash-card header .list-unstyled{
+  text-align: right;
+}
+#dashboard .dash-card footer{
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+  font-size: 13px;
+  color: #909090;
+}
+#dashboard .dash-card footer i{
+  padding-right: 10px;
+}
