@@ -128,14 +128,14 @@
 					<table width="100%">
 						<tr>
 							<td width="10%"><strong>To</strong></td>
-							<td width="46%">{{$quote->company->com_name}}</td>
+							<td width="46%">{{(($quote->company->com_name=='Unkown')?'': $quote->company->com_name)}}</td>
 							<td width="8%"></td>
 							<td width="14%"><strong>Quote N&deg;</strong></td>
 							<td width="22%"><span class="text-red">{{$quote->quote_number}}</span></td>
 						</tr>
 						<tr>
 							<td width="10%"><strong>Attend</strong></td>
-							<td width="46%">{{$quote->quote_cp_name}}</td>
+							<td width="46%">{{(($quote->quote_cp_name=='Unkown')?'': $quote->quote_cp_name)}}</td>
 							<td width="8%"></td>
 							<td width="14%"><strong>Date</strong></td>
 							<td width="22%">{{$quote->quote_date}}</td>
