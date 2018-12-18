@@ -1,3 +1,11 @@
+INSERT INTO `quotations` (`id`, `quote_number`, `quote_date`, `quote_purpose`, `quote_cp_name`, `quote_cp_phone`, `quote_cp_email`, `quote_term`, `quote_status`, `quote_company_id`, `quote_created_by`, `quote_updated_by`, `created_at`, `updated_at`) VALUES
+(1, 180001, '2018-12-18', 'We need payment while agreed or contact signed We need payment while agreed or contact signed We need payment while agreed or contact signed We need payment while agreed or contact signed', 'Unkown', '0', 'un@123.com', '<div>Term &amp; Condition:</div>\r\n\r\n<ul>\r\n	<li>We need payment while agreed or contact signed.</li>\r\n	<li>After complete document with our check list provided, we need 10 week to complete.</li>\r\n</ul>\r\n\r\n<p>Thank you very much for your interesting our service today. We are looking forward to serve you. This price that we have quoted is valid till 28/December/2018</p>', 1, 1, 5, 5, '2018-12-18 05:52:03', '2018-12-18 06:50:25');
+
+INSERT INTO `quotation_services` (`id`, `qs_price`, `qs_qty`, `qs_description`, `qs_quote_id`, `qs_service_id`, `qs_created_by`, `qs_updated_by`, `created_at`, `updated_at`) VALUES
+(5, 450.00, 11, '<p><strong>qweqwe</strong></p>\n\n<ul>\n	<li>wqeqeqewqew1</li>\n	<li>qweqeqweqw1</li>\n</ul>\n\n<p><strong>qweqwe1</strong></p>\n\n<ul>\n	<li>wqeqeqewqew1</li>\n	<li>qweqeqweqw1</li>\n</ul>', 1, 78, 5, 5, '2018-12-18 09:21:57', '2018-12-18 09:31:22'),
+(6, 100.00, 11, '<p>qeweqwe&#39;asdasd</p>', 1, 59, 5, 5, '2018-12-18 09:31:57', '2018-12-18 09:32:25'),
+(7, 1200.00, 1, '<p>qweqeqwe&#39;</p>', 1, 30, 5, 5, '2018-12-18 09:32:39', '2018-12-18 09:32:39'),
+(8, 450.00, 1, '<p>qweqwew&quot;</p>', 1, 78, 5, 5, '2018-12-18 09:32:53', '2018-12-18 09:32:53');
 
 INSERT INTO `user_roles` (`id`, `ur_name`, `ur_description`) VALUES
 (1, 'Poweradmin', 'Poweradmin'),

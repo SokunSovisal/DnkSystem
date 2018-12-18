@@ -52,27 +52,19 @@
 					<div class="col-sm-4">
 						<div class="form-group">
 							<label class="control-label">កែប្រែតម្លៃ <small>*</small></label>
-							<input class="form-control nbr" type="text" id='qs_price' placeholder="update price" autocomplete="off"/>
+							<input class="form-control nbr" type="text" id='qs_price' placeholder="update price" value="0" autocomplete="off"/>
 						</div>
 					</div>
 					<div class="col-sm-4">
 						<div class="form-group">
 							<label class="control-label">ចំនួន <small>*</small></label>
-							<input class="form-control nbr" type="text" id='qs_qty' placeholder="quantity" autocomplete="off"/>
+							<input class="form-control nbr" type="text" id='qs_qty' placeholder="quantity" value="1" autocomplete="off"/>
 						</div>
 					</div>
 					<div class="col-sm-12">
 						<div class="form-group">
 							<label class="control-label">ព័ត៌មានលម្អិត <small>*</small></label>
-							<div class="input-group">
-								<input class="form-control nbr" type="text" id='qs_description' placeholder="add service detail" autocomplete="off"/>
-							  <span class="input-group-btn" id="btn-add">
-									<span class="nbr btn btn-success"><i class="fa fa-plus"></i></span>
-							  </span>
-							</div>
-						</div>
-						<div id="qs_items">
-							<label>ពណ៌នា៖</label>
+							<textarea class="form-control nbr" type="text" id='qs_description' placeholder="service detail" autocomplete="off"></textarea>
 						</div>
 					</div>
         </div>
@@ -119,9 +111,7 @@
 						<td>{{ $i+1 }}</td>
 						<td>{{ $qs->service->s_name }}</td>
 						<td>
-							@foreach(explode(',',$qs->qs_description) as $i => $item)
-								- {{str_replace(':;', ',', $item)}} <br/>
-							@endforeach
+							{!! $qs->qs_description !!}
 						</td>
 						<td>{{ $qs->user->name }}</td>
 						<td class="action">
@@ -143,42 +133,31 @@
 
 @section('js')
 	<script type="text/javascript">
-		// Alert Delete
-		$("button.delete").click(alertYesNo);
 
-		$(document).ready(function() {
+	// CKEDITOR myEditor
+	CKEDITOR.replace( 'qs_description', {
+		toolbar: [
+			{ name: 'document', items: [ 'Source' ] },
+			{ name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Undo', 'Redo' ] },
+			{ name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
+			{ name: 'tools', items: [ 'Maximize', 'ShowBlocks' ] },
+			'/',
+			{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript' ] },
+			{ name: 'colors', items: [ 'TextColor', 'BGColor' ] },
+			{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+		],
+    height: '200'
+	});
+	
+	// Alert Delete
+	$("button.delete").click(alertYesNo);
+
+	$(document).ready(function() {
 
 			// Reload page After Close Modal
 			$('#qs').on('hidden.bs.modal', function () {
 			  	location.reload();
 			}) 
-
-			// Add Service Detail
-    	$("#btn-add").click(function() {
-				if ($('#qs_description').val()!='') {
-	    		var lastField = $("#qs_items div:last");
-	        var intId = (lastField && lastField.length && lastField.data("idx") + 1) || 1;
-	        var fieldWrapper = $('<div class="input-group mb-1 fieldwrapper"/>');
-	        fieldWrapper.data("idx", intId);
-	        var fName = $('<span class="sr-only nbr input-group-addon"><input type="text" name="qs_description[]" value="'+ $('#qs_description').val() +'" class="form-control" /></span>');
-	        var fType = $('<input class="form-control nbr" value="'+ $('#qs_description').val() +'" type="text" disabled/>');
-	        var removeButton = $('<span class="input-group-btn"><span class="nbr btn btn-danger"><i class="fa fa-times"></i></span></span>');
-	        removeButton.click(function() {
-	            // $(this).parent().remove();
-          	var parent = $(this).parent();
-						parent.fadeOut(150, function(){
-							parent.remove();
-						});
-	        });
-	        fieldWrapper.append(fName);
-	        fieldWrapper.append(fType);
-	        fieldWrapper.append(removeButton);
-	        $("#qs_items").append(fieldWrapper);
-	        $("#qs_description").val('');
-
-        }
-	    });
-		});
 
 		// Dynamic Select From Appointment
 		var all_services = $('#qs_service_id').html();
@@ -223,17 +202,16 @@
 			  var qs_quote_id = $('#qs_quote_id').val();
 			  var qs_qty = $('#qs_qty').val();
 			  var qs_price = $('#qs_price').val();
-				var values = [];
-			  $("input[name='qs_description[]']").each(function() {
-				    values.push($(this).val().replace(/,/g, ':;'));
-				});
-			  var qs_description = (values).toString();
+			  var qs_description = CKEDITOR.instances['qs_description'].getData();
  				var _token = $('input[name="_token"]').val();
+				// alert(qs_price + qs_qty + qs_description);
 				$.ajax({
 					url: "{{route('quotationservices.store')}}",
 					type: 'post',
 					data: {service_id:service_id, qs_qty:qs_qty, qs_price:qs_price, qs_quote_id:qs_quote_id, qs_description:qs_description, _token:_token},
 					success: function(dataReturn){
+
+						// alert(dataReturn); 
 						swal({
 				      title: 'បានជោគជ័យ',
 				      text: dataReturn,
@@ -250,11 +228,10 @@
 						})
 						$('#qs_service_id').val('');
 						$('#appointments').val('');
-						$('#qs_description').val('');
-						$('#qs_qty').val('');
-						$('#qs_price').val('');
-						$('#qs_origin_price').val('');
-						$('#qs_items').html('<label>ពណ៌នា៖</label>');
+						CKEDITOR.instances['qs_description'].setData('');
+						$('#qs_qty').val('0');
+						$('#qs_price').val('0');
+						$('#qs_origin_price').val('0');
 					}
 				});
 			}else{
@@ -283,36 +260,12 @@
 					type: 'get',
 					data: {id:id, _token:_token},
 					success: function(dataReturn){
-
 						var data = dataReturn.split(";:;");
 						$('#qs_service_id').val(data[0]);
+						CKEDITOR.instances['qs_description'].setData(data[1]);
 						$('#qs_id').val(data[2]);
 						$('#qs_price').val(data[3]);
 						$('#qs_qty').val(data[4]);
-						// Add Service Description
-						$('#qs_items').html('<label>ពណ៌នា៖</label>');
-						var detail_item = data[1].split(",");
-						if (detail_item.length > 0 && detail_item[0]!='') {
-							for (var i = 0; i < detail_item.length; i++) {
-				    		var lastField = $("#qs_items div:last");
-				        var intId = (lastField && lastField.length && lastField.data("idx") + 1) || 1;
-				        var fieldWrapper = $('<div class="input-group mb-1 fieldwrapper"/>');
-				        fieldWrapper.data("idx", intId);
-				        var fName = $('<span class="sr-only nbr input-group-addon"><input type="text" name="qs_description[]" value="'+ detail_item[i].replace(/:;/g, ',') +'" class="form-control" /></span>');
-				        var fType = $('<input class="form-control nbr" value="'+ detail_item[i].replace(/:;/g, ',') +'" type="text" disabled/>');
-				        var removeButton = $('<span class="input-group-btn"><span class="nbr btn btn-danger"><i class="fa fa-times"></i></span></span>');
-				        removeButton.click(function() {
-			          	var parent = $(this).parent();
-									parent.fadeOut(150, function(){
-										parent.remove();
-									});
-				        });
-				        fieldWrapper.append(fName);
-				        fieldWrapper.append(fType);
-				        fieldWrapper.append(removeButton);
-				        $("#qs_items").append(fieldWrapper);
-							}
-						}
 					}
 				});
 		});
@@ -322,16 +275,11 @@
 			if ($('#qs_service_id').val()!='') {
 			  var id = $('#qs_id').val();
 			  var qs_qty = $('#qs_qty').val();
-			  var qs_price = $('#qs_price').val();
 			  var service_id = $('#qs_service_id').val();
-				var values = [];
-			  $("input[name='qs_description[]']").each(function() {
-				    values.push($(this).val().replace(/,/g, ':;'));
-				});
-			  var qs_description = (values).toString();
+			  var qs_price = $('#qs_price').val();
+			  var qs_description = CKEDITOR.instances['qs_description'].getData();
  				var _token = $('input[name="_token"]').val();
  				var _method = 'PUT';
-      	// <input name="_method" id="input-method" type="hidden" value="PUT">
 				$.ajax({
 					url: "http://localhost:8000/quotationservices/"+id,
 					type: 'PATCH',
@@ -370,6 +318,7 @@
 				})
 			}
 		});
+	});
 
 	</script>
 @endsection

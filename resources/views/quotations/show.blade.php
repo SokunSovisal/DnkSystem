@@ -3,16 +3,16 @@
 @section('css')
 	<style type="text/css">
 		table,td,th,p,li,h1,h2,h3,h4,h5,h6,div{
-			font-family: 'abc' !important;
+			font-family: 'Times New Roman' !important;
 		}
 		#quotation-print{
 			border: 1px solid #ddd;
 			margin: 25px auto;
 			width: 21cm;
-			height: 32cm;
+			height: 29.7cm;
 			position: relative;
 			font-family: 'Times New Roman' !important;
-			padding: 0 30px;
+			padding: 15px 35px;
 		}
 		.print-header{
 			padding: 22px 35px 0 38px;
@@ -56,7 +56,7 @@
 			border-top: 1px solid #000;
 		}
 		.print-body table.table-body tbody tr td{
-			padding: 5px;
+			padding: 5px 8px;
 			border-left: 1px solid #000;
 			border-right: 1px solid #000;
 		}
@@ -72,7 +72,7 @@
 		.print-footer{
 			max-width: 100%;
 			position: absolute;
-			padding: 10px 65px 22px 35px;
+			padding: 10px 70px 22px 35px;
 			bottom: 0;
 		}
 		.text-red{ color: red; }
@@ -170,10 +170,10 @@
 					<thead>
 						<tr>
 							<th width="5%">N&deg;</th>
-							<th width="55%">Description</th>
+							<th width="57%">Description</th>
 							<th width="10%">Unit</th>
-							<th width="15%">Unit Price</th>
-							<th width="15%">Ammount</th>
+							<th width="14%">Unit Price</th>
+							<th width="14%">Ammount</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -183,11 +183,7 @@
 								<td class="description">
 									<strong>{{$qs->service->s_name}}</strong>
 									<br/>
-									<ul>
-										@foreach(explode(",",$qs->qs_description) as $j => $des_item)
-											<li>{{str_replace(":;",",",$des_item)}}</li>
-										@endforeach
-									</ul>
+									{!! $qs->qs_description !!}
 								</td>
 								<td align="center" valign="top">{{$qs->qs_qty}}</td>
 								<td align="right" valign="top" class="price"><span class="pull-left">$</span>  {{number_format($qs->qs_price, 2)}}</td>
