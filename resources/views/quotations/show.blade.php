@@ -23,6 +23,7 @@
 			margin-top: 12px;
 		}
 		.print-header table tr td{
+<<<<<<< HEAD
 			padding-top: 5px;
 		}
 		.print-header h2{
@@ -30,6 +31,15 @@
 			padding: 8px 0 4px 0;
 			font-size: 16pt;
 			text-transform: uppercase;
+=======
+			padding-top: 2px;
+		}
+		.print-header h2{
+			text-align: center;
+			padding: 10px 0 5px 0;
+			text-transform: uppercase;
+			font-size: 16pt;
+>>>>>>> 7cc8b8796408a646b445f0c0eb87624bf0f56eb0
 		}
 		.print-header h2 strong{
 			border-bottom: 2px solid #333;
@@ -56,6 +66,7 @@
 			border-bottom: 1px solid #000;
 			border-top: 1px solid #000;
 		}
+<<<<<<< HEAD
 		.print-body table.table-body tbody tr td{
 			padding: 7px 8px;
 			border-left: 1px solid #000;
@@ -68,6 +79,33 @@
 		.print-body table.table-body tbody tr .service-item .description ul li{
 			padding: 0;
 			line-height: 1.3em;
+=======
+		.print-body table.table-body tbody tr:last-child td{
+			padding: 5px 8px;
+		}
+		.print-body table.table-body tbody tr td{
+			padding: 3px 8px;
+			border-left: 1px solid #000;
+			border-right: 1px solid #000;
+		}
+		.print-body table.table-body tbody .service{
+			font-size: 12.5pt;
+			/*margin-bottom: 0px;*/
+		}
+		.print-body table.table-body tbody .service-item{
+			/*border: 1px solid red;*/
+		}
+		.print-body table.table-body tbody .service-item p{
+			/*border: 1px solid red;*/
+			margin: 5px 0 0 0;
+
+		}
+		.print-body table.table-body tbody .service-item ul{
+			/*border: 1px solid red;*/
+			margin-top: 5px;
+			margin-bottom: 5px;
+
+>>>>>>> 7cc8b8796408a646b445f0c0eb87624bf0f56eb0
 		}
 		.print-body table.table-body tbody tr:last-child td:last-child{
 			border: 1px solid #000;
@@ -76,7 +114,7 @@
 			text-align: center;
 		}
 		.print-body .block-signature .box{
-			height: 1.2cm;
+			height: 35px;
 		}
 		.print-footer{
 			max-width: 100%;
@@ -130,13 +168,19 @@
 					
 					<table width="100%">
 						<tr>
+<<<<<<< HEAD
 							<td width="10%"><strong>To</strong></td>
 							<td width="46%"><strong>: {{(($quote->company->com_name=='Unkown')?'': $quote->company->com_name)}}</strong></td>
+=======
+							<td width="9%"><strong>To</strong></td>
+							<td width="47%">: {{(($quote->company->com_name=='Unkown')?'': $quote->company->com_name)}}</td>
+>>>>>>> 7cc8b8796408a646b445f0c0eb87624bf0f56eb0
 							<td width="8%"></td>
 							<td width="14%"></td>
 							<td width="22%" class="nb"></td>
 						</tr>
 						<tr>
+<<<<<<< HEAD
 							<td width="10%"><strong>Attend</strong></td>
 							<td width="46%"><strong>: {{(($quote->quote_cp_name=='Unkown')?'': $quote->quote_cp_name)}}</strong></td>
 							<td width="8%"></td>
@@ -153,6 +197,24 @@
 						<tr>
 							<td width="10%"><strong>E-mail</strong></td>
 							<td width="46%"><strong>: {{$quote->quote_cp_email}}</strong></td>
+=======
+							<td width="9%"><strong>Attend</strong></td>
+							<td width="47%">: {{(($quote->quote_cp_name=='Unkown')?'': $quote->quote_cp_name)}}</td>
+							<td width="8%"></td>
+							<td width="14%"><strong>Quote N&deg;</strong></td>
+							<td width="22%"><span class="text-red">: {{$quote->quote_number}}</span></td>
+						</tr>
+						<tr>
+							<td width="9%"><strong>Phone</strong></td>
+							<td width="47%">: {{$quote->quote_cp_phone}}</td>
+							<td width="8%"></td>
+							<td width="14%"><strong>Date</strong></td>
+							<td width="22%">: {{$quote->quote_date}}</td>
+						</tr>
+						<tr>
+							<td width="9%"><strong>E-mail</strong></td>
+							<td width="47%">: {{$quote->quote_cp_email}}</td>
+>>>>>>> 7cc8b8796408a646b445f0c0eb87624bf0f56eb0
 							<td width="8%"></td>
 							<td width="14%"></td>
 							<td width="22%" class="nb"></td>
@@ -164,7 +226,11 @@
 			<div class="print-body">
 				<table width="100%" class="table-purpose">
 					<tr>
+<<<<<<< HEAD
 						<td valign="top" width="80px"><strong>Purpose: </strong></td>
+=======
+						<td valign="top" width="75px"><strong>Purpose:</strong></td>
+>>>>>>> 7cc8b8796408a646b445f0c0eb87624bf0f56eb0
 						<td><strong>{{$quote->quote_purpose}}</strong></td>
 					</tr>
 				</table>
@@ -172,22 +238,36 @@
 				<table width="100%" class="table-body">
 					<thead>
 						<tr>
+<<<<<<< HEAD
 							<th width="5%">N&deg;</th>
 							<th width="57%">Description</th>
 							<th width="8%">Unit</th>
 							<th width="14%">Unit Price</th>
 							<th width="14%">Ammount</th>
+=======
+							<th width="6%">N&deg;</th>
+							<th width="54%">Description</th>
+							<th width="10%">Unit</th>
+							<th width="15%">Unit Price</th>
+							<th width="15%">Ammount</th>
+>>>>>>> 7cc8b8796408a646b445f0c0eb87624bf0f56eb0
 						</tr>
 					</thead>
 					<tbody>
 						@foreach($quotationservices as $i => $qs)
-							<tr>
+							<tr class="service-item">
 								<td align="center" valign="top">{{$i+1}}</td>
+<<<<<<< HEAD
 								<td class="service-item">
 									<strong class="service">{{$qs->service->s_name}}</strong>
 									<div class="description">
 										{!! $qs->qs_description !!}
 									</div>
+=======
+								<td class="description">
+									<strong class="service">{{$qs->service->s_name}}</strong>
+									{!! $qs->qs_description !!}
+>>>>>>> 7cc8b8796408a646b445f0c0eb87624bf0f56eb0
 								</td>
 								<td align="center" valign="top">{{$qs->qs_qty}}</td>
 								<td align="right" valign="top" class="price"><span class="pull-left">$</span>  {{number_format($qs->qs_price, 2)}}</td>
