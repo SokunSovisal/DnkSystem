@@ -256,7 +256,7 @@
 			  var id = $(this).data('qsid');
  				var _token = $('input[name="_token"]').val();
 				$.ajax({
-					url: "http://localhost:8000/quotationservices/"+id+"/edit",
+					url: "/quotationservices/"+id+"/edit",
 					type: 'get',
 					data: {id:id, _token:_token},
 					success: function(dataReturn){
@@ -281,7 +281,7 @@
  				var _token = $('input[name="_token"]').val();
  				var _method = 'PUT';
 				$.ajax({
-					url: "http://localhost:8000/quotationservices/"+id,
+					url: "/quotationservices/"+id,
 					type: 'PATCH',
 					data: {qs_price:qs_price, qs_qty:qs_qty, service_id:service_id, id:id, qs_description:qs_description, _method:_method, _token:_token},
 					success: function(dataReturn){
