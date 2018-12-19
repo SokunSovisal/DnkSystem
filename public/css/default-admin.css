@@ -30,6 +30,9 @@
     src: url('/fonts/OpenSans-Regular.ttf');
     font-family: 'opensans_l';
 }
+.time_new{
+  font-family: 'Times New Roman' !important;
+}
 .roboto_r{
   font-family: 'roboto_r' !important;
 }
@@ -37,6 +40,9 @@
   font-family: 'roboto_l' !important;
 }
 .lato_r{
+  font-family: 'lato_r' !important;
+}
+#clock *{
   font-family: 'lato_r' !important;
 }
 .openSans_r{
