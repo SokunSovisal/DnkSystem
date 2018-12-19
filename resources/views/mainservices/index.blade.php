@@ -53,6 +53,9 @@
 
 @section('js')
 	<script type="text/javascript">
+
+
+
 		// Alert Delete
 		$("button.delete").click(alertYesNo);
 	</script>

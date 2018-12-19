@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Users extends Model
 {
@@ -11,13 +12,14 @@ class Users extends Model
     	return $this->belongsTo('App\Models\userRoles','user_role_id');
     }
 
-    // public function company()
-    // {
-    // 	return $this->hasMany('App\Models\Companies','com_created_by');
-    // }
-
-    // public function objective()
-    // {
-    // 	return $this->hasMany('App\Models\Objectives','obj_created_by');
-    // }
+		public function appointNotify()
+		{
+			$today = date("Y-m-d", time());
+			$app_alert  = DB::table('appointments')
+								  ->whereDate('app_datetime','<=', $today)
+					->where('app_status',1)
+								  ->get();
+								  
+			return $app_alert->count();
+		}
 }

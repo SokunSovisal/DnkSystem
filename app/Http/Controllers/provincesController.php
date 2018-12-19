@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Provinces;
+use App\Models\Users;
 use Illuminate\Http\Request;
 use Validator;
 use DB;
@@ -27,11 +28,7 @@ class provincesController extends Controller
 			'sm'=>'provinces',
 			'title'=>'ទីតាំងខេត្ត',
       // Notification Appointments
-      'app_alert' => DB::table('appointments')
-                          ->whereDate('app_datetime','<=', $today)
-                          ->whereTime('app_datetime', '<=', $timeNow)
-                          ->where('app_status',1)
-                          ->get(),
+			'appNotify' => new Users(),
 		];
 	}
 	

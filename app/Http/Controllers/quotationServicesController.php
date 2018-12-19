@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Users;
 use App\Models\Services;
 use App\Models\Quotations;
 use App\Models\Appointments;
 use App\Models\quotation_services;
 use Illuminate\Http\Request;
-use DB;
 use Auth;
 use Validator;
 
@@ -17,20 +17,13 @@ class quotationServicesController extends Controller
 	private $date;
 
 	public function __construct()
-	{
-	$today = date("Y-m-d", time());
-	$timeNow = date("h:i:s", time());
-	
+	{	
 		$this->data=[
 			'title'=>'សេវាកម្មនៃសម្រង់តម្លៃ',
 			'm'=>'manage_processing',
 			'sm'=>'quotations',
 	  // Notification Appointments
-	  'app_alert' => DB::table('appointments')
-						  ->whereDate('app_datetime','<=', $today)
-						  ->whereTime('app_datetime', '<=', $timeNow)
-						  ->where('app_status',1)
-						  ->get(),
+			'appNotify' => new Users(),
 		];
 	}
 	/**

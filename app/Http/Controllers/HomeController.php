@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Appointments;
 use App\Models\Companies;
 use App\Models\Services;
+use App\Models\Users;
 use App\Models\User;
 use DB;
 
@@ -23,20 +24,13 @@ class HomeController extends Controller
 	public function __construct()
 	{
 		$this->middleware('auth');
-  	$today = date("Y-m-d", time());
-  	$timeNow = date("h:i:s", time());
-
 		$this->data=[
 			'breadcrumb'=>'<li class="active"><i class="fa fa-home"></i> ផ្ទាំងដើម</li>',
 			'title'=>'Welcome',
 			'm'=>'home',
 			'sm'=>'home',
 			// Notification Appointments
-			'app_alert' => DB::table('appointments')
-												  ->whereDate('app_datetime','<=', $today)
-												  ->whereTime('app_datetime', '<=', $timeNow)
-                          ->where('app_status',1)
-													->get(),
+			'appNotify' => new Users(),
 
 			// Select Data From Table
 			'companies' => Companies::all(),

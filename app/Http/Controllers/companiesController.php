@@ -6,8 +6,8 @@ use App\Models\Companies;
 use App\Models\Objectives;
 use App\Models\Provinces;
 use App\Models\Districts;
+use App\Models\Users;
 use Illuminate\Http\Request;
-use DB;
 use Validator;
 use Auth;
 use Image;
@@ -26,10 +26,7 @@ class companiesController extends Controller
 	private $path;
 
 	public function __construct()
-	{
-  	$today = date("Y-m-d", time());
-  	$timeNow = date("h:i:s", time());
-  	
+	{  	
 		// Define Upload Image Path
 		$this->path=public_path().'/images/companies/';
 
@@ -38,11 +35,7 @@ class companiesController extends Controller
 			'sm'=>'companies',
 			'title'=>'ក្រុមហ៊ុន',
       // Notification Appointments
-      'app_alert' => DB::table('appointments')
-                          ->whereDate('app_datetime','<=', $today)
-                          ->whereTime('app_datetime', '<=', $timeNow)
-                          ->where('app_status',1)
-                          ->get(),
+			'appNotify' => new Users(),
 		];
 	}
 

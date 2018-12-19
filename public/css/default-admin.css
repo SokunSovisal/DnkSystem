@@ -36,7 +36,13 @@
 .roboto_r{
   font-family: 'roboto_r' !important;
 }
+.roboto_r *{
+  font-family: 'roboto_r' !important;
+}
 .roboto_l{
+  font-family: 'roboto_l' !important;
+}
+.roboto_l *{
   font-family: 'roboto_l' !important;
 }
 .lato_r{
@@ -49,6 +55,9 @@
   font-family: 'openSans_r' !important;
 }
 .KHMERBTB{
+  font-family: 'KhmerOSbattambang' !important;
+}
+.KHMERBTB *{
   font-family: 'KhmerOSbattambang' !important;
 }
 .breadcrumb li,.breadcrumb li a,.sidebar-text{

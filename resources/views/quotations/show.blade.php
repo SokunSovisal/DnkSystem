@@ -108,6 +108,8 @@
 @endsection
 
 @section('content')
+
+
 	<section class="bg-white">
 		<div class="row">
 			<div class="col-sm-6">
@@ -131,21 +133,21 @@
 					<table width="100%">
 						<tr>
 							<td width="10%"><strong>To</strong></td>
-							<td width="46%"><strong>: {{(($quote->company->com_name=='Unkown')?'': $quote->company->com_name)}}</strong></td>
+							<td width="46%"><strong class="{{$quote->is_en($quote->company->com_name)}}">: {{(($quote->company->com_name=='Unknown')?'': $quote->company->com_name)}}</strong></td>
 							<td width="8%"></td>
 							<td width="14%"></td>
 							<td width="22%" class="nb"></td>
 						</tr>
 						<tr>
 							<td width="10%"><strong>Attend</strong></td>
-							<td width="46%"><strong>: {{(($quote->quote_cp_name=='Unkown')?'': $quote->quote_cp_name)}}</strong></td>
+							<td width="46%"><strong class="{{$quote->is_en($quote->quote_cp_name)}}">: {{(($quote->quote_cp_name=='Unknown')?'': $quote->quote_cp_name)}}</strong></td>
 							<td width="8%"></td>
 							<td width="14%"><strong>Quote N&deg;</strong></td>
 							<td width="22%"><span class="text-red"><strong>: {{$quote->quote_number}}</strong></span></td>
 						</tr>
 						<tr>
 							<td width="10%"><strong>Phone</strong></td>
-							<td width="46%"><strong>: {{$quote->quote_cp_phone}}</strong></td>
+							<td width="46%"><strong class="{{$quote->is_en($quote->quote_cp_phone)}}">: {{$quote->quote_cp_phone}}</strong></td>
 							<td width="8%"></td>
 							<td width="14%"><strong>Date</strong></td>
 							<td width="22%"><strong>: {{$quote->quote_date}}</strong></td>
@@ -165,7 +167,7 @@
 				<table width="100%" class="table-purpose">
 					<tr>
 						<td valign="top" width="80px"><strong>Purpose: </strong></td>
-						<td><strong>{{$quote->quote_purpose}}</strong></td>
+						<td><strong class="{{$quote->is_en($quote->quote_purpose)}}">{{$quote->quote_purpose}}</strong></td>
 					</tr>
 				</table>
 
@@ -184,8 +186,8 @@
 							<tr class="service-item">
 								<td align="center" valign="top">{{$i+1}}</td>
 								<td class="service-item">
-									<strong class="service">{{$qs->service->s_name}}</strong>
-									<div class="description">
+									<strong class="service {{$quote->is_en($qs->service->s_nam)}}">{{$qs->service->s_name}}</strong>
+									<div class="description {{$quote->is_en($qs->qs_description)}}">
 										{!! $qs->qs_description !!}
 									</div>
 								</td>

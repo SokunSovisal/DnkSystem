@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Objectives;
+use App\Models\Users;
 use Illuminate\Http\Request;
 use Auth;
 use Validator;
@@ -20,19 +21,12 @@ class objectivesController extends Controller
 
 	public function __construct()
 	{
-  	$today = date("Y-m-d", time());
-  	$timeNow = date("h:i:s", time());
-  	
 		$this->data=[
 			'm'=>'manage_companies',
 			'sm'=>'objectives',
 			'title'=>'សកម្មភាពអាជីវកម្ម',
       // Notification Appointments
-      'app_alert' => DB::table('appointments')
-                          ->whereDate('app_datetime','<=', $today)
-                          ->whereTime('app_datetime', '<=', $timeNow)
-                          ->where('app_status',1)
-                          ->get(),
+			'appNotify' => new Users(),
 		];
 	}
 	

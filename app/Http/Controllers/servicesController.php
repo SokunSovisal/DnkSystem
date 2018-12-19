@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Users;
 use App\Models\Services;
 use App\Models\Mainservices;
 use Illuminate\Http\Request;
@@ -23,19 +24,12 @@ class servicesController extends Controller
 
     public function __construct()
     {
-        $today = date("Y-m-d", time());
-        $timeNow = date("h:i:s", time());
-
         $this->data=[
             'title'=>'សេវាកម្មទាំងអស់',
             'm'=>'services',
             'sm'=>'services',
             // Notification Appointments
-            'app_alert' => DB::table('appointments')
-                          ->whereDate('app_datetime','<=', $today)
-                          ->whereTime('app_datetime', '<=', $timeNow)
-                          ->where('app_status',1)
-                              ->get(),
+            'appNotify' => new Users(),
         ];
     }
 

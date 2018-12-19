@@ -49,14 +49,14 @@
 							<div class="panel-heading" role="tab" id="sidebar-processing-heading">
 								<h4 class="panel-title">
 									<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#sidebar-processing" aria-expanded="false" aria-controls="sidebar-processing">
-										<i class="fa fa-handshake sidebar-icon"></i> <span class="sidebar-text">គ្រប់គ្រងការងារ <span class="badge badge-danger animated {{(($app_alert->count())>0)?'animated flash':''}} {{($app_alert->count()<=0)?'sr-only':''}}">{{$app_alert->count()}}</span><i class="fa fa-angle-down pull-right mt-05"></i></span>
+										<i class="fa fa-handshake sidebar-icon"></i> <span class="sidebar-text">គ្រប់គ្រងការងារ <span class="badge badge-danger animated {{(($appNotify->appointNotify())>0)?'animated flash':''}} {{($appNotify->appointNotify()<=0)?'sr-only':''}}">{{$appNotify->appointNotify()}}</span><i class="fa fa-angle-down pull-right mt-05"></i></span>
 									</a>
 								</h4>
 							</div>
 							<div id="sidebar-processing" class="panel-collapse collapse <?=((@$m=='manage_processing')?'in':'collapse')?>" role="tabpanel" aria-labelledby="sidebar-processing-heading">
 								<div class="panel-body">
 									<ul class="nav">
-										<li class="<?=((@$sm=='appointments')?'active':'')?> {{($app_alert->count()>0)?'animated bounceInLeft':''}}"><a href="{{route('appointments.index')}}"><i class="fa fa-comments sidebar-sub-icon"></i> <span class="sidebar-text">កាណាត់ជួប</span> <span class="badge badge-danger {{($app_alert->count()<=0)?'sr-only':''}}">{{$app_alert->count()}}</span></a></li>
+										<li class="<?=((@$sm=='appointments')?'active':'')?> {{($appNotify->appointNotify()>0)?'animated bounceInLeft':''}}"><a href="{{route('appointments.index')}}"><i class="fa fa-comments sidebar-sub-icon"></i> <span class="sidebar-text">កាណាត់ជួប</span> <span class="badge badge-danger {{($appNotify->appointNotify()<=0)?'sr-only':''}}">{{$appNotify->appointNotify()}}</span></a></li>
 										<li class="<?=((@$sm=='quotations')?'active':'')?>"><a href="{{route('quotations.index')}}"><i class="fa fa-file-alt sidebar-sub-icon"></i> <span class="sidebar-text">សម្រង់តម្លៃ</span></a></li>
 									</ul>
 								</div>

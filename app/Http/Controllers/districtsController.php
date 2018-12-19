@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Users;
 use App\Models\Districts;
 use App\Models\Provinces;
 use Illuminate\Http\Request;
 use Validator;
-use DB;
 
 class districtsController extends Controller
 {
@@ -19,20 +19,13 @@ class districtsController extends Controller
 	private $date;
 
 	public function __construct()
-	{
-  	$today = date("Y-m-d", time());
-  	$timeNow = date("h:i:s", time());
-  	
+	{  	
 		$this->data=[
 			'title'=>'ទីតាំងស្រុក',
 			'm'=>'manage_location',
 			'sm'=>'districts',
       // Notification Appointments
-      'app_alert' => DB::table('appointments')
-                          ->whereDate('app_datetime','<=', $today)
-                          ->whereTime('app_datetime', '<=', $timeNow)
-                          ->where('app_status',1)
-                          ->get(),
+			'appNotify' => new Users(),
 		];
 	}
 
