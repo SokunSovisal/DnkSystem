@@ -45,7 +45,7 @@
 						<div class="col-sm-12">
 							<div class="form-group">
 								<label class="control-label">បុគ្គលិក <small>*</small></label>
-								<select name="app_user_id" class="form-control nbr" required>
+								<select name="app_user_id" class="form-control nbr select2" required>
 									<option value="">-- ជ្រើសរើសបុគ្គលិក --</option>
 									@foreach($users as $i => $user)
 										<option value="{{$user->id}}" {{ ($user->id == old('app_user_id')) ? 'selected':'' }}>{{$user->name}}</option>
@@ -57,7 +57,7 @@
 						<div class="col-sm-12">
 							<div class="form-group">
 								<label class="control-label">ក្រុមហ៊ុន <small>*</small></label>
-								<select name="app_company_id" class="form-control nbr" required>
+								<select name="app_company_id" class="form-control nbr select2" required>
 									<option value="">-- ជ្រើសរើសក្រុមហ៊ុន --</option>
 									@foreach($companies as $i => $com)
 										<option value="{{$com->id}}" {{ ($com->id == old('app_company_id')) ? 'selected':'' }}>{{$com->com_name}}</option>
@@ -91,7 +91,7 @@
 							<div class="form-group">
 								<div class='input-group my-group'>
 									<label class="control-label">ប្រធានបទសេវាកម្ម <small>*</small></label>
-									<select name="services" id="services" class="form-control nbr">
+									<select name="services" id="services" class="form-control nbr select2">
 										<option value="">-- ជ្រើសរើសប្រធានបទសេវាកម្ម --</option>
 										@foreach($services as $i => $s)
 											<option value="{{$s->id}}">{{$s->s_name}}</option>

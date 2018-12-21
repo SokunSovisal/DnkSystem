@@ -34,7 +34,7 @@
 						<div class="col-sm-12">
 							<div class="form-group">
 								<label class="control-label">លក់ជូនក្រុមហ៊ុន <small>*</small></label>
-								<select name="quote_company_id" id="quote_company_id" class="form-control nbr" required>
+								<select name="quote_company_id" id="quote_company_id" class="form-control nbr select2" required>
 									<option value="">-- ជ្រើសរើសក្រុមហ៊ុន --</option>
 									@foreach($companies as $i => $com)
 										<option value="{{$com->id}}" {{ ($com->id == $quote->quote_company_id) || ($com->id == old('quote_company_id')) ? 'selected':'' }}>{{$com->com_name}}</option>

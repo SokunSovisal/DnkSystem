@@ -45,7 +45,19 @@ span.bg-alert{
 .swal2-popup {
   font-size: 1.6rem !important;
 }
-
+.select2{
+  width: 100% !important;
+}
+.select2 .select2-selection{
+  border-radius: 0 !important;
+  height: 35px !important;
+}
+.select2 .select2-selection__rendered{
+  padding-top: 3px !important;
+}
+.select2-container .select2-dropdown{
+  margin: 0 !important;
+}
 .badge-danger {
   background: #D9534F;
   font-size: 11px;

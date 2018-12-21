@@ -1,5 +1,4 @@
 
-
 // font-awesome
 @import 'node_modules/@fortawesome/fontawesome-free/css/all';
 
@@ -7,7 +6,7 @@
 @import 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
 
 // Bootstrap DataTable
-@import 'node_modules/datatables.net/css/dataTables.bootstrap.min';
+@import 'node_modules/datatables.net-bs/css/dataTables.bootstrap.min';
 
 // animate.css
 @import 'node_modules/animate.css/animate';
@@ -18,14 +17,20 @@
 // Bootstrap jansy
 @import 'node_modules/jasny-bootstrap/scss/jasny-bootstrap';
 
-// Bootstrap jansy
-@import 'node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput';
-
 // Perfect-scrollbar
 @import 'node_modules/perfect-scrollbar/css/perfect-scrollbar1';
 
 // Sweet Alert
 @import 'node_modules/sweetalert2/dist/sweetalert2';
+
+// Select 2
+@import 'node_modules/select2/dist/css/select2';
+
+// Select 2
+@import 'node_modules/select2-bootstrap-theme/dist/select2-bootstrap';
+
+// Select 2
+@import 'node_modules/bootstrap-fileinput/css/fileinput';
 
 
 

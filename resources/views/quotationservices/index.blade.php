@@ -35,7 +35,7 @@
 					<div class="col-sm-12">
 						<div class="form-group">
 							<label class="control-label">សេវាកម្ម <small>*</small></label>
-							<select name="qs_service_id" class="form-control nbr" id="qs_service_id" required>
+							<select name="qs_service_id" class="form-control nbr select2" id="qs_service_id" required>
 								<option value="">-- ជ្រើសរើសសេវាកម្ម --</option>
 								@foreach($services as $i => $service)
 									<option value="{{$service->id}}">{{$service->s_name}}</option>

@@ -31,7 +31,7 @@
 						<div class="col-sm-12">
 							<div class="form-group">
 								<label class="control-label">ស្ថិតក្នុងខេត្ត <small>*</small></label>
-								<select name="dist_province_id" class="form-control nbr" required>
+								<select name="dist_province_id" class="form-control nbr select2" required>
 									<option value="">-- ជ្រើសរើសខេត្ត --</option>
 									@foreach($provinces as $i => $pro)
 										<option value="{{$pro->id}}" {{ ($pro->id == old('dist_province_id')) ? 'selected':'' }}>{{$pro->pro_name}}</option>

@@ -31,7 +31,7 @@
 						<div class="col-sm-12">
 							<div class="form-group {{(($errors->has('gender'))?'has-error':'')}}">
 								<label for="">ភេទ <small>*</small></label>
-								<select name="gender" class="form-control nbr" required>
+								<select name="gender" class="form-control nbr select2" required>
 									<option value="">-- ជ្រើសរើសភេទ --</option>
 										<option value="1" {{ ((count($errors) > 0) && (old('gender') == 1)) ? 'selected':'' }}>ប្រុស</option>
 										<option value="2" {{ ((count($errors) > 0) && (old('gender') == 2)) ? 'selected':'' }}>ស្រី</option>

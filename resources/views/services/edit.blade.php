@@ -29,7 +29,7 @@
 						<div class="col-sm-12">
 							<div class="form-group">
 								<label class="control-label">សេវាកម្មធំ <small>*</small></label>
-								<select name="s_ms_id" class="form-control nbr" required>
+								<select name="s_ms_id" class="form-control nbr select2" required>
 									<option value="">-- ជ្រើសរើសសេវាកម្មធំ --</option>
 									@foreach($m_services as $i => $ms)
 										<option value="{{$ms->id}}" {{ ($ms->id == $service->s_ms_id) ? 'selected':'' }}>{{$ms->ms_name}}</option>

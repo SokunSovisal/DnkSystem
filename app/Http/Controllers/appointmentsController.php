@@ -168,7 +168,7 @@ class appointmentsController extends Controller
 		$appointments->save();
 		// Redirect
 		return redirect()->route('appointments.index')
-			->with('success', 'កាណាត់ជួបបានកែប្រែដោយជោគជ័យ: ' . $r->app_datetime);
+			->with('success', 'ការណាត់ជួបបានកែប្រែដោយជោគជ័យ: ' . $r->app_datetime);
 	}
 
 	/**
@@ -185,6 +185,6 @@ class appointmentsController extends Controller
 		$app->delete();
 		// redirect
 		return redirect()->route('appointments.index')
-			->with('success', 'កាត់ជួបត្រូវបានលុបចោលដោយជោគជ័យ៖ '. $app_datetime);
+			->with('success', 'ការណាត់ជួបត្រូវបានលុបចោលដោយជោគជ័យ៖ '. $app_datetime);
 	}
 }

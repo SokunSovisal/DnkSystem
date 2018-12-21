@@ -14,8 +14,8 @@
 //Auth Route
 	Auth::routes();
 	// Registration Routes...
-	// Route::get('register', 'Auth\RegisterController@redirectRegister')->name('register');
-	// Route::post('register', 'Auth\RegisterController@redirectRegister');
+	Route::get('register', 'Auth\RegisterController@redirectRegister')->name('register');
+	Route::post('register', 'Auth\RegisterController@redirectRegister');
 
 	// Password Reset Routes...
 	Route::get('password/reset', 'Auth\RegisterController@redirectRegister')->name('password.request');
@@ -38,6 +38,13 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
 	Route::resource('quotations', 'quotationsController');
 	//============== Quotations Services
 	Route::resource('quotationservices', 'quotationServicesController');
+	Route::resource('quotations', 'quotationsController');
+	//============== Agreements
+	Route::resource('agreements', 'agreementsController');
+	//============== Invoices
+	Route::resource('invoices', 'invoicesController');
+	//============== Recipts
+	Route::resource('recipts', 'reciptsController');
 
 
 	// Manage services

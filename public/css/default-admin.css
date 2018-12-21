@@ -113,7 +113,6 @@ body{
 }
 /*====== Sidebar Left ======*/
 #sidebar-left{
-  /*transition: 0.3s linear;*/
   position: fixed;
   top: 0;
   bottom: 0;
@@ -188,7 +187,8 @@ body{
 }
 #sidebar-left .panel-body{
   border: none !important;
-  padding: 0;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 #sidebar-left .panel-body ul.nav li a{
   display: block;
@@ -196,6 +196,9 @@ body{
   margin: 0 12px 10px 12px;
   border-radius: 3px;
   color: #636D79;
+}
+#sidebar-left .panel-body ul.nav li:last-child a{
+  margin-bottom: 0!important;
 }
 /*====== Sidebar Small ======*/
 #sidebar-left.sidebar-small{

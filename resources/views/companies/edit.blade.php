@@ -35,7 +35,7 @@
 							<div class="col-sm-12">
 								<div class="form-group">
 									<label class="control-label">សកម្មភាពអាជីវកម្ម <small>*</small></label>
-									<select name="com_objective_id" class="form-control nbr" required>
+									<select name="com_objective_id" class="form-control nbr select2" required>
 										<option value="">-- ជ្រើសរើសសកម្មភាពអាជីវកម្ម --</option>
 										@foreach($objectives as $i => $obj)
 											<option value="{{$obj->id}}" {{ ($obj->id == $company->com_objective_id) ? 'selected':'' }}>{{$obj->obj_name}}</option>
@@ -125,7 +125,7 @@
 							<div class="col-sm-12">
 								<div class="form-group">
 									<label class="control-label">ទីតាំងខេត្ត/រាជធានី <small>*</small></label>
-									<select name="com_province_id" class="form-control nbr dynamic_select" data-name="dist_name" data-chtable="districts" data-field="dist_province_id" required>
+									<select name="com_province_id" class="form-control nbr dynamic_select select2" data-name="dist_name" data-chtable="districts" data-field="dist_province_id" required>
 										<option value="qwewqe">-- ជ្រើសរើសខេត្ត/រាជធានី --</option>
 										@foreach($provinces as $i => $pro)
 											<option value="{{$pro->id}}" {{ ($pro->id == $company->com_province_id) ? 'selected':'' }}>{{$pro->pro_name}}</option>
@@ -137,7 +137,7 @@
 							<div class="col-sm-12">
 								<div class="form-group">
 									<label class="control-label">ទីតាំស្រុក/ខណ្ឌ <small>*</small></label>
-									<select name="com_district_id" class="form-control nbr" id="districts" required>
+									<select name="com_district_id" class="form-control nbr select2" id="districts" required>
 										<option value="">-- ជ្រើសរើសស្រុក/ខណ្ឌ --</option>
 										@foreach($districts as $i => $dist)
 											<option value="{{$dist->id}}" {{ ($dist->id == $company->com_district_id) ? 'selected':'' }}>{{$dist->dist_name}}</option>

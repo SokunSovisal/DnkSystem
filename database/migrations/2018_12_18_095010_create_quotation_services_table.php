@@ -20,8 +20,6 @@ class CreateQuotationServicesTable extends Migration
             $table->text('qs_description')->nullable();
             $table->unsignedInteger('qs_quote_id');
             $table->unsignedInteger('qs_service_id');
-            $table->unsignedInteger('qs_created_by');
-            $table->unsignedInteger('qs_updated_by');
             $table->timestamps();
             
             $table->foreign('qs_quote_id')

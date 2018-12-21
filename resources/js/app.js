@@ -3,12 +3,12 @@ require('./bootstrap');
 
 window.dtp = require('eonasdan-bootstrap-datetimepicker');
 window.swal = require('sweetalert2');
-window.dt = require('datatables.net/js/dataTables.bootstrap.min');
-window.jb = require('jasny-bootstrap/dist/js/jasny-bootstrap');
 window.jb = require('typeahead');
-window.jb = require('bootstrap-tagsinput/dist/bootstrap-tagsinput');
-window.ps = require('perfect-scrollbar/dist/perfect-scrollbar.jquery');
 window.moment = require('moment');
 window.moment.locale('en');
-
-// require('./javascript');
+window.jb = require('jasny-bootstrap/dist/js/jasny-bootstrap');
+window.dt = require('datatables.net');
+window.dtbs = require('datatables.net-bs');
+window.ps = require('perfect-scrollbar/dist/perfect-scrollbar.jquery');
+window.select2 = require('select2');
+window.bsfi = require('bootstrap-fileinput');

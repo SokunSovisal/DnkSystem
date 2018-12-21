@@ -87,6 +87,9 @@ $( document ).ready(function () {
 
 	$('.sidebar-sticky').perfectScrollbar();
 	$('#dataTable').DataTable();
+	$('.select2').select2({
+			theme: 'bootstrap',
+	});
 
 	if (localStorage.getItem("navbar_toggle") === "") {
 		$('#sidebar-left').addClass('sidebar-small fadeInLeft');
