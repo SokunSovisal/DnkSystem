@@ -150,7 +150,7 @@
 							<td width="46%"><strong class="{{$quote->is_en($quote->quote_cp_phone)}}">: {{$quote->quote_cp_phone}}</strong></td>
 							<td width="8%"></td>
 							<td width="14%"><strong>Date</strong></td>
-							<td width="22%"><strong>: {{$quote->quote_date}}</strong></td>
+							<td width="22%"><strong>: {{date('d/M/Y', strtotime($quote->quote_date))}}</strong></td>
 						</tr>
 						<tr>
 							<td width="10%"><strong>E-mail</strong></td>

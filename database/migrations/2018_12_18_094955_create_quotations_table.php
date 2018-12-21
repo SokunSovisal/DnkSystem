@@ -20,7 +20,7 @@ class CreateQuotationsTable extends Migration
             $table->string('quote_purpose', 255);
             $table->string('quote_cp_name', 255);
             $table->string('quote_cp_phone', 255);
-            $table->string('quote_cp_email', 255);
+            $table->string('quote_cp_email', 255)->nullable();
             $table->text('quote_term')->nullable();
             $table->integer('quote_status')->default('1');
             $table->unsignedInteger('quote_company_id');

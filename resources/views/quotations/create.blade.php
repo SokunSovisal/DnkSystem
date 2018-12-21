@@ -66,7 +66,7 @@
 						<div class="col-sm-12">
 							<div class="form-group {{(($errors->has('quote_number'))?'has-error':'')}}">
 								<label class="control-label">លេខរៀងសម្រង់តម្លៃ <small>*</small></label>
-								<input class="form-control nbr" type="text" name="quote_number" placeholder="quotation number" value="{{ ((count($errors) > 0) ? old('quote_number') : (isset($quote->quote_number)?$quote->quote_number+1: date('y',time()))).'0001' }}" autocomplete="off" required />
+								<input class="form-control nbr" type="text" name="quote_number" placeholder="quotation number" value="{{ ((count($errors) > 0) ? old('quote_number') : (isset($quote->quote_number)?$quote->quote_number+1: (date('y',time())).'0001')) }}" autocomplete="off" required />
 							</div>
 						</div>
 
