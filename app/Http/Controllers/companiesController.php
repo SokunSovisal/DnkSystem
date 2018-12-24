@@ -239,7 +239,6 @@ class companiesController extends Controller
 		// $com_logo;
 		$image = $r->file('com_logo');
 		if ($image->extension()=='png') {
-			// dd($image->extension());
 			$com_logo=time().'_'.$id.'.png';
 			Image::make($image->getRealPath())->save($this->path.$com_logo);
 		}else{

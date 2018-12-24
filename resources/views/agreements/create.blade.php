@@ -59,7 +59,7 @@
 						<div class="col-sm-12">
 							<label>ឯកសារ</label>
 							<div class="file-loading">
-								<input id="agr_files" name="agr_files[]" multiple type="file" class="file" data-allowed-file-extensions='["pdf","txt", "jpg", "jpeg", "png"]' accept="image/png, image/jpeg, image/jpg, application/pdf, text/plain" required />
+								<input id="agr_file" name="agr_file[]" multiple type="file" class="file" data-allowed-file-extensions='["pdf","txt", "jpg", "jpeg", "png"]' accept="image/png, image/jpeg, image/jpg, application/pdf, text/plain" required />
 							</div>
 						</div>
 					</div><!-- /.column -->
@@ -86,7 +86,7 @@
 		// 	// many more below
 		// };
 
-		$("#agr_files").fileinput({
+		$("#agr_file").fileinput({
 				showRemove: true,
 				showUpload: false
 		});

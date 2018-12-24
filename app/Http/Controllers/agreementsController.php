@@ -61,7 +61,9 @@ class agreementsController extends Controller
 	 */
 	public function store(Request $r)
 	{
-		dd($r->file());
+			foreach ($r->file() as $i => $value) {
+				echo $i;
+			}
 	}
 
 	/**
