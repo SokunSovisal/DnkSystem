@@ -2,24 +2,13 @@
 
 @section('css')
 	<style type="text/css">
-		#service_items .service_id{
-			padding: 0;
-			border: none;
-		}
-		#service_items .input-group-addon input{
-			width: 34px;
-		}
-		#btn-add{
-			padding: 24px 0 0 5px;
-		}
-		.file-preview{
-			border-radius: 0;
-		}
+	
 	</style>
 @endsection
 
 @section('content')
 	{!! Form::open(['enctype'=>'multipart/form-data', 'url' => route('agreements.store')]) !!}
+		{{ Form::hidden('_method', 'PUT') }}
 		<section class="bg-white">
 			
 			<!-- Back Button & Error Message -->
@@ -39,7 +28,7 @@
 								<select name="agr_company_id" class="form-control nbr select2" required>
 									<option value="">-- ជ្រើសរើសក្រុមហ៊ុន --</option>
 									@foreach($companies as $i => $com)
-										<option value="{{$com->id}}" {{ ($com->id == old('agr_company_id')) ? 'selected':'' }}>{{$com->com_name}}</option>
+										<option value="{{$com->id}}" {{ ($com->id == $agreement->agr_company_id || $com->id == old('agr_company_id')) ? 'selected':'' }}>{{$com->com_name}}</option>
 									@endforeach
 								</select>
 							</div>
@@ -50,9 +39,16 @@
 						<div class="col-sm-12">
 							<div class="form-group">
 								<label>ពណ៌នា</label>
-								<textarea class="form-control nbr" name="agr_description" style="height: 34px;" placeholder="description">{{ ((count($errors) > 0) ? old('agr_description') : '') }}</textarea>
+								<textarea class="form-control nbr" name="agr_description" style="height: 34px;" placeholder="description">{{ ((count($errors) > 0) ? old('agr_description') : $agreement->agr_company_id) }}</textarea>
 							</div>
 						</div>
+						
+						@foreach(unserialize($agreement->agr_files) as $i => $file)
+						
+								<input id="test" name="test[]" type="text" value="{{$file}}" data-path="/files/agreements/{{$agreement->agr_company_id}}/{{$file}}" />
+								
+						@endforeach
+
 					</div><!-- /.column -->
 					
 					<div class="col-sm-12">
@@ -75,20 +71,5 @@
 @section('js')
 	<script type="text/javascript">
 
-		// $.fn.fileinput.defaults = {
-		// 	language: 'en',
-		// 	showCaption: true,
-		// 	showPreview: true,
-		// 	showRemove: true,
-		// 	showUpload: false, // <------ just set this from true to false
-		// 	showCancel: true,
-		// 	showUploadedThumbs: true,
-		// 	// many more below
-		// };
-
-		$("#agr_file").fileinput({
-				showRemove: true,
-				showUpload: false
-		});
 	</script>
 @endsection

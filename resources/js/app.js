@@ -11,4 +11,4 @@ window.dt = require('datatables.net');
 window.dtbs = require('datatables.net-bs');
 window.ps = require('perfect-scrollbar/dist/perfect-scrollbar.jquery');
 window.select2 = require('select2');
-window.bsfi = require('bootstrap-fileinput');
+// window.bsfi = require('bootstrap-fileinput');

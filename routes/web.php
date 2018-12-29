@@ -39,11 +39,9 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
 	//============== Quotations Services
 	Route::resource('quotationservices', 'quotationServicesController');
 	Route::resource('quotations', 'quotationsController');
-	//============== Agreements
-	Route::resource('agreements', 'agreementsController');
-	//============== Invoices
+	// //============== Invoices
 	Route::resource('invoices', 'invoicesController');
-	//============== Recipts
+	// //============== Recipts
 	Route::resource('recipts', 'reciptsController');
 
 
@@ -61,6 +59,28 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
 	Route::resource('companies', 'companiesController');
 	Route::get('companies/{id}/image', 'companiesController@image')->name('companies.image');
 	Route::put('companies/{id}/image_update', 'companiesController@image_update')->name('companies.image_update');
+	//============== File Catetgories
+	Route::resource('filecategories', 'fileCategoriesController');
+	//============== Files
+	Route::resource('files', 'filesController');
+	Route::get('files/{id}/pdf', 'filesController@pdfViewer')->name('files.pdf');
+	//============== Download File
+	// Route::get('download/{path}', function($path){
+	// 		// Check if file exists in app/storage/file folder
+	// 		$path_url = (explode("&",$path));
+	// 		$file_path = public_path() .'/files/'. $path_url[0] .'/'. $path_url[1] .'/'. $path_url[2];
+	// 		if (file_exists($file_path))
+	// 		{
+	// 			// Send Download
+	// 			return Response::download($file_path, $path_url[2], [
+	// 				'Content-Length: '. filesize($file_path)
+	// 			]);
+	// 		}else{
+	// 			// Error
+	// 			exit('Requested file does not exist on our server!');
+	// 		}
+	// })
+	// ->where('filename', '[A-Za-z0-9\-\_\.]+');
 
 	// Manage Company
 	//============== User Role

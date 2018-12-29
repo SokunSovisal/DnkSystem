@@ -12,8 +12,6 @@
 	<!-- Scripts -->
 	<script src="{{ asset('js/app.js') }}"></script>
 	<script src="{{ asset('plugin/ckeditor/ckeditor.js') }}"></script>
-	
-	<script src="https://utatti.github.io/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script src="{{ asset('js/javascript.js') }}"></script>
 
 	<!-- Styles -->
@@ -24,7 +22,6 @@
 	<!-- Customer CSS page -->
 	@yield('css')
 	
-
 </head>
 <body>
 	<div class="container-fluid">
@@ -60,7 +57,6 @@
 									<ul class="nav">
 										<li class="<?=((@$sm=='appointments')?'active':'')?> {{($appNotify->appointNotify()>0)?'animated bounceInLeft':''}}"><a href="{{route('appointments.index')}}"><i class="fa fa-comments sidebar-sub-icon"></i> <span class="sidebar-text">កាណាត់ជួប</span> <span class="badge badge-danger {{($appNotify->appointNotify()<=0)?'sr-only':''}}">{{$appNotify->appointNotify()}}</span></a></li>
 										<li class="<?=((@$sm=='quotations')?'active':'')?>"><a href="{{route('quotations.index')}}"><i class="fa fa-file-alt sidebar-sub-icon"></i> <span class="sidebar-text">សម្រង់តម្លៃ</span></a></li>
-										<li class="<?=((@$sm=='agreements')?'active':'')?>"><a href="{{route('agreements.index')}}"><i class="fa fa-file-contract sidebar-sub-icon"></i> <span class="sidebar-text">កិច្ចសន្យា</span></a></li>
 										<li class="<?=((@$sm=='invoices')?'active':'')?>"><a href="{{route('invoices.index')}}"><i class="fa fa-file-invoice sidebar-sub-icon"></i> <span class="sidebar-text">វិក្កយបត្រ</span></a></li>
 										<li class="<?=((@$sm=='recipts')?'active':'')?>"><a href="{{route('recipts.index')}}"><i class="fa fa-receipt sidebar-sub-icon"></i> <span class="sidebar-text">ប័ណ្ណទទួលប្រាក់</span></a></li>
 									</ul>
@@ -82,6 +78,8 @@
 									<ul class="nav">
 										<li class="<?=((@$sm=='objectives')?'active':'')?>"><a href="{{route('objectives.index')}}"><i class="fa fa-database sidebar-sub-icon"></i> <span class="sidebar-text">សកម្មភាពអាជីវភាព</span></a></li>
 										<li class="<?=((@$sm=='companies')?'active':'')?>"><a href="{{route('companies.index')}}"><i class="fa fa-building sidebar-sub-icon"></i> <span class="sidebar-text">ក្រុមហ៊ុន</span></a></li>
+										<li class="<?=((@$sm=='filecategories')?'active':'')?>"><a href="{{route('filecategories.index')}}"><i class="fa fa-file sidebar-sub-icon"></i> <span class="sidebar-text">ផ្នែកឯកសារ</span></a></li>
+										<li class="<?=((@$sm=='files')?'active':'')?>"><a href="{{route('files.index')}}"><i class="far fa-file-alt sidebar-sub-icon"></i> <span class="sidebar-text">ឯកសារ</span></a></li>
 									</ul>
 								</div>
 							</div>
