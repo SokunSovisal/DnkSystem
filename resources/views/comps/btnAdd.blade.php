@@ -17,4 +17,4 @@
         </ul>
     </div>
 @endif
-<a href="{{$btnAdd}}" class="btn btn-success nbr btnAdd"><i class="fa fa-plus"></i> បន្ថែមថ្មី</a>
+<a href="{{$btnAdd}}" class="btn btn-success nbr btnAdd waves-effect waves-light"><i class="fa fa-plus"></i> បន្ថែមថ្មី</a>

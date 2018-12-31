@@ -122,7 +122,7 @@ class filesController extends Controller
 		$files->f_updated_by = Auth::id();
 		$files->save();
 		// Redirect
-		return redirect()->route('files.index')
+		return redirect()->route('files.show',$r->f_company_id)
 			->with('success', 'ឯកសារបានបញ្ចូលដោយជោគជ័យ: ' . $r->f_name);
 	}
 
@@ -135,7 +135,7 @@ class filesController extends Controller
 	public function show(file $file, $id)
 	{
 		$this->data += [
-			'files' => Files::orderBy('f_fc_id', 'asc')->get(),
+			'files' => Files::orderBy('f_fc_id', 'asc')->where('f_company_id',$id)->get(),
 			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('files.index') .'"><i class="far fa-file-alt"></i> ឯកសារ</a></li><li class="active"><i class="far fa-building"></i> មើលឯកសារក្នុងក្រុមហ៊ុន៖ '.Companies::find($id)->com_name.'</li>',
 		];
 		return view('files.show',$this->data);
@@ -178,8 +178,18 @@ class filesController extends Controller
 	 * @param  \App\Models\file  $file
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy(file $file)
+	public function destroy(file $file, $id)
 	{
-		//
+		// delete
+		$file = Files::find($id);
+		$f_name = $file->f_name;
+		$f_company_id = $file->f_company_id;
+		$file->delete();
+		if ($f_name!='default_company.png') {
+			File::delete($this->path.$f_company_id.'/'.$f_name);
+		}
+		// redirect
+		return redirect()->route('files.show',$f_company_id)
+			->with('success', 'ក្រុមហ៊ុនបានលុបចោលដោយជោគជ័យ៖ '. substr($file->f_name, strpos($file->f_name, "_") + 1));
 	}
 }

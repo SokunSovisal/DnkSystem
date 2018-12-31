@@ -30,12 +30,12 @@
 				<div class="sidebar-sticky" id="hello">
 					<span id="sidebar-close" class="sr-only"><i class="fa fa-times"></i></span>
 					<header class="sidebar-brand">
-						<h3><a href="{{route('home')}}"><i class="sidebar-icon"><img src="/images/logo.png" style="max-width: 50px; margin: 0 auto;" alt="..."/></i><span class="sidebar-text KHMERBTB">DNK SYSTEM</span></a></h3>
+						<h3><a href="{{route('home')}}" class="waves-effect"><i class="sidebar-icon"><img src="/images/logo.png" style="max-width: 50px; margin: 0 auto;" alt="..."/></i><span class="sidebar-text KHMERBTB">DNK SYSTEM</span></a></h3>
 					</header>
 
 					<div class="panel-heading">
 						<h4 class="panel-title <?=((@$m=='home')?'active':'')?>">
-							<a href="{{route('dashboard')}}" class="mb-0">
+							<a href="{{route('dashboard')}}" class="mb-0 waves-effect">
 								<i class="fa fa-home sidebar-icon"></i> <span class="sidebar-text">ផ្ទាំងដើម</span>
 							</a>
 						</h4>
@@ -47,7 +47,7 @@
 						<div class="panel">
 							<div class="panel-heading" role="tab" id="sidebar-processing-heading">
 								<h4 class="panel-title">
-									<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#sidebar-processing" aria-expanded="false" aria-controls="sidebar-processing">
+									<a class="collapsed waves-effect" role="button" data-toggle="collapse" data-parent="#accordion" href="#sidebar-processing" aria-expanded="false" aria-controls="sidebar-processing">
 										<i class="fa fa-handshake sidebar-icon"></i> <span class="sidebar-text">គ្រប់គ្រងការងារ <span class="badge badge-danger animated {{(($appNotify->appointNotify())>0)?'animated flash':''}} {{($appNotify->appointNotify()<=0)?'sr-only':''}}">{{$appNotify->appointNotify()}}</span><i class="fa fa-angle-down pull-right mt-05"></i></span>
 									</a>
 								</h4>
@@ -55,10 +55,10 @@
 							<div id="sidebar-processing" class="panel-collapse collapse <?=((@$m=='manage_processing')?'in':'collapse')?>" role="tabpanel" aria-labelledby="sidebar-processing-heading">
 								<div class="panel-body">
 									<ul class="nav">
-										<li class="<?=((@$sm=='appointments')?'active':'')?> {{($appNotify->appointNotify()>0)?'animated bounceInLeft':''}}"><a href="{{route('appointments.index')}}"><i class="fa fa-comments sidebar-sub-icon"></i> <span class="sidebar-text">កាណាត់ជួប</span> <span class="badge badge-danger {{($appNotify->appointNotify()<=0)?'sr-only':''}}">{{$appNotify->appointNotify()}}</span></a></li>
-										<li class="<?=((@$sm=='quotations')?'active':'')?>"><a href="{{route('quotations.index')}}"><i class="fa fa-file-alt sidebar-sub-icon"></i> <span class="sidebar-text">សម្រង់តម្លៃ</span></a></li>
-										<li class="<?=((@$sm=='invoices')?'active':'')?>"><a href="{{route('invoices.index')}}"><i class="fa fa-file-invoice sidebar-sub-icon"></i> <span class="sidebar-text">វិក្កយបត្រ</span></a></li>
-										<li class="<?=((@$sm=='recipts')?'active':'')?>"><a href="{{route('recipts.index')}}"><i class="fa fa-receipt sidebar-sub-icon"></i> <span class="sidebar-text">ប័ណ្ណទទួលប្រាក់</span></a></li>
+										<li class="<?=((@$sm=='appointments')?'active':'')?> {{($appNotify->appointNotify()>0)?'animated bounceInLeft':''}}"><a href="{{route('appointments.index')}}" class="waves-effect"><i class="fa fa-comments sidebar-sub-icon"></i> <span class="sidebar-text">កាណាត់ជួប</span> <span class="badge badge-danger {{($appNotify->appointNotify()<=0)?'sr-only':''}}">{{$appNotify->appointNotify()}}</span></a></li>
+										<li class="<?=((@$sm=='quotations')?'active':'')?>"><a class="waves-effect" href="{{route('quotations.index')}}"><i class="fa fa-file-alt sidebar-sub-icon"></i> <span class="sidebar-text">សម្រង់តម្លៃ</span></a></li>
+										<li class="<?=((@$sm=='invoices')?'active':'')?>"><a class="waves-effect" href="{{route('invoices.index')}}"><i class="fa fa-file-invoice sidebar-sub-icon"></i> <span class="sidebar-text">វិក្កយបត្រ</span></a></li>
+										<li class="<?=((@$sm=='recipts')?'active':'')?>"><a class="waves-effect" href="{{route('recipts.index')}}"><i class="fa fa-receipt sidebar-sub-icon"></i> <span class="sidebar-text">ប័ណ្ណទទួលប្រាក់</span></a></li>
 									</ul>
 								</div>
 							</div>
@@ -68,7 +68,7 @@
 						<div class="panel">
 							<div class="panel-heading" role="tab" id="sidebar-company-heading">
 								<h4 class="panel-title">
-									<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#sidebar-company" aria-expanded="false" aria-controls="sidebar-company">
+									<a class="collapsed waves-effect" role="button" data-toggle="collapse" data-parent="#accordion" href="#sidebar-company" aria-expanded="false" aria-controls="sidebar-company">
 										<i class="fa fa-building sidebar-icon"></i> <span class="sidebar-text">គ្រប់គ្រងក្រុមហ៊ុន<i class="fa fa-angle-down pull-right mt-05"></i></span>
 									</a>
 								</h4>
@@ -76,10 +76,10 @@
 							<div id="sidebar-company" class="panel-collapse collapse <?=((@$m=='manage_companies')?'in':'collapse')?>" role="tabpanel" aria-labelledby="sidebar-company-heading">
 								<div class="panel-body">
 									<ul class="nav">
-										<li class="<?=((@$sm=='objectives')?'active':'')?>"><a href="{{route('objectives.index')}}"><i class="fa fa-database sidebar-sub-icon"></i> <span class="sidebar-text">សកម្មភាពអាជីវភាព</span></a></li>
-										<li class="<?=((@$sm=='companies')?'active':'')?>"><a href="{{route('companies.index')}}"><i class="fa fa-building sidebar-sub-icon"></i> <span class="sidebar-text">ក្រុមហ៊ុន</span></a></li>
-										<li class="<?=((@$sm=='filecategories')?'active':'')?>"><a href="{{route('filecategories.index')}}"><i class="fa fa-file sidebar-sub-icon"></i> <span class="sidebar-text">ផ្នែកឯកសារ</span></a></li>
-										<li class="<?=((@$sm=='files')?'active':'')?>"><a href="{{route('files.index')}}"><i class="far fa-file-alt sidebar-sub-icon"></i> <span class="sidebar-text">ឯកសារ</span></a></li>
+										<li class="<?=((@$sm=='objectives')?'active':'')?>"><a  class="waves-effect" href="{{route('objectives.index')}}"><i class="fa fa-database sidebar-sub-icon"></i> <span class="sidebar-text">សកម្មភាពអាជីវភាព</span></a></li>
+										<li class="<?=((@$sm=='companies')?'active':'')?>"><a  class="waves-effect" href="{{route('companies.index')}}"><i class="fa fa-building sidebar-sub-icon"></i> <span class="sidebar-text">ក្រុមហ៊ុន</span></a></li>
+										<li class="<?=((@$sm=='filecategories')?'active':'')?>"><a  class="waves-effect" href="{{route('filecategories.index')}}"><i class="fa fa-file sidebar-sub-icon"></i> <span class="sidebar-text">ផ្នែកឯកសារ</span></a></li>
+										<li class="<?=((@$sm=='files')?'active':'')?>"><a  class="waves-effect" href="{{route('files.index')}}"><i class="far fa-file-alt sidebar-sub-icon"></i> <span class="sidebar-text">ឯកសារ</span></a></li>
 									</ul>
 								</div>
 							</div>
@@ -89,7 +89,7 @@
 						<div class="panel">
 							<div class="panel-heading" role="tab" id="sidebar-services-head">
 								<h4 class="panel-title">
-									<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#sidebar-services-body" aria-expanded="false" aria-controls="sidebar-services-body">
+									<a class="collapsed waves-effect" role="button" data-toggle="collapse" data-parent="#accordion" href="#sidebar-services-body" aria-expanded="false" aria-controls="sidebar-services-body">
 										<i class="fa fa-concierge-bell sidebar-icon"></i> <span class="sidebar-text">គ្រប់គ្រងសេវាកម្ម<i class="fa fa-angle-down pull-right mt-05"></i></span>
 									</a>
 								</h4>
@@ -97,8 +97,8 @@
 							<div id="sidebar-services-body" class="panel-collapse <?=((@$m=='services')?'in':'collapse')?>" role="tabpanel" aria-labelledby="sidebar-services-head">
 								<div class="panel-body">
 									<ul class="nav">
-										<li class="<?=((@$sm=='mainservices')?'active':'')?>"><a href="{{ route('mainservices.index') }}"><i class="far fa-heart sidebar-sub-icon"></i> <span class="sidebar-text">សេវាកម្មធំៗ</span></a></li>
-										<li class="<?=((@$sm=='services')?'active':'')?>"><a href="{{ route('services.index') }}"><i class="fa fa-heart sidebar-sub-icon"></i> <span class="sidebar-text">សេវាកម្មទាំងអស់</span></a></li>
+										<li class="<?=((@$sm=='mainservices')?'active':'')?>"><a class="waves-effect" href="{{ route('mainservices.index') }}"><i class="far fa-heart sidebar-sub-icon"></i> <span class="sidebar-text">សេវាកម្មធំៗ</span></a></li>
+										<li class="<?=((@$sm=='services')?'active':'')?>"><a class="waves-effect" href="{{ route('services.index') }}"><i class="fa fa-heart sidebar-sub-icon"></i> <span class="sidebar-text">សេវាកម្មទាំងអស់</span></a></li>
 									</ul>
 								</div>
 							</div>
@@ -108,7 +108,7 @@
 						<div class="panel <?=((Auth::user()->user_role_id!=1 && Auth::user()->user_role_id!=2)?'sr-only':'')?>">
 							<div class="panel-heading" role="tab" id="sidebar-user-heading">
 								<h4 class="panel-title">
-									<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#sidebar-user" aria-expanded="false" aria-controls="sidebar-user">
+									<a class="collapsed waves-effect" role="button" data-toggle="collapse" data-parent="#accordion" href="#sidebar-user" aria-expanded="false" aria-controls="sidebar-user">
 										<i class="fa fa-users sidebar-icon"></i> <span class="sidebar-text">គ្រប់គ្រងបុគ្គលិក<i class="fa fa-angle-down pull-right mt-05"></i></span>
 									</a>
 								</h4>
@@ -116,8 +116,8 @@
 							<div id="sidebar-user" class="panel-collapse <?=((@$m=='manage_users')?'in':'collapse')?>" role="tabpanel" aria-labelledby="sidebar-user-heading">
 								<div class="panel-body">
 									<ul class="nav">
-										<li class="<?=(($sm==='users')?'active':'')?>"><a href="{{route('users.index')}}"><i class="fa fa-user sidebar-sub-icon"></i> <span class="sidebar-text">អ្នកប្រើប្រាស់</span></a></li>
-										<li class="<?=(($sm==='user_roles')?'active':'')?> <?=((Auth::user()->user_role_id!=1)?'sr-only':'')?>"><a href="{{route('roles.index')}}"><i class="fa fa-user-cog sidebar-sub-icon"></i> <span class="sidebar-text">ឋានៈអ្នកគ្រប់គ្រង</span></a></li>
+										<li class="<?=(($sm==='users')?'active':'')?>"><a class="waves-effect" href="{{route('users.index')}}"><i class="fa fa-user sidebar-sub-icon"></i> <span class="sidebar-text">អ្នកប្រើប្រាស់</span></a></li>
+										<li class="<?=(($sm==='user_roles')?'active':'')?> <?=((Auth::user()->user_role_id!=1)?'sr-only':'')?>"><a class="waves-effect" href="{{route('roles.index')}}"><i class="fa fa-user-cog sidebar-sub-icon"></i> <span class="sidebar-text">ឋានៈអ្នកគ្រប់គ្រង</span></a></li>
 									</ul>
 								</div>
 							</div>
@@ -127,7 +127,7 @@
 						<div class="panel">
 							<div class="panel-heading" role="tab" id="sidebar-location-heading">
 								<h4 class="panel-title">
-									<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#sidebar-location" aria-expanded="false" aria-controls="sidebar-location">
+									<a class="collapsed waves-effect" role="button" data-toggle="collapse" data-parent="#accordion" href="#sidebar-location" aria-expanded="false" aria-controls="sidebar-location">
 										<i class="fa fa-map sidebar-icon"></i> <span class="sidebar-text">គ្រប់គ្រងទីតាំង<i class="fa fa-angle-down pull-right mt-05"></i></span>
 									</a>
 								</h4>
@@ -135,8 +135,8 @@
 							<div id="sidebar-location" class="panel-collapse <?=((@$m=='manage_location')?'in':'collapse')?>" role="tabpanel" aria-labelledby="sidebar-location-heading">
 								<div class="panel-body">
 									<ul class="nav">
-										<li class="<?=(($sm==='provinces')?'active':'')?>"><a href="{{route('provinces.index')}}"><i class="fa fa-location-arrow sidebar-sub-icon"></i> <span class="sidebar-text">ខេត្ត/ក្រុង</span></a></li>
-										<li class="<?=(($sm==='districts')?'active':'')?>"><a href="{{route('districts.index')}}"><i class="fa fa-thumbtack sidebar-sub-icon"></i> <span class="sidebar-text">ស្រុក/ខណ្ឌ</span></a></li>
+										<li class="<?=(($sm==='provinces')?'active':'')?>"><a class="waves-effect" href="{{route('provinces.index')}}"><i class="fa fa-location-arrow sidebar-sub-icon"></i> <span class="sidebar-text">ខេត្ត/ក្រុង</span></a></li>
+										<li class="<?=(($sm==='districts')?'active':'')?>"><a class="waves-effect" href="{{route('districts.index')}}"><i class="fa fa-thumbtack sidebar-sub-icon"></i> <span class="sidebar-text">ស្រុក/ខណ្ឌ</span></a></li>
 									</ul>
 								</div>
 							</div>
@@ -164,13 +164,13 @@
 						</div>
 						<div class="col-xs-4">
 							<div class="dropdown pull-right mt-3 mb-3">
-							  <button id="account-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background: url('/images/user/{{Auth::user()->image}}') center center no-repeat; background-size: cover;"></button>
+							  <button class="waves-effect" id="account-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background: url('/images/user/{{Auth::user()->image}}') center center no-repeat; background-size: cover;"></button>
 							  <ul class="dropdown-menu" aria-labelledby="account-dropdown">
 									<li class="mt-2"><a href="/user/?action=edit&u_id="><i class="fas fa-pencil-alt"></i> Edit Me</a></li>
 									<li><a href="#"><i class="fas fa-cogs"></i> Setting</a></li>
 							<li role="separator" class="divider"></li>
 									<li>
-										<a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();  document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i> 
+										<a href="{{ route('logout') }}" onclick="event.preventDefault();  document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i> 
                         {{ __('Logout') }}
                     </a>
 

@@ -17,7 +17,7 @@ class Users extends Model
 			$today = date("Y-m-d", time());
 			$app_alert  = DB::table('appointments')
 								  ->whereDate('app_datetime','<=', $today)
-					->where('app_status',1)
+									->where('app_status',1)
 								  ->get();
 								  
 			return $app_alert->count();

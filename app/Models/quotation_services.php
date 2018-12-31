@@ -6,10 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class quotation_services extends Model
 {
-    public function user()
-    {
-    	return $this->belongsTo('App\Models\User','qs_created_by');
-    }
 
     public function service()
     {

@@ -17,4 +17,4 @@
         </ul>
     </div>
 @endif
-<a href="{{$btnBack}}" class="btn btn-danger nbr btnBack"><i class="fa fa-arrow-left"></i> ត្រលប់ក្រោយ</a>
+<a href="{{$btnBack}}" class="btn btn-danger nbr btnBack waves-effect waves-light"><i class="fa fa-arrow-left"></i> ត្រលប់ក្រោយ</a>

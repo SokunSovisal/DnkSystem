@@ -23,13 +23,13 @@
 		<br/>
 		<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
 			<li class="nav-item active">
-				<a class="nav-link" id="pills-group-by-company-tab" data-toggle="pill" href="#pills-group-by-company" role="tab" aria-controls="pills-group-by-company" aria-selected="true"><i class="fa fa-building"></i> បង្ហាញតាមក្រុមហ៊ុន</a>
+				<a class="nav-link waves-effect" id="pills-group-by-company-tab" data-toggle="pill" href="#pills-group-by-company" role="tab" aria-controls="pills-group-by-company" aria-selected="true"><i class="fa fa-building"></i> បង្ហាញតាមក្រុមហ៊ុន</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" id="pills-group-by-category-tab" data-toggle="pill" href="#pills-group-by-category" role="tab" aria-controls="pills-group-by-category" aria-selected="false"><i class="fa fa-file"></i> បង្ហាញតាមផ្នែក</a>
+				<a class="nav-link waves-effect" id="pills-group-by-category-tab" data-toggle="pill" href="#pills-group-by-category" role="tab" aria-controls="pills-group-by-category" aria-selected="false"><i class="fa fa-file"></i> បង្ហាញតាមផ្នែក</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" id="pills-file-list-tab" data-toggle="pill" href="#pills-file-list" role="tab" aria-controls="pills-file-list" aria-selected="false"><i class="far fa-file-alt"></i> បង្ហាញឯកសារនិមួយៗ</a>
+				<a class="nav-link waves-effect" id="pills-file-list-tab" data-toggle="pill" href="#pills-file-list" role="tab" aria-controls="pills-file-list" aria-selected="false"><i class="far fa-file-alt"></i> បង្ហាញឯកសារនិមួយៗ</a>
 			</li>
 		</ul>
 		<div class="tab-content" id="pills-tabContent">
@@ -75,7 +75,7 @@
 										</ul>
 									</td>
 									<td>
-										<a href="{{route('files.show',$company->id)}}" title="Show" class="edit btn btn-info"><i class="fa fa-eye"></i></a>
+										<a href="{{route('files.show',$company->id)}}" title="Show" class="edit btn btn-info waves-effect waves-light"><i class="fa fa-eye"></i></a>
 									</td>
 								</tr>
 							@endif
@@ -141,15 +141,15 @@
 								<td>{{ $i+1 }}</td>
 								<td>{{ $file->company->com_name }}</td>
 								<td>{{ $file->filecategory->fc_name }}</td>
-								<td><a href="{{route('files.show',$file->id)}}" class="btn btn-info"><i class="fa fa-file-alt"></i></a></td>
+								<td>
+									<a class="btn btn-success" href="{{(substr(strrchr($file->f_name,'.'),1) == 'pdf') ? route('files.pdf',$file->id) : '/documents/'.$file->f_company_id.'/'.$file->f_name}}">{!!(substr(strrchr($file->f_name,'.'),1) == 'pdf') ? '<i class="fa fa-file-pdf"></i>' : '<i class="fa fa-image"></i>'!!} {{ substr($file->f_name, strpos($file->f_name, "_") + 1) }}</a>
+								</td>
 								<td>{{ $file->user->name }}</td>
 								<td>{{ $file->updated_at->format('d-m-Y') }}</td>
 								<td class="action">
-									<a href="{{route('files.edit',$file->id)}}" title="Edit" class="edit text-info"><i class="fa fa-pencil-alt"></i></a>
-									/
 									{{Form::open(['url'=>route('files.destroy',$file->id)])}}
 										{{Form::hidden('_method','DELETE')}}
-										<button type="button" title="លុបកិច្ចសន្យា" class="delete text-danger" data-text="តើអ្នកសម្រេចចិត្តច្បាស់ថាចង់លុបកិច្ចសន្យានេះមែនទេ?" data-type="warning" data-rstitle="ជោគជ័យ" data-rstext="កិច្ចសន្យាត្រូវបានលុប."><i class="fa fa-trash-alt"></i>
+										&nbsp;&nbsp;<button type="button" title="លុបកិច្ចសន្យា" class="text-danger btn btn-danger btn-delete waves-effect waves-light" data-text="តើអ្នកសម្រេចចិត្តច្បាស់ថាចង់លុបកិច្ចសន្យានេះមែនទេ?" data-type="warning" data-rstitle="ជោគជ័យ" data-rstext="កិច្ចសន្យាត្រូវបានលុប."><i class="fa fa-trash-alt"></i>
 										</button>
 										<button type="submit" class="sub_delete sr-only"></button>
 									{{Form::close()}}
@@ -169,6 +169,7 @@
 
 		$('#dataTable-2nd').DataTable();
 
-		$("button.delete").click(alertYesNo);
+		// Alert Delete
+		$("button.btn-delete").click(alertYesNo);
 	</script>
 @endsection

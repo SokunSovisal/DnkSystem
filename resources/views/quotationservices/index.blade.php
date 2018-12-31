@@ -101,7 +101,6 @@
 					<th width="5%">N&deg;</th>
 					<th>សេវាកម្ម</th>
 					<th>ពណ៌នា</th>
-					<th>បញ្ចូលដោយ</th>
 					<th width="10%">សកម្មភាព</th>
 				</tr>
 			</thead>
@@ -113,7 +112,6 @@
 						<td>
 							{!! $qs->qs_description !!}
 						</td>
-						<td>{{ $qs->user->name }}</td>
 						<td class="action">
 							<span data-toggle="modal" data-target="#qs" style="cursor: pointer;" title="Edit" class="text-success edit" data-qsid="{{$qs->id}}"><i class="fa fa-pencil-alt"></i></span>
 							/

@@ -83,8 +83,6 @@ class quotationServicesController extends Controller
 		$quotationservice->qs_description = $r->qs_description;
 		$quotationservice->qs_service_id = $r->service_id;
 		$quotationservice->qs_quote_id = $r->qs_quote_id;
-		$quotationservice->qs_created_by = Auth::id();
-		$quotationservice->qs_updated_by = Auth::id();
 		$quotationservice->save();
 		echo "សេវាកម្មបានបញ្ចូលក្នុងសម្រង់តម្លៃដោយជោគជ័យ";
 	}
@@ -129,7 +127,6 @@ class quotationServicesController extends Controller
 		$quotationservice->qs_qty = $r->qs_qty;
 		$quotationservice->qs_description = $r->qs_description;
 		$quotationservice->qs_service_id = $r->service_id;
-		$quotationservice->qs_updated_by = Auth::id();
 		$quotationservice->save();
 		echo "សេវាកម្មបានបញ្ចូលក្នុងសម្រង់តម្លៃដោយជោគជ័យ";
 	}

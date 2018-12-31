@@ -27,7 +27,9 @@
 								<select name="f_company_id" class="form-control nbr select2" required>
 									<option value="">-- ជ្រើសរើសក្រុមហ៊ុន --</option>
 									@foreach($companies as $i => $com)
-										<option value="{{$com->id}}" {{ ($com->id == old('f_company_id')) ? 'selected':'' }}>{{$com->com_name}}</option>
+										@if($com->com_name!='Unknown')
+											<option value="{{$com->id}}" {{ ($com->id == old('f_company_id')) ? 'selected':'' }}>{{$com->com_name}}</option>
+										@endif
 									@endforeach
 								</select>
 							</div>
