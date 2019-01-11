@@ -219,7 +219,7 @@
 							<div class="block-signature">
 								<div class="box"></div>
 								<div>___________________________</div>
-								<div>Authorize's Signaturee</div>
+								<div>Authorize's Signature</div>
 							</div>
 						</td>
 					</tr>

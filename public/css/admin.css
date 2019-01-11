@@ -62,6 +62,9 @@ span.bg-alert{
   background: #D9534F;
   font-size: 11px;
 }
+.dropdown-menu{
+  z-index: 9999999999 !important;
+}
 
 
 /*============ DashBoard ===========*/

@@ -23,6 +23,10 @@
     src: url('/fonts/KhmerOS.ttf');
 }
 @font-face {
+    font-family: 'khmerOsmoul';
+    src: url('/fonts/KhmerOSmuollight_0.ttf');
+}
+@font-face {
     font-family: 'KhmerOSbattambang';
     src: url('/fonts/KhmerOSbattambang.ttf');
 }
@@ -59,6 +63,9 @@
 }
 .KHMERBTB *{
   font-family: 'KhmerOSbattambang' !important;
+}
+.khmerOsmoul{
+  font-family: 'khmerOsmoul' !important;
 }
 .breadcrumb li,.breadcrumb li a,.sidebar-text{
   font-family: 'KhmerOSbattambang' !important;

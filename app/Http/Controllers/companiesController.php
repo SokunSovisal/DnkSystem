@@ -78,6 +78,7 @@ class companiesController extends Controller
 		// Validate Post Data
 		$validator = Validator::make($r->all(), [
 			'com_name' => 'required|unique:companies',
+			'com_name_en' => 'required|unique:companies',
 			'com_tax_size' => 'required',
 			'com_objective_id' => 'required',
 			'com_province_id' => 'required',
@@ -97,6 +98,7 @@ class companiesController extends Controller
 		// Insert to Table
 		$companies = new companies;
 		$companies->com_name = $r->com_name;
+		$companies->com_name_en = $r->com_name_en;
 		$companies->com_phone = $r->com_phone;
 		$companies->com_email = $r->com_email;
 		$companies->com_vat_id = $r->com_vat_id;
@@ -168,6 +170,7 @@ class companiesController extends Controller
 		// Validate Post Data
 		$validator = Validator::make($r->all(), [
 			'com_name' => 'required|unique:companies,com_name,'.$id,
+			'com_name_en' => 'required|unique:companies,com_name_en,'.$id,
 			'com_tax_size' => 'required',
 			'com_objective_id' => 'required',
 			'com_province_id' => 'required',
@@ -185,6 +188,7 @@ class companiesController extends Controller
 		// Update Item
 		$companies = Companies::find($id);
 		$companies->com_name = $r->com_name;
+		$companies->com_name_en = $r->com_name_en;
 		$companies->com_phone = $r->com_phone;
 		$companies->com_email = $r->com_email;
 		$companies->com_vat_id = $r->com_vat_id;

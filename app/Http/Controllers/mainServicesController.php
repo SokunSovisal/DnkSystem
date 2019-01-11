@@ -35,7 +35,6 @@ class mainServicesController extends Controller
 			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li class="active"><i class="far fa-heart"></i> សេវាកម្មធំៗ</li>',
 
 			// Select Data From Table
-			// 'm_services' => Mainservices::orderBy('ms_name', 'asc')->limit(3)->get(),
 			'm_services' => Mainservices::orderBy('ms_name', 'asc')->get(),
 		];
 		return view('mainservices.index',$this->data);

@@ -38,7 +38,7 @@
 							<select name="qs_service_id" class="form-control nbr select2" id="qs_service_id" required>
 								<option value="">-- ជ្រើសរើសសេវាកម្ម --</option>
 								@foreach($services as $i => $service)
-									<option value="{{$service->id}}">{{$service->s_name}}</option>
+									<option value="{{$service->id}}" >{{$service->s_name}}</option>
 								@endforeach
 							</select>
 						</div>
@@ -227,7 +227,7 @@
 						$('#qs_service_id').val('');
 						$('#appointments').val('');
 						CKEDITOR.instances['qs_description'].setData('');
-						$('#qs_qty').val('0');
+						$('#qs_qty').val('1');
 						$('#qs_price').val('0');
 						$('#qs_origin_price').val('0');
 					}
@@ -259,7 +259,7 @@
 					data: {id:id, _token:_token},
 					success: function(dataReturn){
 						var data = dataReturn.split(";:;");
-						$('#qs_service_id').val(data[0]);
+						$('#qs_service_id').val(data[0]).trigger('change.select2');
 						CKEDITOR.instances['qs_description'].setData(data[1]);
 						$('#qs_id').val(data[2]);
 						$('#qs_price').val(data[3]);

@@ -11,7 +11,7 @@
 |
 */
 
-//Auth Route
+	//Auth Route
 	Auth::routes();
 	// Registration Routes...
 	Route::get('register', 'Auth\RegisterController@redirectRegister')->name('register');
@@ -39,18 +39,19 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
 	//============== Quotations Services
 	Route::resource('quotationservices', 'quotationServicesController');
 	Route::resource('quotations', 'quotationsController');
-	// //============== Invoices
+	//============== Invoices
 	Route::resource('invoices', 'invoicesController');
-	// //============== Recipts
-	Route::resource('recipts', 'reciptsController');
-
+	Route::get('invoices/{id}/detail', 'invoicesController@detail')->name('invoices.detail');
+	//============== Invoices Detail
+	Route::resource('invoicedetail', 'invoiceDetailController');
+	//============== Recipts
+	Route::resource('receipts', 'receiptsController');
 
 	// Manage services
 	//============== Main Services
 	Route::resource('mainservices', 'mainServicesController');
 	//============== Services
 	Route::resource('services', 'servicesController');
-
 
 	// Manage Company
 	//============== objectives
@@ -64,23 +65,7 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
 	//============== Files
 	Route::resource('files', 'filesController');
 	Route::get('files/{id}/pdf', 'filesController@pdfViewer')->name('files.pdf');
-	//============== Download File
-	// Route::get('download/{path}', function($path){
-	// 		// Check if file exists in app/storage/file folder
-	// 		$path_url = (explode("&",$path));
-	// 		$file_path = public_path() .'/files/'. $path_url[0] .'/'. $path_url[1] .'/'. $path_url[2];
-	// 		if (file_exists($file_path))
-	// 		{
-	// 			// Send Download
-	// 			return Response::download($file_path, $path_url[2], [
-	// 				'Content-Length: '. filesize($file_path)
-	// 			]);
-	// 		}else{
-	// 			// Error
-	// 			exit('Requested file does not exist on our server!');
-	// 		}
-	// })
-	// ->where('filename', '[A-Za-z0-9\-\_\.]+');
+	
 
 	// Manage Company
 	//============== User Role
@@ -109,4 +94,7 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
 	Route::post('ajax/quoteCompany', 'ajaxController@quoteCompany')->name('ajax.quoteCompany');
 	Route::post('ajax/quoteUser', 'ajaxController@quoteUser')->name('ajax.quoteUser');
 	Route::post('ajax/appointmentServices', 'ajaxController@appointmentServices')->name('ajax.appointmentServices');
+	Route::post('ajax/invoiceCompany', 'ajaxController@invoiceCompany')->name('ajax.invoiceCompany');
+	Route::post('ajax/quotationservices', 'ajaxController@quotationservices')->name('ajax.quotationservices');
+	Route::post('ajax/receiptinvoice', 'ajaxController@receiptinvoice')->name('ajax.receiptinvoice');
 });

@@ -29,8 +29,14 @@
 						<div class="col-sm-6">
 							<div class="col-sm-12">
 								<div class="form-group {{(($errors->has('com_name'))?'has-error':'')}}">
-									<label class="control-label">ឈ្មោះក្រុមហ៊ុន <small>*</small></label>
-									<input class="form-control nbr" type="text" name="com_name" placeholder="name" value="{{ ((count($errors) > 0) ? old('com_name') : '') }}" autocomplete="off" required />
+									<label class="control-label">ឈ្មោះក្រុមហ៊ុនជាភាសាខ្មែរ <small>*</small></label>
+									<input class="form-control nbr" type="text" name="com_name" placeholder="khmer name" value="{{ ((count($errors) > 0) ? old('com_name') : '') }}" autocomplete="off" required />
+								</div>
+							</div>
+							<div class="col-sm-12">
+								<div class="form-group {{(($errors->has('com_name_en'))?'has-error':'')}}">
+									<label class="control-label">ឈ្មោះក្រុមហ៊ុនជាភាសាអង់គ្លេស <small>*</small></label>
+									<input class="form-control nbr" type="text" name="com_name_en" placeholder="engalish name" value="{{ ((count($errors) > 0) ? old('com_name_en') : '') }}" autocomplete="off" required />
 								</div>
 							</div>
 
@@ -151,7 +157,7 @@
 							<div class="col-sm-12">
 								<div class="form-group">
 									<label for="">ពណ៌នា</label>
-									<textarea class="form-control nbr" name="com_description"  style="height: 108px;" placeholder="description">{{ ((count($errors) > 0) ? old('com_description') : '') }}</textarea>
+									<textarea class="form-control nbr" name="com_description"  style="height: 183px;" placeholder="description">{{ ((count($errors) > 0) ? old('com_description') : '') }}</textarea>
 								</div>
 							</div>							
 						</div><!-- /.column -->
