@@ -27,8 +27,9 @@
 					<th width="10%">លេខរៀង</th>
 					<th width="110px">យោងវិក្កយបត្រ</th>
 					<th>ក្រុមហ៊ុន</th>
-					<th>តម្លៃសរុប</th>
-					<th>តម្លៃបានបង់</th>
+					<th>ប្រាក់សរុប</th>
+					<th>ប្រាក់បានបង់</th>
+					<th>ប្រាក់នៅសល់</th>
 					<th width="10%">សកម្មភាព</th>
 				</tr>
 			</thead>
@@ -40,8 +41,9 @@
 						<td>{{ $receipt->rec_number }}</td>
 						<td>{{ $receipt->invoice->inv_number }}</td>
 						<td>{{ $receipt->company->com_name }}</td>
-						<td><i class="fa fa-dollar-sign"> {{$receipt->rec_full_ammount}}</i></td>
-						<td><i class="fa fa-dollar-sign"></i> {{ $receipt->rec_received_ammount }}</td>
+						<td><i class="fa fa-dollar-sign"> {{ number_format($receipt->rec_full_ammount, 2) }}</i></td>
+						<td><i class="fa fa-dollar-sign"></i> {{ number_format($receipt->rec_received_ammount, 2) }}</td>
+						<td><i class="fa fa-dollar-sign"></i> {{ number_format($receipt->rec_balance, 2) }}</td>
 						<td class="action">
 							<a href="{{route('receipts.show',$receipt->id)}}" title="Show" class="edit text-info"><i class="fa fa-print"></i></a>
 							/

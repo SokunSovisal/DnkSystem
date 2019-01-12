@@ -84,23 +84,28 @@ class ReceiptsController extends Controller
 				->withErrors($validator)
 				->withInput();
 		}
-		// Insert to Table
-		$receipt = new Receipts;
-		$receipt->rec_number = $r->rec_number;
-		$receipt->rec_date = $r->rec_date;
-		$receipt->rec_company_id = $r->rec_company_id;
-		$receipt->rec_inv_id = $r->rec_inv_id;
-		$receipt->rec_full_ammount = $r->rec_full_ammount;
-		$receipt->rec_received_ammount = $r->rec_received_ammount;
-		$receipt->rec_balance = $r->rec_balance;
-		$receipt->rec_description = $r->rec_description;
-		$receipt->rec_created_by = Auth::id();
-		$receipt->rec_updated_by = Auth::id();
-		$receipt->save();
+		if ($r->rec_received_ammount <= $r->rec_full_ammount) {
+			// Insert to Table
+			$receipt = new Receipts;
+			$receipt->rec_number = $r->rec_number;
+			$receipt->rec_date = $r->rec_date;
+			$receipt->rec_company_id = $r->rec_company_id;
+			$receipt->rec_inv_id = $r->rec_inv_id;
+			$receipt->rec_full_ammount = $r->rec_full_ammount;
+			$receipt->rec_received_ammount = $r->rec_received_ammount;
+			$receipt->rec_balance = $r->rec_balance;
+			$receipt->rec_description = $r->rec_description;
+			$receipt->rec_created_by = Auth::id();
+			$receipt->rec_updated_by = Auth::id();
+			$receipt->save();
 
-		// Redirect
-		return redirect()->route('receipts.index')
-			->with('success', 'ប័ណ្ណទទួលប្រាក់បានបញ្ចូលដោយជោគជ័យ: ' . $r->rec_number);
+			// Redirect
+			return redirect()->route('receipts.index')
+				->with('success', 'ប័ណ្ណទទួលប្រាក់បានបញ្ចូលដោយជោគជ័យ: ' . $r->rec_number);
+		}else{
+			return redirect()->back()->withErrors('Value of received ammount must not be bigger than full ammount!')->withInput();
+		}
+		
 	}
 
 	/**
@@ -109,9 +114,15 @@ class ReceiptsController extends Controller
 	 * @param  \App\Models\Receipts  $receipts
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show(Receipts $receipts)
+	public function show(Receipts $receipts, $id)
 	{
-		//
+    $this->data+=[
+			// Select Data From Table
+			'receipt' => Receipts::find($id),
+			// Select Data From Table
+			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('receipts.index') .'"><i class="fa fa-receipt"></i> ប័ណ្ណបង់ប្រាក់</li></a></li><li class="active"><i class="fa fa-eye"></i> បង្ហាញ៖ '.Receipts::find($id)->rec_number.'</li>',
+    ];
+    return view('receipts.show',$this->data);
 	}
 
 	/**
@@ -180,8 +191,14 @@ class ReceiptsController extends Controller
 	 * @param  \App\Models\Receipts  $receipts
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy(Receipts $receipts)
+	public function destroy(Receipts $receipts, $id)
 	{
-		//
+		// delete Main service
+    $receipt = Receipts::find($id);
+    $rec_number = $receipt->rec_number;
+    $receipt->delete();
+    // redirect
+		return redirect()->route('receipts.index')
+			->with('success', 'ប័ណ្ណទទួលប្រាក់បានលុបចោលដោយជោគជ័យ៖ '. $rec_number);
 	}
 }

@@ -2,130 +2,105 @@
 
 @section('css')
 	<style type="text/css">
-		table,td,th,p,li,h1,h2,h3,h4,h5,h6,div{
-			font-family: 'roboto_r' !important;
-			font-size: 10pt;
-		}
-		#invoice-print{
+		#receipts-print{
 			border: 1px solid #ddd;
 			margin: 25px auto;
-			width: 21.3cm;
+			width: 21cm;
 			height: 29.7cm;
+		}
+		.third-receipt > div,
+		.second-receipt > div,
+		.first-receipt > div{
+			font-family: 'Times New Roman' !important;
+			font-size: 13pt;
+		}
+		.third-receipt,
+		.second-receipt,
+		.first-receipt{
+			padding-top: 0.16cm;
+			width: 20.92cm;
+			height: 9.90cm;
 			position: relative;
-			font-family: 'roboto_r' !important;
-			padding: 10px 30px;
-			font-size: 10pt;
+			border-bottom: 1px dashed #333;
 		}
-		.print-header{
-			padding: 22px 35px 0 38px;
+		.third-receipt{
+			border-bottom: none;
 		}
-		.print-header .title{
-			margin-bottom: 20px;
+		.third-receipt img,
+		.second-receipt img,
+		.first-receipt img{
+			/* border: 1px solid red; */
 		}
-		.print-header h3{
-			font-size: 11pt;
-			text-align: center;
-		}
-		.print-header h3 strong{
-			font-size: 12pt;
-			text-align: center;
-		}
-		.print-header table.num-date{
-			margin: 30px 0;
-		}
-		.print-header table.num-date td{
-			padding: 3px 6px;
-		}
-		.print-header table.num-date td:last-child{
-			border: 1px solid #000;
-		}
-		.print-header table.num-date tr:last-child td:last-child{
-			border-top: 3px double #000;
-		}
-		
-		.print-header table.info{
-			margin: 30px 0;
-		}
-		.print-header table.info td{
-			padding: 3px 6px;
-		}
-		.print-header table.info td div{
-			border-bottom: 1px dashed #000;
-		}
-		.print-header table.info td div .title{
-			background: #fff;
-			padding-bottom: 4px;
-		}
-
-		.print-body{
-			padding: 0 37px 10px 37px;
-		}
-		.print-body .data-section{
-			font-size: 12pt;
-		}
-		.print-body .data-section th{
-			border: 1px solid #000;
-			border-bottom: 3px double #000;
-			text-align: center;
-			padding-top: 10px;
-		}
-		.print-body .data-section th h4{
-			font-size: 10pt;
-			padding-bottom: 4px;
-		}
-		.print-body .data-section tbody tr td{
-			border-left: 1px solid #000;
-			border-right: 1px solid #000;
-			border-bottom: 1px dashed #000;
-			padding: 5px;
-		}
-		.print-body .data-section tbody tr:last-child td{
-			border-bottom: 1px solid #000;
-		}
-		.print-body .data-section tfoot tr td{
-			padding: 5px;
-		}
-		.print-body .data-section tfoot tr td:last-child{
-			border-left: 1px solid #000;
-			border-right: 1px solid #000;
-			border-bottom: 1px dashed #000;
-			font-weight: bold;
-		}
-		.print-body .data-section tfoot tr:last-child td:last-child{
-			border-bottom: 1px solid #000;
-		}
-		.print-body .signature-section .box{
-			height: 70px;
-		}
-		.print-body .signature-section .khmerOsmoul{
-			margin: 5px 0;
-		}
-		.print-footer{
-			max-width: 100%;
+		.third-receipt .rec_number,
+		.second-receipt .rec_number,
+		.first-receipt .rec_number{
 			position: absolute;
-			padding: 10px 65px 22px 35px;
-			bottom: 0;
+			top: 1.62cm;
+			left: 17.1cm;
+			color: red;
+		}
+		.third-receipt .rec_inv_id,
+		.second-receipt .rec_inv_id,
+		.first-receipt .rec_inv_id{
+			position: absolute;
+			top: 2.27cm;
+			left: 17.1cm;
+
+		}
+		.third-receipt .rec_date,
+		.second-receipt .rec_date,
+		.first-receipt .rec_date{
+			position: absolute;
+			top: 2.9cm;
+			left: 17.1cm;
+		}
+		.third-receipt .rec_company,
+		.second-receipt .rec_company,
+		.first-receipt .rec_company{
+			position: absolute;
+			top: 4.33cm;
+			left: 3.6cm;
+		}
+		.third-receipt .rec_received_ammount,
+		.second-receipt .rec_received_ammount,
+		.first-receipt .rec_received_ammount{
+			position: absolute;
+			top: 5.57cm;
+			left: 4cm;
+
+		}
+		.third-receipt .rec_description,
+		.second-receipt .rec_description,
+		.first-receipt .rec_description{
+			position: absolute;
+			top: 6.8cm;
+			left: 3cm;
+
 		}
 
+		.second-receipt,
+		.first-receipt{
+
+		}
 		@media print {
 
 			#sidebar-left,#body-header,.btnPrint,.btnAdd,.btnBack{ display: none; padding: 0; margin: 0;}
 
 			#main,.bg-white{ padding: 0 !important; margin: 0 !important;}
 
-			#invoice-print{
+			#receipts-print{
 				margin: 0;
-				margin-left: 2px;
 				border: none;
-				width: 100%;
-				height: 30.1cm;
 			}
-			.print-header table.info td div .title{
-				background: #fff !important;
+			.third-receipt .rec_number,
+			.second-receipt .rec_number,
+			.first-receipt .rec_number{
+				color: red !important;
 				-webkit-print-color-adjust: exact !important;
 				-moz-print-color-adjust: exact !important;
 				-o-print-color-adjust: exact !important;
 			}
+
 		}
 	</style>
 @endsection
@@ -138,7 +113,7 @@
 			<div class="col-sm-6">
 				@component('comps.btnBack')
 					@slot('btnBack')
-						{{route('invoices.index')}}
+						{{route('receipts.index')}}
 					@endslot
 				@endcomponent
 			</div>
@@ -148,129 +123,82 @@
 				</div>
 			</div>
 		</div>
-		<section id="invoice-print">
-			<header class="print-header">
-				<img src="/images/invoices/1.png" alt="...">
-				<br/>
-				<br/>
-				<div class="title">
-					<h3 class="khmerOsmoul">វិក្កយបត្រ{{($invoice->inv_vat_status==2)?'អាករ':''}}</h3>
-					<h3><strong>{{($invoice->inv_vat_status==2)?'TAX ':''}}INVOICE</strong></h3>
-				</div>
-				
-				<table width="100%" class="num-date">
-					<tr>
-						<td width="70%" class="KHMERBTB text-right">លេខរៀងវិក្កយបត្រ/<span>Invoice N&deg; :</span></td>
-						<td width="30%" class="text-center">{{$invoice->inv_number}}</td>
-					</tr>
-					<tr>
-						<td width="70%" class="KHMERBTB text-right">កាលបរិច្ឆេទ/<span>Date :</span></td>
-						<td width="30%" class="text-center">{{ date('d-M-y', strtotime($invoice->inv_date)) }}</td>
-					</tr>
-				</table>
+		<?php
+			// convert nomey
 
-				<table width="100%" class="info">
-					<tr>
-						<td class="KHMERBTB"><div><span class="title">ឈ្នោះក្រុមហ៊ុន : </span>&nbsp;<span class="khmerOsmoul">{{$invoice->company->com_name}}</span></div></td>
-					</tr>
-					<tr>
-						<td class="roboto_r"><div><span class="title">Company Name : </span>&nbsp;<span class="roboto_r">{{$invoice->company->com_name_en}}</span></div></td>
-					</tr>
-					<tr>
-						<td><div><span class="title"><span class="KHMERBTB">អាសយដ្ឋាន</span>/Address : </span>&nbsp;<span class="KHMERBTB">{{$invoice->inv_com_address}}</span></div></td>
-					</tr>
-					<tr>
-						<td class="KHMERBTB"><div><span class="title">លេខទូរស័ព្ទ/<span class="roboto_r">Telephone</span> : </span>&nbsp;<span class="roboto_r">{{$invoice->inv_com_phone}}</span></div></td>
-					</tr>
-					<tr class="{{($invoice->inv_vat_status==1)?'sr-only':''}}">
-						<td class="KHMERBTB"><div><span class="title">លេខអត្តសញ្ញាណកម្មអតប: </span>&nbsp;<span class="roboto_r">{{$invoice->company->com_vat_id}}</span></div></td>
-					</tr>
-				</table>
-			</header>
-			<div class="print-body">
-				<table width="100%" class="data-section">
-					<thead>
-						<tr>
-							<th width="6%">
-								<h4 class="khmerOsmoul">ល.រ</h4>
-								<h4>N&deg;</h4>
-							</th>
-							<th width="53%">
-								<h4 class="khmerOsmoul">បរិយាយ</h4>
-								<h4>Description</h4>
-							</th>
-							<th width="10%">
-								<h4 class="khmerOsmoul">បរិមាណ</h4>
-								<h4>Quantity</h4>
-							</th>
-							<th width="13%" colspan="2">
-								<h4 class="khmerOsmoul">តម្លៃឯកតា</h4>
-								<h4>Unit Price</h4>
-							</th>
-							<th width="18%">
-								<h4 class="khmerOsmoul">ថ្លៃសរុប</h4>
-								<h4>Ammount(USD)</h4>
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						@foreach ($invoice_detail as $i => $item)
-								<tr>
-									<td class="text-center" valign="top">{{$i+1}}</td>
-									<td>
-										{{$item->service->s_name}}
-										{!!$item->invd_description!!}
-									</td>
-									<td class="text-center" valign="top">{{$item->invd_qty}}</td>
-									<td class="text-right" valign="top" colspan="2"><span class="pull-left">$</span>{{$item->invd_price}}</td>
-									<td class="text-right" valign="top"><span class="pull-left">$</span>{{$item->invd_price*$item->invd_qty}}</td>
-									<?php
-										$total_amount += $item->invd_price*$item->invd_qty;
-									?>
-								</tr>
-						@endforeach
-					</tbody>
-					<tfoot>
-						<tr>
-								<td colspan="4" class="text-right"><span class="khmerOsmoul">សរុប</span>/(Sub Total)</td>
-								<td class="text-right" colspan="2"><span class="pull-left">$</span> {{$total_amount}}</td>
-							</tr>
-							<tr class="{{($invoice->inv_vat_status==1)?'sr-only':''}}" >
-								<td colspan="4" class="text-right"><span class="khmerOsmoul">អាករលើតម្លៃបន្ថែម</span>/VAT(10%)</td>
-								<td class="text-right" colspan="2"><span class="pull-left">$</span> {{$total_amount*0.1}}</td>
-							</tr>
-							<tr class="{{($invoice->inv_vat_status==1)?'sr-only':''}}" >
-								<td colspan="4" class="text-right"><span class="khmerOsmoul">សរុបរួម</span>/(Grand Total)</td>
-								<td class="text-right" colspan="2"><span class="pull-left">$</span> {{$total_amount*1.1}}</td>
-							</tr>
-					</tfoot>
-				</table>
-				<br/>
-				<table class="signature-section">
-					<tr width="40%">
-						<td>
-							<div class="text-center">
-								<div class="box"></div>
-								<div>________________________________</div>
-								<h4 class="khmerOsmoul">ហត្ថលេខា និងឈ្មោះអ្នកទិញ</h4>
-								<h4>Customer's Signature & Name</h4>
-							</div>
-						</td>
-						<td width="28%"></td>
-						<td width="22%">
-							<div class="text-center">
-								<div class="box"></div>
-								<div>________________________________</div>
-								<h4 class="khmerOsmoul">ហត្ថលេខា និងឈ្មោះអ្នកលក់</h4>
-								<h4>Seller's Signature & Name</h4>
-							</div>
-						</td>
-					</tr>
-				</table>
+			function echo_money_in_letter($number){
+				$no = floor($number);
+				$point = round($number - $no, 2) * 100;
+				$hundred = null;
+				$digits_1 = strlen($no);
+				$i = 0;
+				$str = array();
+				$words = array('0' => '', '1' => 'one', '2' => 'two',
+					'3' => 'three', '4' => 'four', '5' => 'five', '6' => 'six',
+					'7' => 'seven', '8' => 'eight', '9' => 'nine',
+					'10' => 'ten', '11' => 'eleven', '12' => 'twelve',
+					'13' => 'thirteen', '14' => 'fourteen',
+					'15' => 'fifteen', '16' => 'sixteen', '17' => 'seventeen',
+					'18' => 'eighteen', '19' =>'nineteen', '20' => 'twenty',
+					'30' => 'thirty', '40' => 'forty', '50' => 'fifty',
+					'60' => 'sixty', '70' => 'seventy',
+					'80' => 'eighty', '90' => 'ninety');
+				$digits = array('', 'hundred', 'thousand', 'lakh', 'crore');
+				while ($i < $digits_1) {
+					$divider = ($i == 2) ? 10 : 100;
+					$number = floor($no % $divider);
+					$no = floor($no / $divider);
+					$i += ($divider == 10) ? 1 : 2;
+					if ($number) {
+							$plural = (($counter = count($str)) && $number > 9) ? 's' : null;
+							$hundred = ($counter == 1 && $str[0]) ? ' and ' : null;
+							$str [] = ($number < 21) ? $words[$number] .
+									" " . $digits[$counter] . $plural . " " . $hundred
+									:
+									$words[floor($number / 10) * 10]
+									. " " . $words[$number % 10] . " "
+									. $digits[$counter] . $plural . " " . $hundred;
+					} else $str[] = null;
+				}
+				$str = array_reverse($str);
+				$result = implode('', $str);
+				$point = abs($point);
+				$points = ($point) ?
+					" and " . $words[$point / 10] . " " . 
+								$words[$point = $point % 10]." Cent " : ' ';
+				echo $result . "Dollar  " . $points;
+			}
+
+
+		?>
+		<section id="receipts-print">
+			<div class="first-receipt">
+				<img src="/images/receipts/1.jpg" alt="">
+				<div class="rec_number">{{ $receipt->rec_number }}</div>
+				<div class="rec_inv_id">{{ $receipt->invoice->inv_number }}</div>
+				<div class="rec_date">{{ date('d-M-Y', strtotime($receipt->rec_date)) }}</div>
+				<div class="rec_company">{{ $receipt->company->com_name_en }}</div>
+				<div class="rec_received_ammount"><strong>$ {{ number_format($receipt->rec_received_ammount, 2) }}</strong> ({{ echo_money_in_letter($receipt->rec_received_ammount)}})</div>
+				<div class="rec_description">{{ $receipt->rec_description }}</div>
 			</div>
-			<footer class="print-footer">
-				<img src="/images/invoices/2.png" alt="...">
-			</footer>
+			<div class="second-receipt">
+				<img src="/images/receipts/1.jpg" alt="">
+				<div class="rec_number">{{ $receipt->rec_number }}</div>
+				<div class="rec_inv_id">{{ $receipt->invoice->inv_number }}</div>
+				<div class="rec_date">{{ date('d-M-Y', strtotime($receipt->rec_date)) }}</div>
+				<div class="rec_company">{{ $receipt->company->com_name_en }}</div>
+				<div class="rec_received_ammount"><strong>$ {{ number_format($receipt->rec_received_ammount, 2) }}</strong> ({{ echo_money_in_letter($receipt->rec_received_ammount)}})</div>
+				<div class="rec_description">{{ $receipt->rec_description }}</div>
+			</div>
+			<div class="third-receipt">
+				<img src="/images/receipts/1.jpg" alt="">
+				<div class="rec_number">{{ $receipt->rec_number }}</div>
+				<div class="rec_inv_id">{{ $receipt->invoice->inv_number }}</div>
+				<div class="rec_date">{{ date('d-M-Y', strtotime($receipt->rec_date)) }}</div>
+				<div class="rec_company">{{ $receipt->company->com_name_en }}</div>
+				<div class="rec_received_ammount"><strong>$ {{ number_format($receipt->rec_received_ammount, 2) }}</strong> ({{ echo_money_in_letter($receipt->rec_received_ammount)}})</div>
+				<div class="rec_description">{{ $receipt->rec_description }}</div>
+			</div>
 		</section>
 	</section>
 @endsection

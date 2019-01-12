@@ -19,6 +19,7 @@ class CreateReceiptsTable extends Migration
 			$table->string('rec_number', 191)->unique();
 			$table->float('rec_full_ammount');
 			$table->float('rec_received_ammount');
+			$table->float('rec_balance');
 			$table->text('rec_description')->nullable();
 			$table->unsignedInteger('rec_inv_id');
 			$table->unsignedInteger('rec_company_id');
@@ -28,7 +29,7 @@ class CreateReceiptsTable extends Migration
 
 			$table->foreign('rec_inv_id')
 				->references('id')->on('invoices')
-				->onDelete('no action')
+				->onDelete('cascade')
 				->onUpdate('no action');
 
 			$table->foreign('rec_company_id')

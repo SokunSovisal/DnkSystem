@@ -37,6 +37,7 @@ class invoiceDetailController extends Controller
 	 */
 	public function store(Request $r)
 	{
+		$inv_id = $r->invd_invoice_id;
 		// Insert to Table
 		$detail = new invoice_detail;
 		$detail->invd_price = $r->invd_price;

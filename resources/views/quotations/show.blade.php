@@ -98,10 +98,9 @@
 
 			#quotation-print{
 				margin: 0;
-				margin-left: 2px;
 				border: none;
 				width: 100%;
-				height: 30.1cm;
+				height: 29.5cm;
 			}
 		}
 	</style>

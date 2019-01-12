@@ -209,8 +209,14 @@ class invoicesController extends Controller
 	 * @param  \App\Models\invoice  $invoice
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy(invoice $invoice, $id)
+	public function destroy($id)
 	{
-		//
+		// delete Main service
+    $invoice = invoice::find($id);
+    $inv_number = $invoice->inv_number;
+    $invoice->delete();
+    // redirect
+		return redirect()->route('invoices.index')
+			->with('success', 'វិក្កយបត្របានលុបចោលដោយជោគជ័យ៖ '. $inv_number);
 	}
 }

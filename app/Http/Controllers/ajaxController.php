@@ -106,13 +106,11 @@ class ajaxController extends Controller
 		$id = $r->get('id');
 		$inv = invoice::find($id);
 		$rec_full_ammount = $inv->inv_total;
-		$receipts = receipts::where('rec_inv_id', $id)->orderBy('id','DESC')->first();
-		foreach ($receipts as $i => $receipt) {
-			$rec_received += $receipt->rec_received;
+		$receipt = receipts::where('rec_inv_id', $id)->orderBy('id','DESC')->first();
+		if (isset($receipt->rec_balance)) {
+			$rec_full_ammount = $receipt->rec_balance;
 		}
-		$new_full_ammount = $rec_full_ammount - $rec_received;
-
-		$output = $inv->inv_company_id.':'.$rec_received;
+		$output = $inv->inv_company_id.':'.$rec_full_ammount;
 		echo $output;
 	}
 }

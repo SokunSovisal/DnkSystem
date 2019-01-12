@@ -64,7 +64,8 @@
 						<div class="col-sm-12">
 							<div class="form-group">
 								<label class="control-label">លក់ជូនក្រុមហ៊ុន <small>*</small></label>
-								<select name="rec_company_id" id="rec_company_id" class="form-control nbr select2" required>
+								<input type="hidden" id="rec_company_id" name="rec_company_id" value="" />
+								<select name="company_id" id="company_id" class="form-control nbr select2" required disabled>
 									<option value="">-- ជ្រើសរើសក្រុមហ៊ុន --</option>
 									@foreach($companies as $i => $com)
 										<option value="{{$com->id}}" {{ ($com->id == old('rec_company_id')) ? 'selected':'' }}>{{$com->com_name}}</option>
@@ -96,7 +97,7 @@
 						<div class="col-sm-12">
 							<div class="form-group">
 								<label class="control-label">បរិយាយ <small>*</small></label>
-								<input class="form-control nbr" type="text" value="{{ ((count($errors) > 0) ? old('rec_description') : '') }}" placeholder="description" name="rec_description" autocomplete="off" required />
+								<input class="form-control nbr" type="text" value="{{ ((count($errors) > 0) ? old('rec_description') : '') }}" placeholder="description" name="rec_description" autocomplete="off"/>
 							</div>
 						</div>
 					</div><!-- /.column -->
@@ -118,58 +119,21 @@
 	  });
 
 		$(document).ready(function() {
+
 			$('#rec_received_ammount').keyup( function(){
 				var full_ammount = parseFloat($('#rec_full_ammount').val());
 				var received_ammount = parseFloat($(this).val());
-				if ($.isNumeric( received_ammount ) && $.isNumeric( full_ammount ) && $('#rec_full_ammount').val() != '') {
-					if (full_ammount >= received_ammount) {
+				if ($.isNumeric( received_ammount ) && $.isNumeric( full_ammount )) {
+					if ( full_ammount >= received_ammount && $('#rec_full_ammount').val() != '') {
 						$('#rec_balance').val(full_ammount - received_ammount);
+					}else if ($('#rec_full_ammount').val() == 0) {
+						$(this).val($(this).val().slice(0, -1));
 					}else{
-						swal({
-							title: 'ទិន្នន័យបញ្ចូលមិនត្រឹមត្រូវ',
-							text: 'ទឹកប្រាក់សរុបមានចំនួនត្រូវមានចំនួនច្រើនជាងទឹកប្រាក់ទទួល',
-							type: "warning",
-							showConfirmButton: false,
-							timer: 1200,
-							onOpen: () => {
-								timerInterval = setInterval(() => {
-								}, 100)
-							},
-							onClose: () => {
-								clearInterval(timerInterval)
-							}
-						})
+						$(this).val($(this).val().slice(0, -1));
 					}
-				}else if ($('#rec_full_ammount').val() == 0) {
-					swal({
-						title: 'ទិន្នន័យបញ្ចូលមិនត្រឹមត្រូវ',
-						text: 'សូមមេត្តាបញ្ចូលទឹកប្រាក់សរុបជាមុនសិន',
-						type: "warning",
-						showConfirmButton: false,
-						timer: 1200,
-						onOpen: () => {
-							timerInterval = setInterval(() => {
-							}, 100)
-						},
-						onClose: () => {
-							clearInterval(timerInterval)
-						}
-					})
+
 				}else{
-					swal({
-						title: 'ទិន្នន័យបញ្ចូលមិនត្រឹមត្រូវ',
-						text: 'សូមមេត្តាបញ្ចូលតម្លៃលេខ',
-						type: "warning",
-						showConfirmButton: false,
-						timer: 1200,
-						onOpen: () => {
-							timerInterval = setInterval(() => {
-							}, 100)
-						},
-						onClose: () => {
-							clearInterval(timerInterval)
-						}
-					})
+					$(this).val($(this).val().slice(0, -1));
 				}
 			});
 
@@ -183,7 +147,8 @@
 						data: {id:id, _token:_token},
 						success: function(result){
 							var data = result.split(":");
-              $('#rec_company_id').val(data[0]).trigger('change.select2');
+              $('#rec_company_id').val(data[0]);
+              $('#company_id').val(data[0]).trigger('change.select2');
 							$('#rec_full_ammount').val(data[1]);
 
 						}

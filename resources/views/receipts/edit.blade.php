@@ -87,7 +87,7 @@
 						<div class="col-sm-12">
 							<div class="form-group">
 								<label class="control-label">បរិយាយ <small>*</small></label>
-								<input class="form-control nbr" type="text" value="{{ ((count($errors) > 0) ? old('rec_description') : $receipt->rec_description) }}" placeholder="description" name="rec_description" autocomplete="off" required />
+								<input class="form-control nbr" type="text" value="{{ ((count($errors) > 0) ? old('rec_description') : $receipt->rec_description) }}" placeholder="description" name="rec_description" autocomplete="off" />
 							</div>
 						</div>
 					</div><!-- /.column -->

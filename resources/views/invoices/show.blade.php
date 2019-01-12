@@ -115,10 +115,9 @@
 
 			#invoice-print{
 				margin: 0;
-				margin-left: 2px;
 				border: none;
 				width: 100%;
-				height: 30.1cm;
+				height: 29.5cm;
 			}
 			.print-header table.info td div .title{
 				background: #fff !important;
@@ -222,8 +221,8 @@
 										{!!$item->invd_description!!}
 									</td>
 									<td class="text-center" valign="top">{{$item->invd_qty}}</td>
-									<td class="text-right" valign="top" colspan="2"><span class="pull-left">$</span>{{$item->invd_price}}</td>
-									<td class="text-right" valign="top"><span class="pull-left">$</span>{{$item->invd_price*$item->invd_qty}}</td>
+									<td class="text-right" valign="top" colspan="2"><span class="pull-left">$</span>{{number_format($item->invd_price, 2)}}</td>
+									<td class="text-right" valign="top"><span class="pull-left">$</span>{{number_format($item->invd_price, 2*$item->invd_qty)}}</td>
 									<?php
 										$total_amount += $item->invd_price*$item->invd_qty;
 									?>
@@ -233,15 +232,15 @@
 					<tfoot>
 						<tr>
 								<td colspan="4" class="text-right"><span class="khmerOsmoul">សរុប</span>/(Sub Total)</td>
-								<td class="text-right" colspan="2"><span class="pull-left">$</span> {{$total_amount}}</td>
+								<td class="text-right" colspan="2"><span class="pull-left">$</span> {{number_format($total_amount, 2)}}</td>
 							</tr>
 							<tr class="{{($invoice->inv_vat_status==1)?'sr-only':''}}" >
 								<td colspan="4" class="text-right"><span class="khmerOsmoul">អាករលើតម្លៃបន្ថែម</span>/VAT(10%)</td>
-								<td class="text-right" colspan="2"><span class="pull-left">$</span> {{$total_amount*0.1}}</td>
+								<td class="text-right" colspan="2"><span class="pull-left">$</span> {{number_format($total_amount*0.1, 2)}}</td>
 							</tr>
 							<tr class="{{($invoice->inv_vat_status==1)?'sr-only':''}}" >
 								<td colspan="4" class="text-right"><span class="khmerOsmoul">សរុបរួម</span>/(Grand Total)</td>
-								<td class="text-right" colspan="2"><span class="pull-left">$</span> {{$total_amount*1.1}}</td>
+								<td class="text-right" colspan="2"><span class="pull-left">$</span> {{number_format($total_amount*1.1, 2)}}</td>
 							</tr>
 					</tfoot>
 				</table>

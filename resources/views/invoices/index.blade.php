@@ -40,8 +40,8 @@
 						<td>{{ $invoice->inv_date }}</td>
 						<td>{{ $invoice->company->com_name }}</td>
 						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{ route('invoices.detail',$invoice->id) }}" class="btn btn-primary btn-sm" /><i class="fa fa-pencil-alt"></i> <i class="fa fa-info"></i></a></td>
-						<td><i class="fa fa-dollar-sign"></i>{{ $invoice->inv_total }}</td>
-						<td><i class="fa fa-dollar-sign"></i> {{ $invoice->inv_total*1.1 }}</td>
+						<td><i class="fa fa-dollar-sign"></i>{{ number_format($invoice->inv_total, 2) }}</td>
+						<td><i class="fa fa-dollar-sign"></i> {{ number_format($invoice->inv_total*1.1, 2) }}</td>
 						<td class="action">
 							<a href="{{route('invoices.show', $invoice->id)}}" title="Show" class="edit text-info"><i class="fa fa-print"></i></a>
 							/

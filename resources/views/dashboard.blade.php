@@ -2,7 +2,7 @@
 
 @section('content')
 
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js"></script>
+{{-- <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js"></script>
 	<script type="text/javascript">
 		var myCenter=new google.maps.LatLng(11.549178,104.928271);
 		var marker;
@@ -21,7 +21,7 @@
 		}
 		google.maps.event.addDomListener(window, 'load', initialize);
 	</script>
-  <div id="googleMap" style="width:100%;height:380px;"></div>
+  <div id="googleMap" style="width:100%;height:380px;"></div> --}}
 
 	<section id="dashboard">
 		<div id="clock" class="">
@@ -34,7 +34,7 @@
 			</div>
 			<div class="date"></div>
 		</div>
-
+		<br/>
 		<div class="row">
 			<div class="col-sm-6 col-md-6 col-lg-3">
 				<article class="dash-card">
