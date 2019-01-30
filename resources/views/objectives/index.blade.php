@@ -37,11 +37,10 @@
 					<td>{{ $obj->obj_description }}</td>
 					<!-- <td>{{ $obj->createBy->name }}</td> -->
 					<td class="action">
-						<a href="{{route('objectives.edit',$obj->id)}}" title="Edit" class="edit text-info"><i class="fa fa-pencil-alt"></i></a>
-						/
+						<a href="{{route('objectives.edit',$obj->id)}}" title="Edit" class="edit btn btn-info btn-sm"><i class="fa fa-pencil-alt"></i></a>
 						{{Form::open(['url'=>route('objectives.destroy',$obj->id)])}}
 							{{Form::hidden('_method','DELETE')}}
-							<button type="button" title="លុបសកម្មភាពអាជីវកម្ម" class="delete text-danger" data-text="បើអ្នកលុបសកម្មភាពអាជីវកម្មនេះ នោះក្រុមហ៊ុនទាំងឡាយណាដែលមានសកម្មភាពអាជីវកម្មនេះនឹងត្រូវលុបទាំងអស់។ &nbsp;តើអ្នកសម្រេចចិត្តច្បាស់ថាចង់លុបសកម្មភាពអាជីវកម្មនេះមែនទេ?" data-type="warning" data-rstitle="ជោគជ័យ" data-rstext="សកម្មភាពអាជីវកម្មត្រូវបានលុប."><i class="fa fa-trash-alt"></i>
+							<button type="button" title="លុបសកម្មភាពអាជីវកម្ម" class="btn btn-danger btn-sm" data-text="បើអ្នកលុបសកម្មភាពអាជីវកម្មនេះ នោះក្រុមហ៊ុនទាំងឡាយណាដែលមានសកម្មភាពអាជីវកម្មនេះនឹងត្រូវលុបទាំងអស់។ &nbsp;តើអ្នកសម្រេចចិត្តច្បាស់ថាចង់លុបសកម្មភាពអាជីវកម្មនេះមែនទេ?" data-type="warning" data-rstitle="ជោគជ័យ" data-rstext="សកម្មភាពអាជីវកម្មត្រូវបានលុប."><i class="fa fa-trash-alt"></i>
 							</button>
 							<button type="submit" class="sub_delete sr-only"></button>
 						{{Form::close()}}

@@ -31,7 +31,7 @@
 						<div class="col-sm-12">
 							<div class="form-group {{(($errors->has('gender'))?'has-error':'')}}">
 								<label for="">ភេទ <small>*</small></label>
-								<select name="gender" class="form-control nbr select2" required>
+								<select name="gender" class="form-control nbr" required>
 									<option value="">-- ជ្រើសរើសភេទ --</option>
 										<option value="1" {{ ((count($errors) > 0) && (old('gender') == 1)) ? 'selected':'' }}>ប្រុស</option>
 										<option value="2" {{ ((count($errors) > 0) && (old('gender') == 2)) ? 'selected':'' }}>ស្រី</option>
@@ -41,23 +41,15 @@
 						</div>
 
 						<div class="col-sm-12">
-							<div class="form-group {{(($errors->has('position'))?'has-error':'')}}">
-								<label for="">តួនាទី <small>*</small></label>
-								<input class="form-control nbr" type="text" name="position" placeholder="position" value="{{ ((count($errors) > 0) ? old('position') : '') }}" autocomplete="off" required="" />
-							</div>
-						</div>
-
-						<div class="col-sm-12">
-							<div class="form-group {{(($errors->has('salary'))?'has-error':'')}}">
-								<label for="">ប្រាក់ខែ <small>*</small></label>
-								<input class="form-control nbr" type="text" name="salary" placeholder="salary" value="{{ ((count($errors) > 0) ? old('salary') : '') }}" autocomplete="off" required="" />
-							</div>
-						</div>
-
-						<div class="col-sm-12">
 							<div class="form-group {{(($errors->has('phone'))?'has-error':'')}}">
 								<label for="">លេខទូរស័ព្ទ <small>*</small></label>
 								<input class="form-control nbr" type="text" name="phone" placeholder="phone" value="{{ ((count($errors) > 0) ? old('phone') : '') }}" autocomplete="off" required="" />
+							</div>
+						</div>
+						<div class="col-sm-12">
+							<div class="form-group">
+								<label for="">ពណ៌នា</label>
+								<textarea class="form-control nbr" name="description" style="height: 108px;" placeholder="description">{{ ((count($errors) > 0) ? old('description') : '') }}</textarea>
 							</div>
 						</div>
 
@@ -82,12 +74,6 @@
 							<div class="form-group {{(($errors->has('confirm_password'))?'has-error':'')}}">
 								<label for="">បញ្ជាក់-ពាក្យសម្ងាត់ <small>*</small></label>
 								<input class="form-control nbr" type="password" name="confirm_password" placeholder="re-password" autocomplete="off" required="" />
-							</div>
-						</div>
-						<div class="col-sm-12">
-							<div class="form-group">
-								<label for="">ពណ៌នា</label>
-								<textarea class="form-control nbr" name="description" style="height: 108px;" placeholder="description">{{ ((count($errors) > 0) ? old('description') : '') }}</textarea>
 							</div>
 						</div>
 					</div><!-- /.column -->

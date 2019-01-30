@@ -11,22 +11,21 @@ use DB;
 
 class objectivesController extends Controller
 {
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
 	
-	private $date;
+	
+	private $globalNotitfy;
+	private $module;
 
 	public function __construct()
 	{
+		$this->globalNotitfy = new Users();
+		$this->module = '13';
 		$this->data=[
 			'm'=>'manage_companies',
-			'sm'=>'objectives',
+			'sm'=>$this->module,
 			'title'=>'សកម្មភាពអាជីវកម្ម',
       // Notification Appointments
-			'appNotify' => new Users(),
+			'appNotify' => $this->globalNotitfy->appointNotify(),
 		];
 	}
 	
@@ -38,7 +37,8 @@ class objectivesController extends Controller
 			// Select Data From Table
 			'objectives' => Objectives::orderBy('obj_name', 'asc')->get(),
 		];
-		return view('objectives.index',$this->data);
+		// return view('objectives.index',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('objectives.index',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -51,7 +51,8 @@ class objectivesController extends Controller
 		$this->data+=[
 			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('objectives.index') .'"><i class="fa fa-database"></i> សកម្មភាពអាជីវកម្ម</a></li><li class="active"><i class="fa fa-plus"></i> បន្ថែមថ្មី</li>',
 		];
-		return view('objectives.create',$this->data);
+		// return view('objectives.create',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('objectives.create',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -74,17 +75,21 @@ class objectivesController extends Controller
 				->withInput();
 		}
 
-		// Insert to Table
-		$objectives = new Objectives;
-		$objectives->obj_name = $r->obj_name;
-		$objectives->obj_description = $r->obj_description;
-		$objectives->obj_created_by = Auth::id();
-		$objectives->obj_updated_by = Auth::id();
-		$objectives->save();
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// Insert to Table
+			$objectives = new Objectives;
+			$objectives->obj_name = $r->obj_name;
+			$objectives->obj_description = $r->obj_description;
+			$objectives->obj_created_by = Auth::id();
+			$objectives->obj_updated_by = Auth::id();
+			$objectives->save();
 
-		// Redirect
-		return redirect()->route('objectives.index')
-			->with('success', 'សកម្មវភាពបានបញ្ចូលដោយជោគជ័យ: ' . $r->obj_name);
+			// Redirect
+			return redirect()->route('objectives.index')
+				->with('success', 'សកម្មវភាពបានបញ្ចូលដោយជោគជ័យ: ' . $r->obj_name);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 
 	/**
@@ -110,7 +115,8 @@ class objectivesController extends Controller
 			'obj' => Objectives::find($id),
 			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('objectives.index') .'"><i class="fa fa-database"></i> សកម្មភាពអាជីវកម្ម</a></li><li class="active"><i class="fa fa-pencil"></i> កែប្រែ៖ '. Objectives::find($id)->obj_name.'</li>',
 		];
-		return view('objectives.edit',$this->data);
+		// return view('objectives.edit',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('objectives.edit',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -132,16 +138,20 @@ class objectivesController extends Controller
 				->withInput();
 		}
 
-		// Update Item
-		$objectives = Objectives::find($id);
-		$objectives->obj_name = $r->obj_name;
-		$objectives->obj_description = $r->obj_description;
-		$objectives->obj_updated_by = Auth::id();
-		$objectives->save();
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// Update Item
+			$objectives = Objectives::find($id);
+			$objectives->obj_name = $r->obj_name;
+			$objectives->obj_description = $r->obj_description;
+			$objectives->obj_updated_by = Auth::id();
+			$objectives->save();
 
-    // redirect
-		return redirect()->route('objectives.index')
-			->with('success', 'សកម្មវភាពបានកែប្រែដោយជោគជ័យ៖ ' . $r->obj_name);
+	    // redirect
+			return redirect()->route('objectives.index')
+				->with('success', 'សកម្មវភាពបានកែប្រែដោយជោគជ័យ៖ ' . $r->obj_name);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 
 	/**
@@ -152,12 +162,16 @@ class objectivesController extends Controller
 	 */
 	public function destroy(Objectives $objectives, $id)
 	{
-		// delete
-    $obj = Objectives::find($id);
-    $obj_name = $obj->obj_name;
-    $obj->delete();
-    // redirect
-		return redirect()->route('objectives.index')
-			->with('success', 'សកម្មវភាពបានលុបចោលដោយជោគជ័យ៖ '. $obj_name);
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// delete
+	    $obj = Objectives::find($id);
+	    $obj_name = $obj->obj_name;
+	    $obj->delete();
+	    // redirect
+			return redirect()->route('objectives.index')
+				->with('success', 'សកម្មវភាពបានលុបចោលដោយជោគជ័យ៖ '. $obj_name);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 }

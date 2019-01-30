@@ -26,11 +26,6 @@
 		.third-receipt{
 			border-bottom: none;
 		}
-		.third-receipt img,
-		.second-receipt img,
-		.first-receipt img{
-			/* border: 1px solid red; */
-		}
 		.third-receipt .rec_number,
 		.second-receipt .rec_number,
 		.first-receipt .rec_number{
@@ -61,9 +56,9 @@
 			top: 4.33cm;
 			left: 3.6cm;
 		}
-		.third-receipt .rec_received_ammount,
-		.second-receipt .rec_received_ammount,
-		.first-receipt .rec_received_ammount{
+		.third-receipt .rec_received_amount,
+		.second-receipt .rec_received_amount,
+		.first-receipt .rec_received_amount{
 			position: absolute;
 			top: 5.57cm;
 			left: 4cm;
@@ -73,21 +68,14 @@
 		.second-receipt .rec_description,
 		.first-receipt .rec_description{
 			position: absolute;
-			top: 6.8cm;
+			top: 6.82cm;
 			left: 3cm;
-
-		}
-
-		.second-receipt,
-		.first-receipt{
 
 		}
 		@media print {
 
 			#sidebar-left,#body-header,.btnPrint,.btnAdd,.btnBack{ display: none; padding: 0; margin: 0;}
-
 			#main,.bg-white{ padding: 0 !important; margin: 0 !important;}
-
 			#receipts-print{
 				margin: 0;
 				border: none;
@@ -169,7 +157,6 @@
 				echo $result . "Dollar  " . $points;
 			}
 
-
 		?>
 		<section id="receipts-print">
 			<div class="first-receipt">
@@ -177,8 +164,8 @@
 				<div class="rec_number">{{ $receipt->rec_number }}</div>
 				<div class="rec_inv_id">{{ $receipt->invoice->inv_number }}</div>
 				<div class="rec_date">{{ date('d-M-Y', strtotime($receipt->rec_date)) }}</div>
-				<div class="rec_company">{{ $receipt->company->com_name_en }}</div>
-				<div class="rec_received_ammount"><strong>$ {{ number_format($receipt->rec_received_ammount, 2) }}</strong> ({{ echo_money_in_letter($receipt->rec_received_ammount)}})</div>
+				<div class="rec_company">{{ $compan_name }}</div>
+				<div class="rec_received_amount"><strong>$ {{ number_format($receipt->rec_received_amount, 2) }}</strong> ({{ echo_money_in_letter($receipt->rec_received_amount)}})</div>
 				<div class="rec_description">{{ $receipt->rec_description }}</div>
 			</div>
 			<div class="second-receipt">
@@ -186,8 +173,8 @@
 				<div class="rec_number">{{ $receipt->rec_number }}</div>
 				<div class="rec_inv_id">{{ $receipt->invoice->inv_number }}</div>
 				<div class="rec_date">{{ date('d-M-Y', strtotime($receipt->rec_date)) }}</div>
-				<div class="rec_company">{{ $receipt->company->com_name_en }}</div>
-				<div class="rec_received_ammount"><strong>$ {{ number_format($receipt->rec_received_ammount, 2) }}</strong> ({{ echo_money_in_letter($receipt->rec_received_ammount)}})</div>
+				<div class="rec_company">{{ $compan_name }}</div>
+				<div class="rec_received_amount"><strong>$ {{ number_format($receipt->rec_received_amount, 2) }}</strong> ({{ echo_money_in_letter($receipt->rec_received_amount)}})</div>
 				<div class="rec_description">{{ $receipt->rec_description }}</div>
 			</div>
 			<div class="third-receipt">
@@ -195,8 +182,8 @@
 				<div class="rec_number">{{ $receipt->rec_number }}</div>
 				<div class="rec_inv_id">{{ $receipt->invoice->inv_number }}</div>
 				<div class="rec_date">{{ date('d-M-Y', strtotime($receipt->rec_date)) }}</div>
-				<div class="rec_company">{{ $receipt->company->com_name_en }}</div>
-				<div class="rec_received_ammount"><strong>$ {{ number_format($receipt->rec_received_ammount, 2) }}</strong> ({{ echo_money_in_letter($receipt->rec_received_ammount)}})</div>
+				<div class="rec_company">{{ $compan_name }}</div>
+				<div class="rec_received_amount"><strong>$ {{ number_format($receipt->rec_received_amount, 2) }}</strong> ({{ echo_money_in_letter($receipt->rec_received_amount)}})</div>
 				<div class="rec_description">{{ $receipt->rec_description }}</div>
 			</div>
 		</section>

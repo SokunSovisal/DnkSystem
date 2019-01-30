@@ -27,9 +27,8 @@
 					<th width="10%">ការបរិច្ឆេទ</th>
 					<th>ក្រុមហ៊ុន</th>
 					<th>លេខទំនាក់ទំនង</th>
-					<th width="70px">សេវាកម្ម</th>
 					<th width="110px">ចម្លើយ</th>
-					<th width="10%">សកម្មភាព</th>
+					<th width="16%">សកម្មភាព</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -40,16 +39,14 @@
 						<td>{{ $quote->quote_date }}</td>
 						<td>{{ $quote->company->com_name }}</td>
 						<td>{{ $quote->quote_cp_phone }}</td>
-						<td><a href="{{ route('quotationservices.index','qid='.$quote->id) }}" class="btn btn-primary btn-sm" /><i class="fa fa-pencil-alt"></i> <i class="fa fa-heart"></i></a></td>
 						<td><span class="label label-{{($quote->quote_status==1)?'warning':(($quote->quote_status==2)?'success':'danger')}} btn-xs">{{ ($quote->quote_status==1)?'មិនទាន់មានចម្លើយ':(($quote->quote_status==2)?'ជោគជ័យ':'មិនជោគជ័យ') }}</span></td>
 						<td class="action">
-							<a href="{{route('quotations.show',$quote->id)}}" title="Show" class="edit text-info"><i class="fa fa-print"></i></a>
-							/
-							<a href="{{route('quotations.edit',$quote->id)}}" title="Edit" class="edit text-success"><i class="fa fa-pencil-alt"></i></a>
-							/
+							<a href="{{ route('quotationservices.index','qid='.$quote->id) }}" class="btn btn-primary btn-sm" /><i class="fa fa-heart"></i></a>
+							<a href="{{route('quotations.show',$quote->id)}}" title="Show" class="edit btn btn-success btn-sm"><i class="fa fa-print"></i></a>
+							<a href="{{route('quotations.edit',$quote->id)}}" title="Edit" class="edit btn btn-info btn-sm"><i class="fa fa-pencil-alt"></i></a>
 							{{Form::open(['url'=>route('quotations.destroy',$quote->id)])}}
 								{{Form::hidden('_method','DELETE')}}
-								<button type="button" title="លុបសម្រង់តម្លៃ" class="delete text-danger" data-text="តើអ្នកសម្រេចចិត្តច្បាស់ថាចង់លុបសម្រង់តម្លៃនេះមែនទេ?" data-type="warning" data-rstitle="ជោគជ័យ" data-rstext="សម្រង់តម្លៃត្រូវបានលុប."><i class="fa fa-trash-alt"></i>
+								<button type="button" title="លុបសម្រង់តម្លៃ" class="delete btn btn-danger btn-sm" data-text="តើអ្នកសម្រេចចិត្តច្បាស់ថាចង់លុបសម្រង់តម្លៃនេះមែនទេ?" data-type="warning" data-rstitle="ជោគជ័យ" data-rstext="សម្រង់តម្លៃត្រូវបានលុប."><i class="fa fa-trash-alt"></i>
 								</button>
 								<button type="submit" class="sub_delete sr-only"></button>
 							{{Form::close()}}

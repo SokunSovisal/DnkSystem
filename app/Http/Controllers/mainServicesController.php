@@ -10,22 +10,20 @@ use DB;
 
 class mainServicesController extends Controller
 {
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	
-	private $date;
+
+	private $globalNotitfy;
+	private $module;
 
 	public function __construct()
 	{  	
+		$this->globalNotitfy = new Users();
+		$this->module = '17';
 		$this->data=[
 			'm'=>'services',
-			'sm'=>'mainservices',
+			'sm'=>$this->module,
 			'title'=>'សេវាកម្មធំៗ',
       // Notification Appointments
-			'appNotify' => new Users(),
+			'appNotify' => $this->globalNotitfy->appointNotify(),
 		];
 	}
 
@@ -37,7 +35,8 @@ class mainServicesController extends Controller
 			// Select Data From Table
 			'm_services' => Mainservices::orderBy('ms_name', 'asc')->get(),
 		];
-		return view('mainservices.index',$this->data);
+		// return view('mainservices.index',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('mainservices.index',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -50,7 +49,8 @@ class mainServicesController extends Controller
 		$this->data+=[
 			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('mainservices.index') .'"><i class="far fa-heart"></i> សេវាកម្មធំៗ</a></li><li class="active"><i class="fa fa-plus"></i> បន្ថែមថ្មី</li>',
 		];
-		return view('mainservices.create',$this->data);
+		// return view('mainservices.create',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('mainservices.create',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -73,15 +73,19 @@ class mainServicesController extends Controller
 				->withInput();
 		}
 
-		// Insert to Table
-		$mainservices = new Mainservices;
-		$mainservices->ms_name = $r->ms_name;
-		$mainservices->ms_description = $r->ms_description;
-		$mainservices->save();
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// Insert to Table
+			$mainservices = new Mainservices;
+			$mainservices->ms_name = $r->ms_name;
+			$mainservices->ms_description = $r->ms_description;
+			$mainservices->save();
 
-		// Redirect
-		return redirect()->route('mainservices.index')
-			->with('success', 'សេវាកម្មធំបានបញ្ចូលដោយជោគជ័យ: ' . $r->ms_name);
+			// Redirect
+			return redirect()->route('mainservices.index')
+				->with('success', 'សេវាកម្មធំបានបញ្ចូលដោយជោគជ័យ: ' . $r->ms_name);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 
 	/**
@@ -107,16 +111,11 @@ class mainServicesController extends Controller
 			'ms' => Mainservices::find($id),
 			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('mainservices.index') .'"><i class="far fa-heart"></i> សេវាកម្មធំៗ</a></li><li class="active"><i class="fa fa-pencil"></i> កែប្រែ៖ '. Mainservices::find($id)->ms_name.'</li>',
 		];
-		return view('mainservices.edit',$this->data);
+		// return view('mainservices.edit',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('mainservices.edit',$this->data) : view('errors.permission',$this->data) );
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  \App\Models\Mainservices  $mainservices
-	 * @return \Illuminate\Http\Response
-	 */
+
 	public function update(Request $r, Mainservices $mainservices, $id)
 	{
 		// Validate Post Data
@@ -128,30 +127,33 @@ class mainServicesController extends Controller
 				->withErrors($validator)
 				->withInput();
 		}
-		// Update Item
-		$mainservices = Mainservices::find($id);
-		$mainservices->ms_name = $r->ms_name;
-		$mainservices->ms_description = $r->ms_description;
-		$mainservices->save();
-    // redirect
-		return redirect()->route('mainservices.index')
-			->with('success', 'សេវាកម្មធំបានកែប្រែដោយជោគជ័យ៖ ' . $r->ms_name);
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// Update Item
+			$mainservices = Mainservices::find($id);
+			$mainservices->ms_name = $r->ms_name;
+			$mainservices->ms_description = $r->ms_description;
+			$mainservices->save();
+	    // redirect
+			return redirect()->route('mainservices.index')
+				->with('success', 'សេវាកម្មធំបានកែប្រែដោយជោគជ័យ៖ ' . $r->ms_name);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  \App\Models\Mainservices  $mainservices
-	 * @return \Illuminate\Http\Response
-	 */
+
 	public function destroy(Mainservices $mainservices, $id)
 	{
-		// delete Main service
-    $ms = Mainservices::find($id);
-    $ms_name = $ms->ms_name;
-    $ms->delete();
-    // redirect
-		return redirect()->route('mainservices.index')
-			->with('success', 'សេវាកម្មធំបានលុបចោលដោយជោគជ័យ៖ '. $ms_name);
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// delete Main service
+	    $ms = Mainservices::find($id);
+	    $ms_name = $ms->ms_name;
+	    $ms->delete();
+	    // redirect
+			return redirect()->route('mainservices.index')
+				->with('success', 'សេវាកម្មធំបានលុបចោលដោយជោគជ័យ៖ '. $ms_name);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 }

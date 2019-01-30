@@ -12,15 +12,19 @@ class fileCategoriesController extends Controller
 {
 	
 	private $date;
+	private $globalNotitfy;
+	private $module;
 
 	public function __construct()
 	{  	
+		$this->globalNotitfy = new Users();
+		$this->module = '15';
 		$this->data=[
 			'm'=>'manage_companies',
-			'sm'=>'filecategories',
+			'sm'=>$this->module,
 			'title'=>'ផ្នែកឯកសារ',
       // Notification Appointments
-			'appNotify' => new Users(),
+			'appNotify' => $this->globalNotitfy->appointNotify(),
 		];
 	}
 	
@@ -38,7 +42,8 @@ class fileCategoriesController extends Controller
 			// 'm_services' => filecategories::orderBy('fc_name', 'asc')->limit(3)->get(),
 			'filecategories' => file_categories::orderBy('fc_name', 'asc')->get(),
 		];
-		return view('filecategories.index',$this->data);
+		// return view('filecategories.index',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('filecategories.index',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -51,7 +56,8 @@ class fileCategoriesController extends Controller
 		$this->data+=[
 			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('filecategories.index') .'"><i class="far fa-heart"></i> ផ្នែកឯកសារ</a></li><li class="active"><i class="fa fa-plus"></i> បន្ថែមថ្មី</li>',
 		];
-		return view('filecategories.create',$this->data);
+		// return view('filecategories.create',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('filecategories.create',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -74,17 +80,21 @@ class fileCategoriesController extends Controller
 				->withInput();
 		}
 
-		// Insert to Table
-		$filecategories = new file_categories;
-		$filecategories->fc_name = $r->fc_name;
-		$filecategories->fc_description = $r->fc_description;
-		$filecategories->fc_created_by = Auth::id();
-		$filecategories->fc_updated_by = Auth::id();
-		$filecategories->save();
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// Insert to Table
+			$filecategories = new file_categories;
+			$filecategories->fc_name = $r->fc_name;
+			$filecategories->fc_description = $r->fc_description;
+			$filecategories->fc_created_by = Auth::id();
+			$filecategories->fc_updated_by = Auth::id();
+			$filecategories->save();
 
-		// Redirect
-		return redirect()->route('filecategories.index')
-			->with('success', 'ផ្នែកឯកសារបានបញ្ចូលដោយជោគជ័យ: ' . $r->fc_name);
+			// Redirect
+			return redirect()->route('filecategories.index')
+				->with('success', 'ផ្នែកឯកសារបានបញ្ចូលដោយជោគជ័យ: ' . $r->fc_name);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 
 	/**
@@ -110,7 +120,8 @@ class fileCategoriesController extends Controller
 			'filecategory' => file_categories::find($id),
 			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('filecategories.index') .'"><i class="far fa-heart"></i> ផ្នែកឯកសារ</a></li><li class="active"><i class="fa fa-pencil"></i> កែប្រែ៖ '. file_categories::find($id)->fc_name.'</li>',
 		];
-		return view('filecategories.edit',$this->data);
+		// return view('filecategories.edit',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('filecategories.edit',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -131,15 +142,19 @@ class fileCategoriesController extends Controller
 				->withErrors($validator)
 				->withInput();
 		}
-		// Update Item
-		$filecategories = file_categories::find($id);
-		$filecategories->fc_name = $r->fc_name;
-		$filecategories->fc_description = $r->fc_description;
-		$filecategories->fc_updated_by = Auth::id();
-		$filecategories->save();
-    // redirect
-		return redirect()->route('filecategories.index')
-			->with('success', 'ផ្នែកឯកសារបានកែប្រែដោយជោគជ័យ៖ ' . $r->fc_name);
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// Update Item
+			$filecategories = file_categories::find($id);
+			$filecategories->fc_name = $r->fc_name;
+			$filecategories->fc_description = $r->fc_description;
+			$filecategories->fc_updated_by = Auth::id();
+			$filecategories->save();
+	    // redirect
+			return redirect()->route('filecategories.index')
+				->with('success', 'ផ្នែកឯកសារបានកែប្រែដោយជោគជ័យ៖ ' . $r->fc_name);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 
 	/**
@@ -150,12 +165,16 @@ class fileCategoriesController extends Controller
 	 */
 	public function destroy(file_categories $file_categories, $id)
 	{
-		// delete Main service
-		$filecategory = file_categories::find($id);
-		$fc_name = $filecategory->fc_name;
-		$filecategory->delete();
-		// redirect
-			return redirect()->route('filecategories.index')
-				->with('success', 'ផ្នែកឯកសារបានលុបចោលដោយជោគជ័យ៖ '. $fc_name);
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// delete Main service
+			$filecategory = file_categories::find($id);
+			$fc_name = $filecategory->fc_name;
+			$filecategory->delete();
+			// redirect
+				return redirect()->route('filecategories.index')
+					->with('success', 'ផ្នែកឯកសារបានលុបចោលដោយជោគជ័យ៖ '. $fc_name);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 }

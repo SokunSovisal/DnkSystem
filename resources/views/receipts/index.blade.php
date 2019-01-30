@@ -24,13 +24,10 @@
 				<tr>
 					<th width="5%">N&deg;</th>
 					<th width="10%">ការបរិច្ឆេទ</th>
-					<th width="10%">លេខរៀង</th>
-					<th width="110px">យោងវិក្កយបត្រ</th>
-					<th>ក្រុមហ៊ុន</th>
-					<th>ប្រាក់សរុប</th>
-					<th>ប្រាក់បានបង់</th>
-					<th>ប្រាក់នៅសល់</th>
-					<th width="10%">សកម្មភាព</th>
+					<th>លេខរៀង</th>
+					<th>យោងវិក្កយបត្រ</th>
+					<th>ប្រាក់បានទទួល</th>
+					<th width="18%">សកម្មភាព</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -40,18 +37,13 @@
 						<td>{{ $receipt->rec_date }}</td>
 						<td>{{ $receipt->rec_number }}</td>
 						<td>{{ $receipt->invoice->inv_number }}</td>
-						<td>{{ $receipt->company->com_name }}</td>
-						<td><i class="fa fa-dollar-sign"> {{ number_format($receipt->rec_full_ammount, 2) }}</i></td>
-						<td><i class="fa fa-dollar-sign"></i> {{ number_format($receipt->rec_received_ammount, 2) }}</td>
-						<td><i class="fa fa-dollar-sign"></i> {{ number_format($receipt->rec_balance, 2) }}</td>
+						<td><i class="fa fa-dollar-sign"></i> {{ number_format($receipt->rec_received_amount, 2) }}</td>
 						<td class="action">
-							<a href="{{route('receipts.show',$receipt->id)}}" title="Show" class="edit text-info"><i class="fa fa-print"></i></a>
-							/
-							<a href="{{route('receipts.edit',$receipt->id)}}" title="Edit" class="edit text-success"><i class="fa fa-pencil-alt"></i></a>
-							/
+							<a href="{{route('receipts.show',$receipt->id)}}" title="Show" class="edit btn btn-success btn-sm"><i class="fa fa-print"></i></a>
+							<a href="{{route('receipts.edit',$receipt->id)}}" title="Edit" class="edit btn btn-info btn-sm"><i class="fa fa-pencil-alt"></i></a>
 							{{Form::open(['url'=>route('receipts.destroy',$receipt->id)])}}
 								{{Form::hidden('_method','DELETE')}}
-								<button type="button" title="លុបសម្រង់តម្លៃ" class="delete text-danger" data-text="តើអ្នកសម្រេចចិត្តច្បាស់ថាចង់លុបសម្រង់តម្លៃនេះមែនទេ?" data-type="warning" data-rstitle="ជោគជ័យ" data-rstext="សម្រង់តម្លៃត្រូវបានលុប."><i class="fa fa-trash-alt"></i>
+								<button type="button" title="លុបសម្រង់តម្លៃ" class="delete btn btn-danger btn-sm" data-text="តើអ្នកសម្រេចចិត្តច្បាស់ថាចង់លុបសម្រង់តម្លៃនេះមែនទេ?" data-type="warning" data-rstitle="ជោគជ័យ" data-rstext="សម្រង់តម្លៃត្រូវបានលុប."><i class="fa fa-trash-alt"></i>
 								</button>
 								<button type="submit" class="sub_delete sr-only"></button>
 							{{Form::close()}}

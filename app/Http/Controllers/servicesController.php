@@ -12,24 +12,20 @@ use Auth;
 
 class servicesController extends Controller
 {
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
 
-
-
-	private $date;
+	private $globalNotitfy;
+	private $module;
 
 	public function __construct()
 	{
+		$this->globalNotitfy = new Users();
+		$this->module = '24';
 		$this->data=[
 			'title'=>'សេវាកម្មទាំងអស់',
 			'm'=>'services',
-			'sm'=>'services',
+			'sm'=>$this->module,
 			// Notification Appointments
-			'appNotify' => new Users(),
+			'appNotify' => $this->globalNotitfy->appointNotify(),
 		];
 	}
 
@@ -41,7 +37,8 @@ class servicesController extends Controller
 			// Select Data From Table
 			'services' => Services::orderBy('s_name', 'asc')->get(),
 		];
-		return view('services.index',$this->data);
+		// return view('services.index',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('services.index',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -55,15 +52,11 @@ class servicesController extends Controller
 			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('services.index') .'"><i class="fa fa-heart"></i> សេវាកម្មទាំងអស់</a></li><li class="active"><i class="fa fa-plus"></i> បន្ថែមថ្មី</li>',
 			'm_services' => Mainservices::orderBy('ms_name', 'asc')->get(),
 		];
-		return view('services.create',$this->data);
+		// return view('services.create',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('services.create',$this->data) : view('errors.permission',$this->data) );
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @return \Illuminate\Http\Response
-	 */
+
 	public function store(Request $r)
 	{
 		// Validate Post Data
@@ -80,19 +73,23 @@ class servicesController extends Controller
 				->withInput();
 		}
 
-		// Insert to Table
-		$services = new services;
-		$services->s_name = $r->s_name;
-		$services->s_price = $r->s_price;
-		$services->s_ms_id = $r->s_ms_id;
-		$services->s_description = $r->s_description;
-		$services->s_created_by = Auth::id();
-		$services->s_updated_by = Auth::id();
-		$services->save();
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// Insert to Table
+			$services = new services;
+			$services->s_name = $r->s_name;
+			$services->s_price = $r->s_price;
+			$services->s_ms_id = $r->s_ms_id;
+			$services->s_description = $r->s_description;
+			$services->s_created_by = Auth::id();
+			$services->s_updated_by = Auth::id();
+			$services->save();
 
-		// Redirect
-		return redirect()->route('services.index')
-			->with('success', 'សេវាកម្មបានបញ្ចូលដោយជោគជ័យ: ' . $r->s_name);
+			// Redirect
+			return redirect()->route('services.index')
+				->with('success', 'សេវាកម្មបានបញ្ចូលដោយជោគជ័យ: ' . $r->s_name);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 
 	/**
@@ -119,16 +116,11 @@ class servicesController extends Controller
 			'm_services' => Mainservices::orderBy('ms_name', 'asc')->get(),
 			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('services.index') .'"><i class="fa fa-heart"></i> សេវាកម្មទាំងអស់</a></li><li class="active"><i class="fa fa-pencil"></i> កែប្រែ៖ '. Services::find($id)->s_name.'</li>',
 		];
-		return view('services.edit',$this->data);
+		// return view('services.edit',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('services.edit',$this->data) : view('errors.permission',$this->data) );
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  \App\Models\Services  $services
-	 * @return \Illuminate\Http\Response
-	 */
+	
 	public function update(Request $r, Services $services, $id)
 	{
 		// Validate Post Data
@@ -143,35 +135,38 @@ class servicesController extends Controller
 				->withInput();
 		}
 
-		// Update Item
-		$services = Services::find($id);
-		$services->s_name = $r->s_name;
-		$services->s_price = $r->s_price;
-		$services->s_ms_id = $r->s_ms_id;
-		$services->s_description = $r->s_description;
-		$services->s_updated_by = Auth::id();
-		$services->save();
-
-	// redirect
-		return redirect()->route('services.index')
-			->with('success', 'សេវាកម្មបានកែប្រែដោយជោគជ័យ៖ ' . $r->s_name);
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  \App\Models\Services  $services
-	 * @return \Illuminate\Http\Response
-	 */
-	public function destroy(Services $services, $id)
-	{
-		// delete
-		$s = Services::find($id);
-		$s_name = $s->s_name;
-		$s->delete();
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// Update Item
+			$services = Services::find($id);
+			$services->s_name = $r->s_name;
+			$services->s_price = $r->s_price;
+			$services->s_ms_id = $r->s_ms_id;
+			$services->s_description = $r->s_description;
+			$services->s_updated_by = Auth::id();
+			$services->save();
 
 		// redirect
 			return redirect()->route('services.index')
-				->with('success', 'សេវាកម្មបានលុបចោលដោយជោគជ័យ៖ '. $s_name);
+			->with('success', 'សេវាកម្មបានកែប្រែដោយជោគជ័យ៖ ' . $r->s_name);
+		}else{
+			return redirect(route('errors.permission'));
+		}
+	}
+
+
+	public function destroy(Services $services, $id)
+	{
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// delete
+			$s = Services::find($id);
+			$s_name = $s->s_name;
+			$s->delete();
+
+			// redirect
+				return redirect()->route('services.index')
+					->with('success', 'សេវាកម្មបានលុបចោលដោយជោគជ័យ៖ '. $s_name);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 }

@@ -14,10 +14,5 @@ class Receipts extends Model
 	{
 		return $this->belongsTo('App\Models\invoice','rec_inv_id');
 	}
-
-	public function company()
-	{
-		return $this->belongsTo('App\Models\companies','rec_company_id');
-    }
     
 }

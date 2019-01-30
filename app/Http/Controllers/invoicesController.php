@@ -20,15 +20,19 @@ class invoicesController extends Controller
 	 */
 
 	private $date;
+	private $globalNotitfy;
+	private $module;
 
 	public function __construct()
 	{  	
+		$this->globalNotitfy = new Users();
+		$this->module = '4';
 		$this->data=[
-			'm'=>'manage_processing',
-			'sm'=>'invoices',
+			'm'=>'manage_income',
+			'sm'=>$this->module,
 			'title'=>'វិក្កយបត្រ',
 	  	// Notification Appointments
-			'appNotify' => new Users(),
+			'appNotify' => $this->globalNotitfy->appointNotify(),
 		];
 	}
 	
@@ -38,9 +42,10 @@ class invoicesController extends Controller
 			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li class="active"><i class="fa fa-file-invoice"></i> វិក្កយបត្រ</li>',
 
 			// Select Data From Table
-			'invoices' => invoice::orderBy('inv_number', 'asc')->get(),
+			'invoices' => invoice::orderBy('inv_number', 'desc')->get(),
 		];
-		return view('invoices.index', $this->data);
+		// return view('invoices.index', $this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('invoices.index',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -54,11 +59,12 @@ class invoicesController extends Controller
 			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('invoices.index') .'"><i class="fa fa-file-invoice"></i> វិក្កយបត្រ</li></a></li><li class="active"><i class="fa fa-plus"></i> បន្ថែមថ្មី</li>',
 			// Select Data From Table
 			'invoice' => invoice::orderBy('created_at', 'desc')->first(),
-			'companies' => Companies::orderBy('com_name', 'asc')->get(),
+			'companies' => Companies::where('com_type', 1)->orWhere('com_type', 3)->orderBy('com_name', 'asc')->get(),
 			'quotations' => quotations::orderBy('created_at', 'desc')->get(),
 			'users' => Users::orderBy('name', 'asc')->get(),
 		];
-		return view('invoices.create',$this->data);
+		// return view('invoices.create',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('invoices.create',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -82,23 +88,27 @@ class invoicesController extends Controller
 				->withErrors($validator)
 				->withInput();
 		}
-		// Insert to Table
-		$invoice = new invoice;
-		$invoice->inv_number = $r->inv_number;
-		$invoice->inv_date = $r->inv_date;
-		$invoice->inv_company_id = $r->inv_company_id;
-		$invoice->inv_com_phone = $r->inv_com_phone;
-		$invoice->inv_com_address = $r->inv_com_address;
-		$invoice->inv_vat_status = $r->inv_vat_status;
-		$invoice->inv_quote_refer = $r->inv_quote_refer;
-		$invoice->inv_description = $r->inv_description;
-		$invoice->inv_created_by = Auth::id();
-		$invoice->inv_updated_by = Auth::id();
-		$invoice->save();
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// Insert to Table
+			$invoice = new invoice;
+			$invoice->inv_number = $r->inv_number;
+			$invoice->inv_date = $r->inv_date;
+			$invoice->inv_company_id = $r->inv_company_id;
+			$invoice->inv_com_phone = $r->inv_com_phone;
+			$invoice->inv_com_address = $r->inv_com_address;
+			$invoice->inv_vat_status = $r->inv_vat_status;
+			$invoice->inv_quote_refer = $r->inv_quote_refer;
+			$invoice->inv_description = $r->inv_description;
+			$invoice->inv_created_by = Auth::id();
+			$invoice->inv_updated_by = Auth::id();
+			$invoice->save();
 
-		// Redirect
-		return redirect()->route('invoices.index')
-			->with('success', 'វិក្កយបត្របានបញ្ចូលដោយជោគជ័យ: ' . $r->inv_number);
+			// Redirect
+			return redirect()->route('invoices.index')
+				->with('success', 'វិក្កយបត្របានបញ្ចូលដោយជោគជ័យ: ' . $r->inv_number);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 
 	/**
@@ -109,15 +119,16 @@ class invoicesController extends Controller
 	 */
 	public function detail($id)
 	{
-			$this->data +=[
-				// Select Data From Table
-				'invoices' => invoice::find($id),
-				'quotations' => quotations::orderBy('quote_number','desc')->get(),
-				'invoice_detail' => invoice_detail::where('invd_invoice_id', $id)->get(),
-				'services' => Services::orderBy('s_name', 'asc')->get(),
-				'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('invoices.index') .'"><i class="fa fa-file-invoice"></i> វិក្កយបត្រ</li></a></li><li class="active"><i class="fa fa-info"></i> វិក្កយបត្រលម្អិត: '.invoice::find($id)->inv_number.'</li>',
-			];
-			return view('invoices.detail', $this->data);
+		$this->data +=[
+			// Select Data From Table
+			'invoices' => invoice::find($id),
+			'quotations' => quotations::orderBy('quote_number','desc')->get(),
+			'invoice_detail' => invoice_detail::where('invd_invoice_id', $id)->get(),
+			'services' => Services::orderBy('s_name', 'asc')->get(),
+			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('invoices.index') .'"><i class="fa fa-file-invoice"></i> វិក្កយបត្រ</li></a></li><li class="active"><i class="fa fa-info"></i> វិក្កយបត្រលម្អិត: '.invoice::find($id)->inv_number.'</li>',
+		];
+		// return view('invoices.detail', $this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('invoices.detail',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	// public function updateDtail(Request $r, invoice $invoice)
@@ -142,7 +153,8 @@ class invoicesController extends Controller
 			// Select Data From Table
 			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('invoices.index') .'"><i class="fa fa-file-invoice"></i> វិក្កយបត្រ</li></a></li><li class="active"><i class="fa fa-eye"></i> បង្ហាញ៖ '.invoice::find($id)->inv_number.'</li>',
     ];
-    return view('invoices.show',$this->data);
+    // return view('invoices.show',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('invoices.show',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -155,12 +167,13 @@ class invoicesController extends Controller
 	{
 		$this->data+=[
 			'invoice' => invoice::find($id),
-			'companies' => Companies::orderBy('com_name', 'asc')->get(),
+			'companies' => Companies::where('com_type', 1)->orWhere('com_type', 3)->orderBy('com_name', 'asc')->get(),
 			'quotations' => quotations::orderBy('created_at', 'desc')->get(),
 			'users' => Users::orderBy('name', 'asc')->get(),
-			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('mainservices.index') .'"><i class="fa fa-file-invoice"></i> វិក្កយបត្រ</a></li><li class="active"><i class="fa fa-pencil"></i> កែប្រែ៖ '. invoice::find($id)->inv_number.'</li>',
+			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('invoices.index') .'"><i class="fa fa-file-invoice"></i> វិក្កយបត្រ</a></li><li class="active"><i class="fa fa-pencil"></i> កែប្រែ៖ '. invoice::find($id)->inv_number.'</li>',
 		];
-		return view('invoices.edit',$this->data);
+		// return view('invoices.edit',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('invoices.edit',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -185,22 +198,26 @@ class invoicesController extends Controller
 				->withErrors($validator)
 				->withInput();
 		}
-		// Insert to Table
-		$invoice = invoice::find($id);
-		$invoice->inv_number = $r->inv_number;
-		$invoice->inv_date = $r->inv_date;
-		$invoice->inv_company_id = $r->inv_company_id;
-		$invoice->inv_com_phone = $r->inv_com_phone;
-		$invoice->inv_com_address = $r->inv_com_address;
-		$invoice->inv_vat_status = $r->inv_vat_status;
-		$invoice->inv_quote_refer = $r->inv_quote_refer;
-		$invoice->inv_description = $r->inv_description;
-		$invoice->inv_updated_by = Auth::id();
-		$invoice->save();
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// Insert to Table
+			$invoice = invoice::find($id);
+			$invoice->inv_number = $r->inv_number;
+			$invoice->inv_date = $r->inv_date;
+			$invoice->inv_company_id = $r->inv_company_id;
+			$invoice->inv_com_phone = $r->inv_com_phone;
+			$invoice->inv_com_address = $r->inv_com_address;
+			$invoice->inv_vat_status = $r->inv_vat_status;
+			$invoice->inv_quote_refer = $r->inv_quote_refer;
+			$invoice->inv_description = $r->inv_description;
+			$invoice->inv_updated_by = Auth::id();
+			$invoice->save();
 
-		// Redirect
-		return redirect()->route('invoices.index')
-			->with('success', 'វិក្កយបត្របានកែប្រែដោយជោគជ័យ: ' . $r->inv_number);
+			// Redirect
+			return redirect()->route('invoices.index')
+				->with('success', 'វិក្កយបត្របានកែប្រែដោយជោគជ័យ: ' . $r->inv_number);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 
 	/**
@@ -211,12 +228,16 @@ class invoicesController extends Controller
 	 */
 	public function destroy($id)
 	{
-		// delete Main service
-    $invoice = invoice::find($id);
-    $inv_number = $invoice->inv_number;
-    $invoice->delete();
-    // redirect
-		return redirect()->route('invoices.index')
-			->with('success', 'វិក្កយបត្របានលុបចោលដោយជោគជ័យ៖ '. $inv_number);
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// delete Main service
+	    $invoice = invoice::find($id);
+	    $inv_number = $invoice->inv_number;
+	    $invoice->delete();
+	    // redirect
+			return redirect()->route('invoices.index')
+				->with('success', 'វិក្កយបត្របានលុបចោលដោយជោគជ័យ៖ '. $inv_number);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 }

@@ -16,18 +16,22 @@ class agreementsController extends Controller
 
 	private $date;
 	private $path;
+	private $globalNotitfy;
+	private $module;
 
 	public function __construct()
 	{
+		$this->globalNotitfy = new Users();
+		$this->module = 'agreements';
 		// Define Upload Image Path
 		$this->path=public_path().'/files/agreements/';
 
 		$this->data=[
 			'm'=>'manage_processing',
-			'sm'=>'agreements',
+			'sm'=>$this->module,
 			'title'=>'កិច្ចសន្យា',
 	  // Notification agreements
-			'appNotify' => new Users(),
+			'appNotify' => $this->globalNotitfy->appointNotify(),
 		];
 	}
 
@@ -43,7 +47,8 @@ class agreementsController extends Controller
 			// Select Data From Table
 			'agreements' => agreements::orderBy('created_at', 'asc')->get(),
 		];
-		return view('agreements.index',$this->data);
+		// return view('agreements.index',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('agreements.index',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -58,7 +63,8 @@ class agreementsController extends Controller
 			// Select Data From Table
 			'companies' => Companies::orderBy('com_name', 'asc')->get(),
 		];
-		return view('agreements.create',$this->data);
+		// return view('agreements.create',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('agreements.create',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -81,45 +87,49 @@ class agreementsController extends Controller
 				->withInput();
 		}
 
-		$agr_files = [];
-		
-		if($r->hasFile('agr_file')){
-			foreach ($r->file('agr_file') as $i => $file) {
-				if ($file->getClientOriginalExtension()=='pdf') {
-					$agr_file=str_replace(' ', '-', strtok($file->getClientOriginalName(), '.')).'_'.time().'_'.$i.'.pdf';
-					if (!File::exists($this->path.$r->agr_company_id.'/')) {
-						File::makeDirectory($this->path.$r->agr_company_id.'/');
-					}
-					$file->move($this->path.$r->agr_company_id.'/', $agr_file);
-				}else{
-					if ($file->getClientOriginalExtension()=='png') {
-						$agr_file=str_replace(' ', '-', strtok($file->getClientOriginalName(), '.')).'_'.time().'_'.$i.'.png';
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			$agr_files = [];
+			
+			if($r->hasFile('agr_file')){
+				foreach ($r->file('agr_file') as $i => $file) {
+					if ($file->getClientOriginalExtension()=='pdf') {
+						$agr_file=str_replace(' ', '-', strtok($file->getClientOriginalName(), '.')).'_'.time().'_'.$i.'.pdf';
 						if (!File::exists($this->path.$r->agr_company_id.'/')) {
 							File::makeDirectory($this->path.$r->agr_company_id.'/');
 						}
-						Image::make($file->getRealPath())->save($this->path.$r->agr_company_id.'/'.$agr_file);
+						$file->move($this->path.$r->agr_company_id.'/', $agr_file);
 					}else{
-						$agr_file=str_replace(' ', '-', strtok($file->getClientOriginalName(), '.')).'_'.time().'_'.$i.'.jpg';
-						if (!File::exists($this->path.$r->agr_company_id.'/')) {
-							File::makeDirectory($this->path.$r->agr_company_id.'/');
+						if ($file->getClientOriginalExtension()=='png') {
+							$agr_file=str_replace(' ', '-', strtok($file->getClientOriginalName(), '.')).'_'.time().'_'.$i.'.png';
+							if (!File::exists($this->path.$r->agr_company_id.'/')) {
+								File::makeDirectory($this->path.$r->agr_company_id.'/');
+							}
+							Image::make($file->getRealPath())->save($this->path.$r->agr_company_id.'/'.$agr_file);
+						}else{
+							$agr_file=str_replace(' ', '-', strtok($file->getClientOriginalName(), '.')).'_'.time().'_'.$i.'.jpg';
+							if (!File::exists($this->path.$r->agr_company_id.'/')) {
+								File::makeDirectory($this->path.$r->agr_company_id.'/');
+							}
+							Image::make($file->getRealPath())->save($this->path.$r->agr_company_id.'/'.$agr_file);
 						}
-						Image::make($file->getRealPath())->save($this->path.$r->agr_company_id.'/'.$agr_file);
 					}
+					$agr_files[$i] = $agr_file;
 				}
-				$agr_files[$i] = $agr_file;
 			}
+			// Insert Agreegments
+			$agreements = new agreements;
+			$agreements->agr_files = serialize($agr_files);
+			$agreements->agr_description = $r->agr_description;
+			$agreements->agr_company_id = $r->agr_company_id;
+			$agreements->agr_created_by = Auth::id();
+			$agreements->agr_updated_by = Auth::id();
+			$agreements->save();
+			// Redirect
+			return redirect()->route('agreements.index')
+				->with('success', 'កិច្ចសន្យាបានបញ្ចូលដោយជោគជ័យ: ' . Companies::find($r->agr_company_id)->com_name);
+		}else{
+			return redirect(route('errors.permission'));
 		}
-		// Insert Agreegments
-		$agreements = new agreements;
-		$agreements->agr_files = serialize($agr_files);
-		$agreements->agr_description = $r->agr_description;
-		$agreements->agr_company_id = $r->agr_company_id;
-		$agreements->agr_created_by = Auth::id();
-		$agreements->agr_updated_by = Auth::id();
-		$agreements->save();
-		// Redirect
-		return redirect()->route('agreements.index')
-			->with('success', 'កិច្ចសន្យាបានបញ្ចូលដោយជោគជ័យ: ' . Companies::find($r->agr_company_id)->com_name);
 
 	}
 
@@ -148,7 +158,8 @@ class agreementsController extends Controller
 			'companies' => Companies::orderBy('com_name', 'asc')->get(),
 		  'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('agreements.index') .'"><i class="fa fa-file-contract"></i> កិច្ចសន្យា</a></li><li class="active"><i class="fa fa-pencil"></i> កែប្រែ៖ '. agreements::find($id)->company->com_name.'</li>',
 		];
-		return view('agreements.edit',$this->data);
+		// return view('agreements.edit',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('agreements.edit',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -173,21 +184,25 @@ class agreementsController extends Controller
 				->withErrors($validator)
 				->withInput();
 		}
-		// Insert to Table
-		$agreements = agreements::find($id);
-		$agreements->agr_files = $r->agr_files;
-		$agreements->agr_user_id = $r->agr_user_id;
-		$agreements->agr_company_id = $r->agr_company_id;
-		$agreements->agr_status = $r->agr_status;
-		$services_id = serialize($r->agr_services_id);
-		$agreements->agr_services_id = $services_id;
-		$agreements->agr_description = $r->agr_description;
-		$agreements->agr_created_by = Auth::id();
-		$agreements->agr_updated_by = Auth::id();
-		$agreements->save();
-		// Redirect
-		return redirect()->route('agreements.index')
-			->with('success', 'កាណាត់ជួបបានកែប្រែដោយជោគជ័យ: ' . $r->agr_files);
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// Insert to Table
+			$agreements = agreements::find($id);
+			$agreements->agr_files = $r->agr_files;
+			$agreements->agr_user_id = $r->agr_user_id;
+			$agreements->agr_company_id = $r->agr_company_id;
+			$agreements->agr_status = $r->agr_status;
+			$services_id = serialize($r->agr_services_id);
+			$agreements->agr_services_id = $services_id;
+			$agreements->agr_description = $r->agr_description;
+			$agreements->agr_created_by = Auth::id();
+			$agreements->agr_updated_by = Auth::id();
+			$agreements->save();
+			// Redirect
+			return redirect()->route('agreements.index')
+				->with('success', 'កាណាត់ជួបបានកែប្រែដោយជោគជ័យ: ' . $r->agr_files);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 
 	/**
@@ -198,12 +213,16 @@ class agreementsController extends Controller
 	 */
 	public function destroy(agreements $agreements)
 	{
-		// delete
-		$app = agreements::find($id);
-		$agr_files = $app->agr_files;
-		$app->delete();
-		// redirect
-		return redirect()->route('agreements.index')
-			->with('success', 'កាត់ជួបត្រូវបានលុបចោលដោយជោគជ័យ៖ '. $agr_files);
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// delete
+			$app = agreements::find($id);
+			$agr_files = $app->agr_files;
+			$app->delete();
+			// redirect
+			return redirect()->route('agreements.index')
+				->with('success', 'កាត់ជួបត្រូវបានលុបចោលដោយជោគជ័យ៖ '. $agr_files);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 }

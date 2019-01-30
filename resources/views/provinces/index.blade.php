@@ -35,11 +35,10 @@
 					<td>{{ $pro->pro_name }}</td>
 					<td>{{ $pro->pro_description }}</td>
 					<td class="action">
-						<a href="{{route('provinces.edit',$pro->id)}}" title="Edit" class="edit text-info"><i class="fa fa-pencil-alt"></i></a>
-						/
+						<a href="{{route('provinces.edit',$pro->id)}}" title="Edit" class="edit btn btn-info btn-sm"><i class="fa fa-pencil-alt"></i></a>
 						{{Form::open(['url'=>route('provinces.destroy',$pro->id)])}}
 							{{Form::hidden('_method','DELETE')}}
-							<button type="button" title="លុបទីតាំងខេត្ត" class="delete text-danger" data-text="តើអ្នកចង់លុបទីតាំងខេត្តនេះមែទេ?" data-type="warning" data-rstitle="ជោគជ័យ" data-rstext="ទីតាំងខេត្តត្រូវបានលុប."><i class="fa fa-trash-alt"></i>
+							<button type="button" title="លុបទីតាំងខេត្ត" class="delete btn btn-danger btn-sm" data-text="តើអ្នកចង់លុបទីតាំងខេត្តនេះមែទេ?" data-type="warning" data-rstitle="ជោគជ័យ" data-rstext="ទីតាំងខេត្តត្រូវបានលុប."><i class="fa fa-trash-alt"></i>
 							</button>
 							<button type="submit" class="sub_delete sr-only"></button>
 						{{Form::close()}}

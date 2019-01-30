@@ -16,6 +16,11 @@ class invoice extends Model
 	{
 		return $this->hasMany('App\Models\invoice_detail','invd_invoice_id');
 	}
+
+	public function receipt()
+	{
+		return $this->hasMany('App\Models\Receipts','rec_inv_id');
+	}
 	
 	public function is_en($str)
 	{

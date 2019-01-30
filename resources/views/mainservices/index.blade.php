@@ -35,11 +35,10 @@
 					<td>{{ $ms->ms_name }}</td>
 					<td>{{ $ms->ms_description }}</td>
 					<td class="action">
-						<a href="{{route('mainservices.edit',$ms->id)}}" title="Edit" class="edit text-info"><i class="fa fa-pencil-alt"></i></a>
-						/
+						<a href="{{route('mainservices.edit',$ms->id)}}" title="Edit" class="edit btn btn-info btn-sm"><i class="fa fa-pencil-alt"></i></a>
 						{{Form::open(['url'=>route('mainservices.destroy',$ms->id)])}}
 							{{Form::hidden('_method','DELETE')}}
-							<button type="button" title="លុបសេវាកម្មធំ" class="delete text-danger" data-text="បើអ្នកលុបសេវាកម្មធំនេះ នោះសេវាកម្មទាំងឡាយណាដែលស្ថិតនៅក្នុងសេវាកម្មធំនេះនឹងត្រូវលុបទាំងអស់។ &nbsp;តើអ្នកសម្រេចចិត្តច្បាស់ថាចង់លុបសេវាកម្មធំនេះមែនទេ?" data-type="warning" data-rstitle="ជោគជ័យ" data-rstext="សេវាកម្មធំត្រូវបានលុប."><i class="fa fa-trash-alt"></i>
+							<button type="button" title="លុបសេវាកម្មធំ" class="delete btn btn-danger btn-sm" data-text="បើអ្នកលុបសេវាកម្មធំនេះ នោះសេវាកម្មទាំងឡាយណាដែលស្ថិតនៅក្នុងសេវាកម្មធំនេះនឹងត្រូវលុបទាំងអស់។ &nbsp;តើអ្នកសម្រេចចិត្តច្បាស់ថាចង់លុបសេវាកម្មធំនេះមែនទេ?" data-type="warning" data-rstitle="ជោគជ័យ" data-rstext="សេវាកម្មធំត្រូវបានលុប."><i class="fa fa-trash-alt"></i>
 							</button>
 							<button type="submit" class="sub_delete sr-only"></button>
 						{{Form::close()}}

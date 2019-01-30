@@ -16,15 +16,19 @@ class appointmentsController extends Controller
 
 
 	private $date;
+	private $globalNotitfy;
+	private $module;
 
 	public function __construct()
 	{
+		$this->globalNotitfy = new Users();
+		$this->module = '2';
 		$this->data=[
-			'm'=>'manage_processing',
-			'sm'=>'appointments',
+			'm'=>'manage_income',
+			'sm'=>$this->module,
 			'title'=>'ការណាត់ជួប',
       // Notification Appointments
-			'appNotify' => new Users(),
+			'appNotify' => $this->globalNotitfy->appointNotify(),
 		];
 	}
 
@@ -40,7 +44,8 @@ class appointmentsController extends Controller
 			// Select Data From Table
 			'appointments' => Appointments::orderBy('app_datetime', 'asc')->get(),
 		];
-		return view('appointments.index',$this->data);
+		// return view('appointments.index',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('appointments.index',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -53,11 +58,12 @@ class appointmentsController extends Controller
 		$this->data += [
 			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('quotations.index') .'"><i class="fa fa-comments"></i> ការណាត់ជួប</li></a></li><li class="active"><i class="fa fa-plus"></i> បន្ថែមថ្មី</li>',
 			// Select Data From Table
-			'companies' => Companies::orderBy('com_name', 'asc')->get(),
+			'companies' => Companies::where('com_type', 1)->orWhere('com_type', 3)->orderBy('com_name', 'asc')->get(),
 			'users' => Users::orderBy('name', 'asc')->get(),
 			'services' => Services::orderBy('s_name', 'asc')->get(),
 		];
-		return view('appointments.create',$this->data);
+		// return view('appointments.create',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('appointments.create',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -84,21 +90,25 @@ class appointmentsController extends Controller
 				->withErrors($validator)
 				->withInput();
 		}
-		// Insert to Table
-		$appointments = new Appointments;
-		$appointments->app_datetime = $r->app_datetime;
-		$appointments->app_user_id = $r->app_user_id;
-		$appointments->app_company_id = $r->app_company_id;
-		$appointments->app_status = $r->app_status;
-		$services_id = serialize($r->app_services_id);
-		$appointments->app_services_id = $services_id;
-		$appointments->app_description = $r->app_description;
-		$appointments->app_created_by = Auth::id();
-		$appointments->app_updated_by = Auth::id();
-		$appointments->save();
-		// Redirect
-		return redirect()->route('appointments.index')
-			->with('success', 'កាណាត់ជួបបានបញ្ចូលដោយជោគជ័យ: ' . $r->app_datetime);
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// Insert to Table
+			$appointments = new Appointments;
+			$appointments->app_datetime = $r->app_datetime;
+			$appointments->app_user_id = $r->app_user_id;
+			$appointments->app_company_id = $r->app_company_id;
+			$appointments->app_status = $r->app_status;
+			$services_id = serialize($r->app_services_id);
+			$appointments->app_services_id = $services_id;
+			$appointments->app_description = $r->app_description;
+			$appointments->app_created_by = Auth::id();
+			$appointments->app_updated_by = Auth::id();
+			$appointments->save();
+			// Redirect
+			return redirect()->route('appointments.index')
+				->with('success', 'កាណាត់ជួបបានបញ្ចូលដោយជោគជ័យ: ' . $r->app_datetime);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 
 	/**
@@ -123,12 +133,13 @@ class appointmentsController extends Controller
     $this->data+=[
 			// Select Data From Table
       'appointment' => Appointments::find($id),
-			'companies' => Companies::orderBy('com_name', 'asc')->get(),
+			'companies' => Companies::where('com_type', 1)->orWhere('com_type', 3)->orderBy('com_name', 'asc')->get(),
 			'users' => Users::orderBy('name', 'asc')->get(),
 			'services' => Services::orderBy('s_name', 'asc')->get(),
       'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('appointments.index') .'"><i class="fa fa-comments"></i> ការណាត់ជួប</a></li><li class="active"><i class="fa fa-pencil"></i> កែប្រែ៖ '. Appointments::find($id)->app_datetime.'</li>',
     ];
-    return view('appointments.edit',$this->data);
+    // return view('appointments.edit',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('appointments.edit',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -154,21 +165,25 @@ class appointmentsController extends Controller
 				->withErrors($validator)
 				->withInput();
 		}
-		// Insert to Table
-		$appointments = Appointments::find($id);
-		$appointments->app_datetime = $r->app_datetime;
-		$appointments->app_user_id = $r->app_user_id;
-		$appointments->app_company_id = $r->app_company_id;
-		$appointments->app_status = $r->app_status;
-		$services_id = serialize($r->app_services_id);
-		$appointments->app_services_id = $services_id;
-		$appointments->app_description = $r->app_description;
-		$appointments->app_created_by = Auth::id();
-		$appointments->app_updated_by = Auth::id();
-		$appointments->save();
-		// Redirect
-		return redirect()->route('appointments.index')
-			->with('success', 'ការណាត់ជួបបានកែប្រែដោយជោគជ័យ: ' . $r->app_datetime);
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// Insert to Table
+			$appointments = Appointments::find($id);
+			$appointments->app_datetime = $r->app_datetime;
+			$appointments->app_user_id = $r->app_user_id;
+			$appointments->app_company_id = $r->app_company_id;
+			$appointments->app_status = $r->app_status;
+			$services_id = serialize($r->app_services_id);
+			$appointments->app_services_id = $services_id;
+			$appointments->app_description = $r->app_description;
+			$appointments->app_created_by = Auth::id();
+			$appointments->app_updated_by = Auth::id();
+			$appointments->save();
+			// Redirect
+			return redirect()->route('appointments.index')
+				->with('success', 'ការណាត់ជួបបានកែប្រែដោយជោគជ័យ: ' . $r->app_datetime);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 
 	/**
@@ -179,12 +194,16 @@ class appointmentsController extends Controller
 	 */
 	public function destroy(appointments $appointments,$id)
 	{
-		// delete
-		$app = Appointments::find($id);
-		$app_datetime = $app->app_datetime;
-		$app->delete();
-		// redirect
-		return redirect()->route('appointments.index')
-			->with('success', 'ការណាត់ជួបត្រូវបានលុបចោលដោយជោគជ័យ៖ '. $app_datetime);
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// delete
+			$app = Appointments::find($id);
+			$app_datetime = $app->app_datetime;
+			$app->delete();
+			// redirect
+			return redirect()->route('appointments.index')
+				->with('success', 'ការណាត់ជួបត្រូវបានលុបចោលដោយជោគជ័យ៖ '. $app_datetime);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 }

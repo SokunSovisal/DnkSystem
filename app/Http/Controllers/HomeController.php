@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Appointments;
 use App\Models\Companies;
 use App\Models\Services;
+use App\Models\Staffs;
 use App\Models\Users;
 use App\Models\User;
 use DB;
@@ -20,22 +21,25 @@ class HomeController extends Controller
 	 */
 
 	private $date;
+	private $globalNotitfy;
 
 	public function __construct()
 	{
 		$this->middleware('auth');
+		$this->globalNotitfy = new Users();
 		$this->data=[
 			'breadcrumb'=>'<li class="active"><i class="fa fa-home"></i> ផ្ទាំងដើម</li>',
 			'title'=>'Welcome',
 			'm'=>'home',
 			'sm'=>'home',
 			// Notification Appointments
-			'appNotify' => new Users(),
+			'appNotify' => $this->globalNotitfy->appointNotify(),
 
 			// Select Data From Table
 			'companies' => Companies::all(),
 			'services' => Services::all(),
 			'users' => User::all(),
+			'staffs' => Staffs::all(),
 		];
 	}
 

@@ -35,15 +35,14 @@
 				<tr>
 					<td>{{ $i+1 }}</td>
 					<td>{{ $s->s_name }}</td>
-					<td>{{ $s->s_price }}</td>
-					<td>{{ $s->mainservice->ms_name }}</td>
+					<td class="text-right"><span class="pull-left">$</span> {{ number_format($s->s_price, 2) }}</td>
+					<td class="text-center">{{ $s->mainservice->ms_name }}</td>
 					<!-- <td>{{ $s->createdBy->name }}</td> -->
 					<td class="action">
-						<a href="{{route('services.edit',$s->id)}}" title="Edit" class="edit text-info"><i class="fa fa-pencil-alt"></i></a>
-						/
+						<a href="{{route('services.edit',$s->id)}}" title="Edit" class="edit btn btn-info btn-sm"><i class="fa fa-pencil-alt"></i></a>
 						{{Form::open(['url'=>route('services.destroy',$s->id)])}}
 							{{Form::hidden('_method','DELETE')}}
-							<button type="button" title="លុបសេវាកម្ម" class="delete text-danger" data-text="តើអ្នកចង់លុបសេវាកម្មនេះមែទេ?" data-type="warning" data-rstitle="ជោគជ័យ" data-rstext="សេវាកម្មត្រូវបានលុប."><i class="fa fa-trash-alt"></i>
+							<button type="button" title="លុបសេវាកម្ម" class="delete btn btn-danger btn-sm" data-text="តើអ្នកចង់លុបសេវាកម្មនេះមែទេ?" data-type="warning" data-rstitle="ជោគជ័យ" data-rstext="សេវាកម្មត្រូវបានលុប."><i class="fa fa-trash-alt"></i>
 							</button>
 							<button type="submit" class="sub_delete sr-only"></button>
 						{{Form::close()}}

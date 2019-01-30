@@ -37,11 +37,10 @@
 					<td>{{ $dist->dist_description }}</td>
 					<td>{{ $dist->province->pro_name }}</td>
 					<td class="action">
-						<a href="{{route('districts.edit',$dist->id)}}" title="Edit" class="edit text-info"><i class="fa fa-pencil-alt"></i></a>
-						/
+						<a href="{{route('districts.edit',$dist->id)}}" title="Edit" class="edit btn btn-info btn-sm"><i class="fa fa-pencil-alt"></i></a>
 						{{Form::open(['url'=>route('districts.destroy',$dist->id)])}}
 							{{Form::hidden('_method','DELETE')}}
-							<button type="button" title="លុបទីតាំងស្រុក" class="delete text-danger" data-text="តើអ្នកចង់លុបទីតាំងស្រុកនេះមែទេ?" data-type="warning" data-rstitle="ជោគជ័យ" data-rstext="ទីតាំងស្រុកត្រូវបានលុប."><i class="fa fa-trash-alt"></i>
+							<button type="button" title="លុបទីតាំងស្រុក" class="delete btn btn-sm btn-danger" data-text="តើអ្នកចង់លុបទីតាំងស្រុកនេះមែទេ?" data-type="warning" data-rstitle="ជោគជ័យ" data-rstext="ទីតាំងស្រុកត្រូវបានលុប."><i class="fa fa-trash-alt"></i>
 							</button>
 							<button type="submit" class="sub_delete sr-only"></button>
 						{{Form::close()}}

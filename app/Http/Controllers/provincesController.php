@@ -10,25 +10,20 @@ use DB;
 
 class provincesController extends Controller
 {
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
 
-	private $date;
+	private $globalNotitfy;
+	private $module;
 
 	public function __construct()
 	{
-  	$today = date("Y-m-d", time());
-  	$timeNow = date("h:i:s", time());
-  	
+		$this->globalNotitfy = new Users();
+		$this->module = '22';
 		$this->data=[
 			'm'=>'manage_location',
-			'sm'=>'provinces',
+			'sm'=>$this->module,
 			'title'=>'ទីតាំងខេត្ត',
       // Notification Appointments
-			'appNotify' => new Users(),
+			'appNotify' => $this->globalNotitfy->appointNotify(),
 		];
 	}
 	
@@ -40,7 +35,8 @@ class provincesController extends Controller
 			// Select Data From Table
 			'provinces' => Provinces::orderBy('pro_description', 'asc')->get(),
 		];
-		return view('provinces.index',$this->data);
+		// return view('provinces.index',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('provinces.index',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -53,7 +49,8 @@ class provincesController extends Controller
 		$this->data+=[
 			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('provinces.index') .'"><i class="fa fa-location-arrow"></i> ទីតាំងខេត្ត</a></li><li class="active"><i class="fa fa-plus"></i> បន្ថែមថ្មី</li>',
 		];
-		return view('provinces.create',$this->data);
+		// return view('provinces.create',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('provinces.create',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -76,15 +73,19 @@ class provincesController extends Controller
 				->withInput();
 		}
 
-		// Insert to Table
-		$provinces = new Provinces;
-		$provinces->pro_name = $r->pro_name;
-		$provinces->pro_description = $r->pro_description;
-		$provinces->save();
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// Insert to Table
+			$provinces = new Provinces;
+			$provinces->pro_name = $r->pro_name;
+			$provinces->pro_description = $r->pro_description;
+			$provinces->save();
 
-		// Redirect
-		return redirect()->route('provinces.index')
-			->with('success', 'ទីតាំងខេត្តបានបញ្ចូលដោយជោគជ័យ: ' . $r->pro_name);
+			// Redirect
+			return redirect()->route('provinces.index')
+				->with('success', 'ទីតាំងខេត្តបានបញ្ចូលដោយជោគជ័យ: ' . $r->pro_name);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 
 	/**
@@ -110,7 +111,8 @@ class provincesController extends Controller
 			'pro' => Provinces::find($id),
 			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('provinces.index') .'"><i class="fa fa-location-arrow"></i> ទីតាំងខេត្ត</a></li><li class="active"><i class="fa fa-pencil"></i> កែប្រែ៖ '. Provinces::find($id)->pro_name.'</li>',
 		];
-		return view('provinces.edit',$this->data);
+		// return view('provinces.edit',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('provinces.edit',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -132,15 +134,19 @@ class provincesController extends Controller
 				->withInput();
 		}
 
-		// Update Item
-		$provinces = Provinces::find($id);
-		$provinces->pro_name = $r->pro_name;
-		$provinces->pro_description = $r->pro_description;
-		$provinces->save();
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// Update Item
+			$provinces = Provinces::find($id);
+			$provinces->pro_name = $r->pro_name;
+			$provinces->pro_description = $r->pro_description;
+			$provinces->save();
 
-    // redirect
-		return redirect()->route('provinces.index')
-			->with('success', 'ទីតាំងខេត្តបានកែប្រែដោយជោគជ័យ៖ ' . $r->pro_name);
+	    // redirect
+			return redirect()->route('provinces.index')
+				->with('success', 'ទីតាំងខេត្តបានកែប្រែដោយជោគជ័យ៖ ' . $r->pro_name);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 
 	/**
@@ -151,13 +157,17 @@ class provincesController extends Controller
 	 */
 	public function destroy(provinces $provinces, $id)
 	{
-		// delete
-    $ms = Provinces::find($id);
-    $pro_name = $ms->pro_name;
-    $ms->delete();
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// delete
+	    $ms = Provinces::find($id);
+	    $pro_name = $ms->pro_name;
+	    $ms->delete();
 
-    // redirect
-		return redirect()->route('provinces.index')
-			->with('success', 'ទីតាំងខេត្តបានលុបចោលដោយជោគជ័យ៖ '. $pro_name);
+	    // redirect
+			return redirect()->route('provinces.index')
+				->with('success', 'ទីតាំងខេត្តបានលុបចោលដោយជោគជ័យ៖ '. $pro_name);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 }

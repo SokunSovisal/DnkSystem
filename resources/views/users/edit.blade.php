@@ -29,7 +29,7 @@
 						<div class="col-sm-12">
 							<div class="form-group {{(($errors->has('name'))?'has-error':'')}}">
 								<label for="">ភេទ <small>*</small></label>
-								<select name="gender" class="form-control nbr select2" required>
+								<select name="gender" class="form-control nbr" required>
 									<option value="">-- ជ្រើសរើសភេទ --</option>
 										<option value="1" {{ (($user->gender == 1) || ((count($errors) > 0) && (old('gender') == 1))) ? 'selected':'' }}>ប្រុស</option>
 										<option value="2" {{ (($user->gender == 2) || ((count($errors) > 0) && (old('gender') == 1))) ? 'selected':'' }}>ស្រី</option>
@@ -37,29 +37,15 @@
 								</select>
 							</div>
 						</div>
-
-						<div class="col-sm-12">
-							<div class="form-group {{(($errors->has('position'))?'has-error':'')}}">
-								<label for="">តួនាទី <small>*</small></label>
-								<input class="form-control nbr" type="text" name="position" placeholder="position" value="{{ $errors->has('position') ? old('position') : $user->position }}" autocomplete="off" required="" />
-							</div>
-						</div>
-
-						<div class="col-sm-12">
-							<div class="form-group {{(($errors->has('salary'))?'has-error':'')}}">
-								<label for="">ប្រាក់ខែ <small>*</small></label>
-								<input class="form-control nbr" type="text" name="salary" placeholder="salary" value="{{ $errors->has('salary') ? old('salary') : $user->salary }}" autocomplete="off" required />
-							</div>
-						</div>
-					</div><!-- /.column -->
-
-					<div class="col-sm-6">
 						<div class="col-sm-12">
 							<div class="form-group {{(($errors->has('email'))?'has-error':'')}}">
 								<label for="">អ៊ីមែល <small>*</small></label>
 								<input class="form-control nbr" type="email" name="email" placeholder="email" value="{{ $errors->has('email') ? old('email') : $user->email }}" autocomplete="off" required="" />
 							</div>
 						</div>
+					</div><!-- /.column -->
+
+					<div class="col-sm-6">
 						<div class="col-sm-12">
 							<div class="form-group {{(($errors->has('phone'))?'has-error':'')}}">
 								<label for="">លេខទូរស័ព្ទ <small>*</small></label>

@@ -31,13 +31,6 @@ span.bg-alert{
 .action form {
   display: inline;
 }
-.action .delete{
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: inline;
-  padding: 0 2px;
-}
 .status{
   margin: 0;
   display: inline;

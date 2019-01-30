@@ -36,7 +36,7 @@
 						<div class="form-group {{(($errors->has('app_datetime'))?'has-error':'')}}">
 							<label class="control-label">ថ្ងៃខែ & ម៉ោង <small>*</small></label>
 							<div class='input-group date'>
-								<input class="form-control nbr" type="text" id='datetimepicker' name="app_datetime" placeholder="date & time" value="{{ (count($errors) > 0) ? old('app_datetime') : $appointment->app_datetime }}" autocomplete="off" required data-mask="9999-99-99 99:99:99" />
+								<input class="form-control" type="text" id='datetimepicker' name="app_datetime" placeholder="date & time" value="{{ (count($errors) > 0) ? old('app_datetime') : $appointment->app_datetime }}" autocomplete="off" required data-mask="9999-99-99 99:99:99" />
 								<span class="nbr input-group-addon">
 									<span class="glyphicon glyphicon-calendar"></span>
 								</span>
@@ -47,7 +47,7 @@
 					<div class="col-sm-12">
 						<div class="form-group">
 							<label class="control-label">បុគ្គលិក <small>*</small></label>
-							<select name="app_user_id" class="form-control nbr select2" required>
+							<select name="app_user_id" class="form-control select2" required>
 								<option value="">-- ជ្រើសរើសបុគ្គលិក --</option>
 								@foreach($users as $i => $user)
 									<option value="{{$user->id}}" {{ ($appointment->app_user_id==$user->id) || ($user->id == old('app_user_id')) ? 'selected':'' }}>{{$user->name}}</option>
@@ -59,7 +59,7 @@
 					<div class="col-sm-12">
 						<div class="form-group">
 							<label class="control-label">ក្រុមហ៊ុន <small>*</small></label>
-							<select name="app_company_id" class="form-control nbr select2" required>
+							<select name="app_company_id" class="form-control select2" required>
 								<option value="">-- ជ្រើសរើសក្រុមហ៊ុន --</option>
 								@foreach($companies as $i => $com)
 									<option value="{{$com->id}}" {{ ($appointment->app_company_id==$com->id) || ($com->id == old('app_company_id')) ? 'selected':'' }}>{{$com->com_name}}</option>
@@ -71,7 +71,7 @@
 					<div class="col-sm-12">
 						<div class="form-group">
 							<label class="control-label">ដំណើរការចម្លើយ <small>*</small></label>
-							<select name="app_status" class="form-control nbr" required>
+							<select name="app_status" class="form-control" required>
 								<option value="">-- ជ្រើសរើសដំណើរការចម្លើយ --</option>
 								<option value="1" {{ ($appointment->app_status==1) || (old('app_status')==1) ? 'selected':'' }}>មិនទាន់មានចម្លើយ</option>
 								<option value="2" {{ ($appointment->app_status==2) || (old('app_status')==2) ? 'selected':'' }}>ជោគជ័យ</option>
@@ -83,7 +83,7 @@
 					<div class="col-sm-12">
 						<div class="form-group">
 							<label for="">ពណ៌នា</label>
-							<textarea class="form-control nbr" name="app_description" style="height: 108px;" placeholder="description">{{ (count($errors) > 0) ? old('app_description') : $appointment->app_description }}</textarea>
+							<textarea class="form-control" name="app_description" style="height: 108px;" placeholder="description">{{ (count($errors) > 0) ? old('app_description') : $appointment->app_description }}</textarea>
 						</div>
 					</div>
 				</div><!-- /.column -->
@@ -93,7 +93,7 @@
 						<div class="form-group">
 							<div class='input-group my-group'>
 								<label class="control-label">ប្រធានបទសេវាកម្ម</label>
-								<select name="services" id="services" class="form-control nbr select2">
+								<select name="services" id="services" class="form-control select2">
 									<option value="">-- ជ្រើសរើសប្រធានបទសេវាកម្ម --</option>
 									@foreach($services as $i => $s)
 										<option value="{{$s->id}}">{{$s->s_name}}</option>
@@ -112,8 +112,8 @@
 							@foreach($services as $i => $s)
 								@if($s->id==$serv)
 									<div class="input-group mb-1 fieldwrapper" id="field-{{$serv}}"/>
-										<span class="sr-only nbr input-group-addon service_id"><input type="text" name="app_services_id[]" value="{{$serv}}" class="form-control" /></span>
-										<input class="form-control nbr" value="{{$s->s_name}}" type="text" disabled/>
+										<span class="sr-only input-group-addon service_id"><input type="text" name="app_services_id[]" value="{{$serv}}" class="form-control" /></span>
+										<input class="form-control" value="{{$s->s_name}}" type="text" disabled/>
 										<span class="input-group-btn btn-remove"><span class="nbr btn btn-danger"><i class="fa fa-times"></i></span></span>
 									</div>
 								@endif
@@ -161,8 +161,8 @@
 						var intId = (lastField && lastField.length && lastField.data("idx") + 1) || 1;
 						var fieldWrapper = $('<div class="input-group mb-1 fieldwrapper" id="field-' + $('#services').val() + '"/>');
 						fieldWrapper.data("idx", intId);
-						var fName = $('<span class="sr-only nbr input-group-addon service_id"><input type="text" name="app_services_id[]" value="'+ $('#services').val() +'" class="form-control" /></span>');
-						var fType = $('<input class="form-control nbr" value="'+ $('#services').find(':selected').text() +'" type="text" disabled/>');
+						var fName = $('<span class="sr-only input-group-addon service_id"><input type="text" name="app_services_id[]" value="'+ $('#services').val() +'" class="form-control" /></span>');
+						var fType = $('<input class="form-control" value="'+ $('#services').find(':selected').text() +'" type="text" disabled/>');
 						var removeButton = $('<span class="input-group-btn"><span class="nbr btn btn-danger"><i class="fa fa-times"></i></span></span>');
 						removeButton.click(function() {
 							var parent = $(this).parent();

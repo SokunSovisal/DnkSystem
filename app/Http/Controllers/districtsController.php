@@ -10,22 +10,20 @@ use Validator;
 
 class districtsController extends Controller
 {
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
 
-	private $date;
+	private $globalNotitfy;
+	private $module;
 
 	public function __construct()
 	{  	
+		$this->globalNotitfy = new Users();
+		$this->module = '23';
 		$this->data=[
 			'title'=>'ទីតាំងស្រុក',
 			'm'=>'manage_location',
-			'sm'=>'districts',
+			'sm'=>$this->module,
       // Notification Appointments
-			'appNotify' => new Users(),
+			'appNotify' => $this->globalNotitfy->appointNotify(),
 		];
 	}
 
@@ -37,7 +35,8 @@ class districtsController extends Controller
 			// Select Data From Table
 			'districts' => Districts::orderBy('dist_province_id', 'asc')->get(),
 		];
-		return view('districts.index',$this->data);
+		// return view('districts.index',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('districts.index',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -51,7 +50,8 @@ class districtsController extends Controller
 			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('districts.index') .'"><i class="fa fa-heart"></i> ទីតាំងស្រុក</a></li><li class="active"><i class="fa fa-plus"></i> បន្ថែមថ្មី</li>',
 			'provinces' => Provinces::orderBy('pro_description', 'asc')->get(),
 		];
-		return view('districts.create',$this->data);
+		// return view('districts.create',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('districts.create',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -76,17 +76,21 @@ class districtsController extends Controller
 				->withInput();
 		}
 
-		// Insert to Table
-		$districts = new districts;
-		$districts->dist_name = $r->dist_name;
-		$districts->dist_code = $r->dist_code;
-		$districts->dist_province_id = $r->dist_province_id;
-		$districts->dist_description = $r->dist_description;
-		$districts->save();
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// Insert to Table
+			$districts = new districts;
+			$districts->dist_name = $r->dist_name;
+			$districts->dist_code = $r->dist_code;
+			$districts->dist_province_id = $r->dist_province_id;
+			$districts->dist_description = $r->dist_description;
+			$districts->save();
 
-		// Redirect
-		return redirect()->route('districts.index')
-			->with('success', 'ទីតាំងស្រុកបានបញ្ចូលដោយជោគជ័យ: ' . $r->dist_name);
+			// Redirect
+			return redirect()->route('districts.index')
+				->with('success', 'ទីតាំងស្រុកបានបញ្ចូលដោយជោគជ័យ: ' . $r->dist_name);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 
 	/**
@@ -113,7 +117,8 @@ class districtsController extends Controller
 			'provinces' => Provinces::orderBy('pro_description', 'asc')->get(),
 			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('districts.index') .'"><i class="fa fa-heart"></i> ទីតាំងស្រុក</a></li><li class="active"><i class="fa fa-pencil"></i> កែប្រែ៖ '. Districts::find($id)->dist_name.'</li>',
 		];
-		return view('districts.edit',$this->data);
+		// return view('districts.edit',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('districts.edit',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -137,17 +142,21 @@ class districtsController extends Controller
 				->withInput();
 		}
 
-		// Update Item
-		$districts = Districts::find($id);
-		$districts->dist_name = $r->dist_name;
-		$districts->dist_code = $r->dist_code;
-		$districts->dist_province_id = $r->dist_province_id;
-		$districts->dist_description = $r->dist_description;
-		$districts->save();
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// Update Item
+			$districts = Districts::find($id);
+			$districts->dist_name = $r->dist_name;
+			$districts->dist_code = $r->dist_code;
+			$districts->dist_province_id = $r->dist_province_id;
+			$districts->dist_description = $r->dist_description;
+			$districts->save();
 
-		// redirect
-		return redirect()->route('districts.index')
-			->with('success', 'ទីតាំងស្រុកបានកែប្រែដោយជោគជ័យ៖ ' . $r->dist_name);
+			// redirect
+			return redirect()->route('districts.index')
+				->with('success', 'ទីតាំងស្រុកបានកែប្រែដោយជោគជ័យ៖ ' . $r->dist_name);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 
 	/**
@@ -158,13 +167,17 @@ class districtsController extends Controller
 	 */
 	public function destroy(districts $districts, $id)
 	{
-		// delete
-		$s = Districts::find($id);
-		$dist_name = $s->dist_name;
-		$s->delete();
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// delete
+			$s = Districts::find($id);
+			$dist_name = $s->dist_name;
+			$s->delete();
 
-		// redirect
-		return redirect()->route('districts.index')
-			->with('success', 'ទីតាំងស្រុកបានលុបចោលដោយជោគជ័យ៖ '. $dist_name);
+			// redirect
+			return redirect()->route('districts.index')
+				->with('success', 'ទីតាំងស្រុកបានលុបចោលដោយជោគជ័យ៖ '. $dist_name);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 }

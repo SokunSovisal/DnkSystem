@@ -113,11 +113,10 @@
 							{!! $qs->qs_description !!}
 						</td>
 						<td class="action">
-							<span data-toggle="modal" data-target="#qs" style="cursor: pointer;" title="Edit" class="text-success edit" data-qsid="{{$qs->id}}"><i class="fa fa-pencil-alt"></i></span>
-							/
+							<span data-toggle="modal" data-target="#qs" style="cursor: pointer;" title="Edit" class="btn btn-sm btn-info edit" data-qsid="{{$qs->id}}"><i class="fa fa-pencil-alt"></i></span>
 							{{Form::open(['url'=>route('quotationservices.destroy',$qs->id)])}}
 								{{Form::hidden('_method','DELETE')}}
-								<button type="button" title="លុបសេវាកម្មពីក្នុងសម្រង់តម្លៃ" class="delete text-danger" data-text="តើអ្នកសម្រេចចិត្តច្បាស់ថាចង់លុបសេវាកម្មពីក្នុងសម្រង់តម្លៃនេះមែនទេ?" data-type="warning" data-rstitle="ជោគជ័យ" data-rstext="សេវាកម្មពីក្នុងសម្រង់តម្លៃត្រូវបានលុប."><i class="fa fa-trash-alt"></i>
+								<button type="button" title="លុបសេវាកម្មពីក្នុងសម្រង់តម្លៃ" class="delete btn btn-sm btn-danger" data-text="តើអ្នកសម្រេចចិត្តច្បាស់ថាចង់លុបសេវាកម្មពីក្នុងសម្រង់តម្លៃនេះមែនទេ?" data-type="warning" data-rstitle="ជោគជ័យ" data-rstext="សេវាកម្មពីក្នុងសម្រង់តម្លៃត្រូវបានលុប."><i class="fa fa-trash-alt"></i>
 								</button>
 								<button type="submit" class="sub_delete sr-only"></button>
 							{{Form::close()}}

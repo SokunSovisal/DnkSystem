@@ -13,6 +13,8 @@ use App\Models\Appointments;
 use App\Models\quotation_services;
 use App\Models\invoice;
 use App\Models\Receipts;
+use App\Models\bills;
+use App\Models\payment_transitions;
 use DB;
 
 class ajaxController extends Controller
@@ -105,12 +107,33 @@ class ajaxController extends Controller
 	{
 		$id = $r->get('id');
 		$inv = invoice::find($id);
-		$rec_full_ammount = $inv->inv_total;
-		$receipt = receipts::where('rec_inv_id', $id)->orderBy('id','DESC')->first();
-		if (isset($receipt->rec_balance)) {
-			$rec_full_ammount = $receipt->rec_balance;
+		if ($inv->inv_vat_status == 2) {
+			$rec_full_amount = $inv->inv_total*1.1;
+		}else{
+			$rec_full_amount = $inv->inv_total;
 		}
-		$output = $inv->inv_company_id.':'.$rec_full_ammount;
+		$rec_received_total = 0;
+		$receipts = receipts::where('rec_inv_id', $id)->get();
+		foreach ($receipts as $id => $receipt) {
+			$rec_received_total += $receipt->rec_received_amount;
+		}
+		
+		$output = $inv->inv_company_id.':'.$rec_full_amount.':'.$rec_received_total;
+		echo $output;
+	}
+
+	public function accountpayable(Request $r)
+	{
+		$id = $r->get('id');
+		$bill = bills::find($id);
+		$bill_total = $bill->br_total;
+		$bill_company_id = $bill->br_company_id;
+		$pt_amount_total = 0;
+		$payment_transitions = payment_transitions::where('pt_bill_id', $id)->orderBy('id','DESC')->get();
+		foreach ($payment_transitions as $id => $ap) {
+			$pt_amount_total += $ap->pt_amount;
+		}
+		$output = $bill_company_id.':'.$bill_total.':'.$pt_amount_total;
 		echo $output;
 	}
 }

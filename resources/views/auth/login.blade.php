@@ -83,10 +83,10 @@
 					<div class="form-group row">
 						<div class="col-sm-10 col-sm-offset-1">
 							<button type="submit" class="btn btn-success btn-block btn-lg">
-								<i class="fa fa-sign-in-alt"></i> {{ __('Login') }}
+								<i class="fa fa-sign-in-alt"></i> <span class="roboto_r">{{ __('Login') }}</span>
 							</button>
 							<a href="{{route('register')}}" class="btn btn-primary btn-block btn-lg">
-								<i class="fa fa-user-plus"></i> {{ __('Register') }}
+								<i class="fa fa-user-plus"></i> <span class="roboto_r">{{ __('Register') }}</span>
 							</a>
 						</div>
 					</div>

@@ -41,11 +41,10 @@
 						<td><span class="label label-{{($app->app_status==1)?'warning':(($app->app_status==2)?'success':'danger')}} btn-xs">{{ ($app->app_status==1)?'មិនទាន់មានចម្លើយ':(($app->app_status==2)?'ជោគជ័យ':'មិនជោគជ័យ') }}</span></td>
 						<td>{{ $app->user->name }}</td>
 						<td class="action">
-							<a href="{{route('appointments.edit',$app->id)}}" title="Edit" class="edit text-info"><i class="fa fa-pencil-alt"></i></a>
-							/
+							<a href="{{route('appointments.edit',$app->id)}}" title="Edit" class="edit btn btn-info btn-sm"><i class="fa fa-pencil-alt"></i></a>
 							{{Form::open(['url'=>route('appointments.destroy',$app->id)])}}
 								{{Form::hidden('_method','DELETE')}}
-								<button type="button" title="លុបការណាត់ជួប" class="delete text-danger" data-text="តើអ្នកសម្រេចចិត្តច្បាស់ថាចង់លុបការណាត់ជួបនេះមែនទេ?" data-type="warning" data-rstitle="ជោគជ័យ" data-rstext="ការណាត់ជួបត្រូវបានលុប."><i class="fa fa-trash-alt"></i>
+								<button type="button" title="លុបការណាត់ជួប" class="delete btn btn-sm btn-danger" data-text="តើអ្នកសម្រេចចិត្តច្បាស់ថាចង់លុបការណាត់ជួបនេះមែនទេ?" data-type="warning" data-rstitle="ជោគជ័យ" data-rstext="ការណាត់ជួបត្រូវបានលុប."><i class="fa fa-trash-alt"></i>
 								</button>
 								<button type="submit" class="sub_delete sr-only"></button>
 							{{Form::close()}}

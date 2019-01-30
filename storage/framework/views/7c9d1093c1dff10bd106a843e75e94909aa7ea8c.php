@@ -1,12 +1,10 @@
-@extends('layouts.app')
-
-@section('css')
+<?php $__env->startSection('css'); ?>
 <style type="text/css">
   td{ font-family: 'roboto_r'!important;}
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 	
 
   <!-- Modal -->
@@ -15,8 +13,8 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="invdLabel">បញ្ចូលសេវាកម្មទៅក្នុងវិក្កយបត្រ៖ {{$invoices->inv_number}}</h4>
-          <input type="hidden" name="invd_invoice_id" id="invd_invoice_id" value="{{$invoices->id}}"/>
+          <h4 class="modal-title" id="invdLabel">បញ្ចូលសេវាកម្មទៅក្នុងវិក្កយបត្រ៖ <?php echo e($invoices->inv_number); ?></h4>
+          <input type="hidden" name="invd_invoice_id" id="invd_invoice_id" value="<?php echo e($invoices->id); ?>"/>
         </div>
         <div class="modal-body">
           <input type="hidden" name="invd_id" id="invd_id" />
@@ -26,9 +24,9 @@
                 <label class="control-label">រើសពីសម្រង់តម្លៃ</label>
                 <select class="form-control nbr dynamic_select" id="quotations">
                   <option value="">-- ជ្រើសរើសសម្រង់តម្លៃ --</option>
-                  @foreach($quotations as $i => $quote)
-                    <option value="{{$quote->id}}" {{($quote->id==$invoices->inv_quote_refer)?'selected':''}}>{{$quote->quote_number}}</option>
-                  @endforeach
+                  <?php $__currentLoopData = $quotations; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $quote): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <option value="<?php echo e($quote->id); ?>" <?php echo e(($quote->id==$invoices->inv_quote_refer)?'selected':''); ?>><?php echo e($quote->quote_number); ?></option>
+                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
               </div>
             </div>
@@ -37,9 +35,9 @@
                 <label class="control-label">សេវាកម្ម <small>*</small></label>
                 <select name="invd_service_id" class="form-control nbr select2" id="invd_service_id" required>
                   <option value="">-- ជ្រើសរើសសេវាកម្ម --</option>
-                  @foreach($services as $i => $service)
-                    <option value="{{$service->id}}">{{$service->s_name}}</option>
-                  @endforeach
+                  <?php $__currentLoopData = $services; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $service): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <option value="<?php echo e($service->id); ?>"><?php echo e($service->s_name); ?></option>
+                  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </select>
               </div>
             </div>
@@ -52,18 +50,18 @@
             <div class="col-sm-4">
               <div class="form-group">
                 <label class="control-label">កែប្រែតម្លៃ <small>*</small></label>
-                <input class="form-control nbr" type="text" id='invd_price' placeholder="update price" value="0" autocomplete="off"/>
+                <input class="form-control nbr" type="text" id='invd_price' placeholder="update price" value="0" autocomplete="off" required/>
               </div>
             </div>
             <div class="col-sm-4">
               <div class="form-group">
                 <label class="control-label">ចំនួន <small>*</small></label>
-                <input class="form-control nbr" type="text" id='invd_qty' placeholder="quantity" value="1" autocomplete="off"/>
+                <input class="form-control nbr" type="text" id='invd_qty' placeholder="quantity" value="1" autocomplete="off" required/>
               </div>
             </div>
             <div class="col-sm-12">
               <div class="form-group">
-                <label class="control-label">ព័ត៌មានលម្អិត <small>*</small></label>
+                <label class="control-label">ព័ត៌មានលម្អិត</label>
                 <textarea class="form-control nbr" type="text" id='invd_description' placeholder="service detail" autocomplete="off"></textarea>
               </div>
             </div>
@@ -77,17 +75,19 @@
       </div>
     </div>
   </div>
-  {{ csrf_field() }}
+  <?php echo e(csrf_field()); ?>
+
 
 
 
 	<section class="bg-white">
 		<!-- Add Button & Error Message -->
-    @component('comps.btnBack')
-      @slot('btnBack')
-        {{route('invoices.index')}}
-      @endslot
-    @endcomponent
+    <?php $__env->startComponent('comps.btnBack'); ?>
+      <?php $__env->slot('btnBack'); ?>
+        <?php echo e(route('invoices.index')); ?>
+
+      <?php $__env->endSlot(); ?>
+    <?php echo $__env->renderComponent(); ?>
     &nbsp;
     <button type="button" class="btn btn-success nbr" data-toggle="modal" data-target="#invd"><i class="fa fa-plus"></i> បន្ថែមថ្មី</button>
     <br/>
@@ -102,31 +102,35 @@
         </tr>
       </thead>
       <tbody>
-        @foreach($invoice_detail as $i => $invd)
+        <?php $__currentLoopData = $invoice_detail; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $i => $invd): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
           <tr>
-            <td>{{ $i+1 }}</td>
-            <td>{{ $invd->service->s_name }}</td>
+            <td><?php echo e($i+1); ?></td>
+            <td><?php echo e($invd->service->s_name); ?></td>
             <td>
-              {!! $invd->invd_description !!}
+              <?php echo $invd->invd_description; ?>
+
             </td>
             <td class="action">
-              <span data-toggle="modal" data-target="#invd" style="cursor: pointer;" title="Edit" class="text-success edit" data-invdid="{{$invd->id}}"><i class="fa fa-pencil-alt"></i></span>
+              <span data-toggle="modal" data-target="#invd" style="cursor: pointer;" title="Edit" class="text-success edit" data-invdid="<?php echo e($invd->id); ?>"><i class="fa fa-pencil-alt"></i></span>
               /
-              {{Form::open(['url'=>route('invoicedetail.destroy',$invd->id)])}}
-                {{Form::hidden('_method','DELETE')}}
+              <?php echo e(Form::open(['url'=>route('invoicedetail.destroy',$invd->id)])); ?>
+
+                <?php echo e(Form::hidden('_method','DELETE')); ?>
+
                 <button type="button" title="លុបសេវាកម្មពីក្នុងសម្រង់តម្លៃ" class="delete text-danger" data-text="តើអ្នកសម្រេចចិត្តច្បាស់ថាចង់លុបសេវាកម្មពីក្នុងសម្រង់តម្លៃនេះមែនទេ?" data-type="warning" data-rstitle="ជោគជ័យ" data-rstext="សេវាកម្មពីក្នុងសម្រង់តម្លៃត្រូវបានលុប."><i class="fa fa-trash-alt"></i>
                 </button>
                 <button type="submit" class="sub_delete sr-only"></button>
-              {{Form::close()}}
+              <?php echo e(Form::close()); ?>
+
             </td>
           </tr>
-        @endforeach
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 			</tbody>
 		</table>
 	</section>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
   <script type="text/javascript">
 
     // CKEDITOR myEditor
@@ -161,7 +165,7 @@
           var quote_id =$(this).val();
           var _token = $('input[name="_token"]').val();
           $.ajax({
-            url: "{{route('ajax.quotationservices')}}",
+            url: "<?php echo e(route('ajax.quotationservices')); ?>",
             type: 'post',
             data: {id:quote_id, _token:_token},
             success: function(result){
@@ -179,7 +183,7 @@
           var id = $(this).val();
           var _token = $('input[name="_token"]').val();
           $.ajax({
-            url: "{{route('ajax.servicePrice')}}",
+            url: "<?php echo e(route('ajax.servicePrice')); ?>",
             type: 'post',
             data: {id:id, _token:_token},
             success: function(result){
@@ -200,7 +204,7 @@
           var invd_description = CKEDITOR.instances['invd_description'].getData();
           var _token = $('input[name="_token"]').val();
           $.ajax({
-            url: "{{route('invoicedetail.store')}}",
+            url: "<?php echo e(route('invoicedetail.store')); ?>",
             type: 'post',
             data: {invd_service_id:invd_service_id, invd_qty:invd_qty, invd_price:invd_price, invd_invoice_id:invd_invoice_id, invd_description:invd_description, _token:_token},
             success: function(dataReturn){
@@ -315,4 +319,6 @@
     });
 
   </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.app', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -14,16 +14,19 @@ use Validator;
 class quotationServicesController extends Controller
 {
 	
-	private $date;
+	private $globalNotitfy;
+	private $module;
 
 	public function __construct()
 	{	
+		$this->globalNotitfy = new Users();
+		$this->module = '3';
 		$this->data=[
 			'title'=>'សេវាកម្មនៃសម្រង់តម្លៃ',
-			'm'=>'manage_processing',
-			'sm'=>'quotations',
-	  // Notification Appointments
-			'appNotify' => new Users(),
+			'm'=>'manage_income',
+			'sm'=>$this->module,
+	  	// Notification Appointments
+			'appNotify' => $this->globalNotitfy->appointNotify(),
 		];
 	}
 	/**
@@ -45,7 +48,8 @@ class quotationServicesController extends Controller
 
 					'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('quotations.index') .'"><i class="fa fa-file-alt"></i> សម្រង់តម្លៃ៖ '.Quotations::find($_GET['qid'])->quote_number.'</li></a></li><li class="active"><i class="fa fa-heart"></i> សេវាកម្ម</li>',
 				];
-				return view('quotationservices.index',$this->data);
+				// return view('quotationservices.index',$this->data);
+				return (($this->globalNotitfy->permission($this->module)=='true')? view('quotationservices.index',$this->data) : view('errors.permission',$this->data) );
 			}else{
 				// Redirect
 				return redirect()->route('quotations.index')
@@ -139,13 +143,17 @@ class quotationServicesController extends Controller
 	 */
 	public function destroy(quotation_services $quotation_services, $id)
 	{
-		// delete
-		$qs = quotation_services::find($id);
-		$qid = $qs->qs_quote_id;
-		$qs_service_name = Services::find($qs->qs_service_id)->s_name;
-		$qs->delete();
-		// redirect
-		return redirect()->route('quotationservices.index','qid='.$qid)
-			->with('success', 'សេវាកម្មបានលុបចោលពីក្នុងសម្រង់តម្លៃដោយជោគជ័យ៖ '. $qs_service_name);
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// delete
+			$qs = quotation_services::find($id);
+			$qid = $qs->qs_quote_id;
+			$qs_service_name = Services::find($qs->qs_service_id)->s_name;
+			$qs->delete();
+			// redirect
+			return redirect()->route('quotationservices.index','qid='.$qid)
+				->with('success', 'សេវាកម្មបានលុបចោលពីក្នុងសម្រង់តម្លៃដោយជោគជ័យ៖ '. $qs_service_name);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 }

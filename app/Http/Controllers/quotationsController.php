@@ -15,16 +15,19 @@ use Validator;
 class quotationsController extends Controller
 {
 
-	private $date;
+	private $globalNotitfy;
+	private $module;
 
 	public function __construct()
 	{
+		$this->globalNotitfy = new Users();
+		$this->module = '3';
 		$this->data=[
-			'm'=>'manage_processing',
-			'sm'=>'quotations',
+			'm'=>'manage_income',
+			'sm'=>$this->module,
 			'title'=>'សម្រង់តម្លៃ',
 		  // Notification Appointments
-			'appNotify' => new Users(),
+			'appNotify' => $this->globalNotitfy->appointNotify(),
 		];
 	}
 	
@@ -40,7 +43,8 @@ class quotationsController extends Controller
 			// Select Data From Table
 			'quotations' => Quotations::orderBy('quote_date', 'asc')->get(),
 		];
-		return view('quotations.index',$this->data);
+		// return view('quotations.index',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('quotations.index',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -54,10 +58,11 @@ class quotationsController extends Controller
 			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('quotations.index') .'"><i class="fa fa-file-alt"></i> សម្រង់តម្លៃ</li></a></li><li class="active"><i class="fa fa-plus"></i> បន្ថែមថ្មី</li>',
 			// Select Data From Table
 			'quote' => Quotations::orderBy('created_at', 'desc')->first(),
-			'companies' => Companies::orderBy('com_name', 'asc')->get(),
+			'companies' => Companies::where('com_type', 1)->orWhere('com_type', 3)->orderBy('com_name', 'asc')->get(),
 			'users' => Users::orderBy('name', 'asc')->get(),
 		];
-		return view('quotations.create',$this->data);
+		// return view('quotations.create',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('quotations.create',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -84,24 +89,28 @@ class quotationsController extends Controller
 				->withErrors($validator)
 				->withInput();
 		}
-		// Insert to Table
-		$quotation = new quotations;
-		$quotation->quote_number = $r->quote_number;
-		$quotation->quote_date = $r->quote_date;
-		$quotation->quote_cp_name = $r->quote_cp_name;
-		$quotation->quote_cp_phone = $r->quote_cp_phone;
-		$quotation->quote_cp_email = $r->quote_cp_email;
-		$quotation->quote_company_id = $r->quote_company_id;
-		$quotation->quote_status = $r->quote_status;
-		$quotation->quote_purpose = $r->quote_purpose;
-		$quotation->quote_term = $r->quote_term;
-		$quotation->quote_created_by = Auth::id();
-		$quotation->quote_updated_by = Auth::id();
-		$quotation->save();
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// Insert to Table
+			$quotation = new quotations;
+			$quotation->quote_number = $r->quote_number;
+			$quotation->quote_date = $r->quote_date;
+			$quotation->quote_cp_name = $r->quote_cp_name;
+			$quotation->quote_cp_phone = $r->quote_cp_phone;
+			$quotation->quote_cp_email = $r->quote_cp_email;
+			$quotation->quote_company_id = $r->quote_company_id;
+			$quotation->quote_status = $r->quote_status;
+			$quotation->quote_purpose = $r->quote_purpose;
+			$quotation->quote_term = $r->quote_term;
+			$quotation->quote_created_by = Auth::id();
+			$quotation->quote_updated_by = Auth::id();
+			$quotation->save();
 
-		// Redirect
-		return redirect()->route('quotations.index')
-			->with('success', 'សម្រងតម្លៃបានបញ្ចូលដោយជោគជ័យ: ' . $r->quote_number);
+			// Redirect
+			return redirect()->route('quotations.index')
+				->with('success', 'សម្រងតម្លៃបានបញ្ចូលដោយជោគជ័យ: ' . $r->quote_number);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 
 	/**
@@ -120,7 +129,8 @@ class quotationsController extends Controller
 			// Select Data From Table
 			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('quotations.index') .'"><i class="fa fa-file-alt"></i> សម្រង់តម្លៃ</li></a></li><li class="active"><i class="fa fa-eye"></i> បង្ហាញ៖ '.Quotations::find($id)->quote_number.'</li>',
     ];
-    return view('quotations.show',$this->data);
+    // return view('quotations.show',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('quotations.show',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -134,12 +144,13 @@ class quotationsController extends Controller
     $this->data+=[
 			// Select Data From Table
 			'quote' => Quotations::find($id),
-			'companies' => Companies::orderBy('com_name', 'asc')->get(),
+			'companies' => Companies::where('com_type', 1)->orWhere('com_type', 3)->orderBy('com_name', 'asc')->get(),
 			'users' => Users::orderBy('name', 'asc')->get(),
 			// Select Data From Table
 			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('quotations.index') .'"><i class="fa fa-file-alt"></i> សម្រង់តម្លៃ</li></a></li><li class="active"><i class="fa fa-pencil-alt"></i> កែប្រែ៖ '.Quotations::find($id)->quote_number.'</li>',
     ];
-    return view('quotations.edit',$this->data);
+    // return view('quotations.edit',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('quotations.edit',$this->data) : view('errors.permission',$this->data) );
 	}
 
 	/**
@@ -167,23 +178,27 @@ class quotationsController extends Controller
 				->withErrors($validator)
 				->withInput();
 		}
-		// Insert to Table
-		$quotation = Quotations::find($id);
-		$quotation->quote_date = $r->quote_date;
-		$quotation->quote_cp_name = $r->quote_cp_name;
-		$quotation->quote_cp_phone = $r->quote_cp_phone;
-		$quotation->quote_cp_email = $r->quote_cp_email;
-		$quotation->quote_company_id = $r->quote_company_id;
-		$quotation->quote_status = $r->quote_status;
-		$quotation->quote_purpose = $r->quote_purpose;
-		$quotation->quote_term = $r->quote_term;
-		$quotation->quote_created_by = Auth::id();
-		$quotation->quote_updated_by = Auth::id();
-		$quotation->save();
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// Insert to Table
+			$quotation = Quotations::find($id);
+			$quotation->quote_date = $r->quote_date;
+			$quotation->quote_cp_name = $r->quote_cp_name;
+			$quotation->quote_cp_phone = $r->quote_cp_phone;
+			$quotation->quote_cp_email = $r->quote_cp_email;
+			$quotation->quote_company_id = $r->quote_company_id;
+			$quotation->quote_status = $r->quote_status;
+			$quotation->quote_purpose = $r->quote_purpose;
+			$quotation->quote_term = $r->quote_term;
+			$quotation->quote_created_by = Auth::id();
+			$quotation->quote_updated_by = Auth::id();
+			$quotation->save();
 
-		// Redirect
-		return redirect()->route('quotations.index')
-			->with('success', 'សម្រងតម្លៃបានកែប្រែដោយជោគជ័យ: ' . $r->quote_number);
+			// Redirect
+			return redirect()->route('quotations.index')
+				->with('success', 'សម្រងតម្លៃបានកែប្រែដោយជោគជ័យ: ' . $r->quote_number);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 
 	/**
@@ -194,12 +209,16 @@ class quotationsController extends Controller
 	 */
 	public function destroy(quotations $quotations,$id)
 	{
-		// delete
-		$quote = Quotations::find($id);
-		$quote_number = $quote->quote_number;
-		$quote->delete();
-		// redirect
-		return redirect()->route('quotations.index')
-			->with('success', 'សម្រង់តម្លៃបានលុបចោលដោយជោគជ័យ៖ '. $quote_number);
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// delete
+			$quote = Quotations::find($id);
+			$quote_number = $quote->quote_number;
+			$quote->delete();
+			// redirect
+			return redirect()->route('quotations.index')
+				->with('success', 'សម្រង់តម្លៃបានលុបចោលដោយជោគជ័យ៖ '. $quote_number);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 }

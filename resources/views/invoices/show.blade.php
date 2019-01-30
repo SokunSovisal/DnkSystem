@@ -208,7 +208,7 @@
 							</th>
 							<th width="18%">
 								<h4 class="khmerOsmoul">ថ្លៃសរុប</h4>
-								<h4>Ammount(USD)</h4>
+								<h4>amount(USD)</h4>
 							</th>
 						</tr>
 					</thead>
@@ -231,7 +231,7 @@
 					</tbody>
 					<tfoot>
 						<tr>
-								<td colspan="4" class="text-right"><span class="khmerOsmoul">សរុប</span>/(Sub Total)</td>
+								<td colspan="4" class="text-right"><span class="khmerOsmoul">សរុប</span>/({{($invoice->inv_vat_status==2)?'Sub ':''}} Total)</td>
 								<td class="text-right" colspan="2"><span class="pull-left">$</span> {{number_format($total_amount, 2)}}</td>
 							</tr>
 							<tr class="{{($invoice->inv_vat_status==1)?'sr-only':''}}" >

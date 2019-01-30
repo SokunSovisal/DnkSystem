@@ -31,7 +31,7 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
 	Route::get('', 'HomeController@index')->name('home');
 	Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
 
-	// Manage Work Processing
+	// Manage Work Income
 	//============== Appointments
 	Route::resource('appointments', 'appointmentsController');
 	//============== Quotations
@@ -46,6 +46,39 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
 	Route::resource('invoicedetail', 'invoiceDetailController');
 	//============== Recipts
 	Route::resource('receipts', 'receiptsController');
+	
+	// Manage Expense
+	//============== billsreceived
+	Route::resource('billsreceived', 'billsreceivedController');
+	//============== Accountpayable
+	Route::resource('accountpayables', 'accountpayablesController');
+
+	// Manage Report
+	//============== ARReport
+	Route::get('ARReport', 'ARReportController@index')->name('ARReport.index');
+	Route::post('ARReport/search', 'ARReportController@search')->name('ARReport.search');
+	Route::post('ARReport/receipts', 'ARReportController@receipts')->name('ARReport.receipts');
+	// Route::post('ARReport/receipts', 'ARReportController@receipts')->name('ARReport.receipts');
+	//============== APReport
+	Route::get('APReport', 'APReportController@index')->name('APReport.index');
+	Route::post('APReport/search', 'APReportController@search')->name('APReport.search');
+	Route::post('APReport/payments', 'APReportController@payments')->name('APReport.payments');
+	// Route::post('incomereport/receipts', 'IncomeReportController@receipts')->name('incomereport.receipts');
+	//============== income report
+	Route::get('incomereport', 'IncomeReportController@index')->name('incomereport.index');
+	Route::post('incomereport/invoices', 'IncomeReportController@invoices')->name('incomereport.invoices');
+	Route::post('incomereport/receipts', 'IncomeReportController@receipts')->name('incomereport.receipts');
+	Route::post('incomereport/search', 'IncomeReportController@search')->name('incomereport.search');
+	//============== expense report
+	Route::get('expensereport', 'ExpenseReportController@index')->name('expensereport.index');
+	Route::post('expensereport/bills', 'ExpenseReportController@bills')->name('expensereport.bills');
+	Route::post('expensereport/payments', 'ExpenseReportController@payments')->name('expensereport.payments');
+	Route::post('expensereport/search', 'ExpenseReportController@search')->name('expensereport.search');
+	//============== ProfitLoss report
+	Route::get('profitloss', 'ProfitLossController@index')->name('profitloss.index');
+	Route::post('profitloss/receipts', 'ProfitLossController@receipts')->name('profitloss.receipts');
+	Route::post('profitloss/search', 'ProfitLossController@search')->name('profitloss.search');
+
 
 	// Manage services
 	//============== Main Services
@@ -57,6 +90,7 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
 	//============== objectives
 	Route::resource('objectives', 'objectivesController');
 	//============== companies
+	Route::get('companies/list', 'companiesController@list')->name('companies.list');
 	Route::resource('companies', 'companiesController');
 	Route::get('companies/{id}/image', 'companiesController@image')->name('companies.image');
 	Route::put('companies/{id}/image_update', 'companiesController@image_update')->name('companies.image_update');
@@ -67,19 +101,24 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
 	Route::get('files/{id}/pdf', 'filesController@pdfViewer')->name('files.pdf');
 	
 
-	// Manage Company
+	// Manage User
+	//============== Staffs
+	Route::resource('staffs', 'StaffsController');
 	//============== User Role
-	// Route::resource('roles', 'userRolesController');
-	Route::get('roles', 'userRolesController@index')->name('roles.index');
-	Route::get('roles/{id}/edit', 'userRolesController@edit')->name('roles.edit');
-	Route::put('roles/{id}/update', 'userRolesController@update')->name('roles.update');
-	//============== companies
+	Route::resource('roles', 'userRolesController');
+	//============== Users
 	Route::resource('users', 'usersController');
 	Route::get('users/{id}/password', 'usersController@password')->name('users.password');
 	Route::put('users/{id}/password_update', 'usersController@password_update')->name('users.password_update');
 	Route::put('users/{id}/status', 'usersController@status')->name('users.status');
 	Route::get('users/{id}/image', 'usersController@image')->name('users.image');
 	Route::put('users/{id}/image_update', 'usersController@image_update')->name('users.image_update');
+	Route::get('users/{id}/role', 'usersController@role')->name('users.role');
+	Route::put('users/{id}/role_update', 'usersController@role_update')->name('users.role_update');
+	//============== Staffs
+	Route::get('permissions', 'userPermissionsController@index')->name('permissions.index');
+	Route::post('permissions/set_permission', 'userPermissionsController@set_permission')->name('permissions.set_permission');
+	Route::post('permissions/update_permission', 'userPermissionsController@update_permission')->name('permissions.update_permission');
 
 	// Manage Location
 	//============== provinces
@@ -97,4 +136,10 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
 	Route::post('ajax/invoiceCompany', 'ajaxController@invoiceCompany')->name('ajax.invoiceCompany');
 	Route::post('ajax/quotationservices', 'ajaxController@quotationservices')->name('ajax.quotationservices');
 	Route::post('ajax/receiptinvoice', 'ajaxController@receiptinvoice')->name('ajax.receiptinvoice');
+	Route::post('ajax/accountpayable', 'ajaxController@accountpayable')->name('ajax.accountpayable');
+
+	
+	//============== Error Controller
+	Route::get('errors/permission', 'ErrorController@permission')->name('errors.permission');
+
 });

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Users;
-use App\Models\userRoles;
+use App\Models\user_roles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use DB;
@@ -11,61 +11,50 @@ use Validator;
 use Auth;
 use Image;
 use File;
+use Route;
 
 class usersController extends Controller
 {
-
-	private $date;
 	private $path;
+	private $globalNotitfy;
+	private $module;
 
 	public function __construct()
 	{
+		$this->globalNotitfy = new Users();
+		$this->module = '19';
 		// Define Upload Image Path
 		$this->path=public_path().'/images/user/';
 		$this->data=[
 			'm'=>'manage_users',
-			'sm'=>'users',
+			'sm'=>$this->module,
 			'title'=>'អ្នកប្រើប្រាស់',
       // Notification Appointments
-			'appNotify' => new Users(),
+			'appNotify' => $this->globalNotitfy->appointNotify(),
 		];
 	}
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
+
 	public function index()
 	{
 		$this->data += [
 			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li class="active"><i class="fa fa-user-friends"></i> អ្នកប្រើប្រាស់</li>',
-
 			// Select Data From Table
 			'users' => Users::orderBy('user_role_id', 'desc')->get(),
 		];
-		return view('users.index',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('users.index',$this->data) : view('errors.permission',$this->data) );
 	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
+
 	public function create()
 	{
 		$this->data += [
 			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('users.index') .'"><i class="fa fa-user-friends"></i> អ្នកប្រើប្រាស់</li></a></li><li class="active"><i class="fa fa-plus"></i> បន្ថែមថ្មី</li>',
 		];
-		return view('users.create',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('users.create',$this->data) : view('errors.permission',$this->data) );
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $r
-	 * @return \Illuminate\Http\Response
-	 */
+
 	public function store(Request $r)
 	{
 		// Validate Post Data
@@ -74,8 +63,6 @@ class usersController extends Controller
 			'email' => 'required|email|unique:users',
 			'password' => 'required|min:6',
 			'confirm_password' => 'required_with:password|same:password|min:6',
-			'position' => 'required',
-			'salary' => 'required',
 			'gender' => 'required',
 			'phone' => 'required',
 		]);
@@ -86,57 +73,42 @@ class usersController extends Controller
 				->withErrors($validator)
 				->withInput();
 		}
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// Insert to Table
+			$user = new users;
+			$user->name = $r->name;
+			$user->email = $r->email;
+			$user->password = Hash::make($r->password);
+			$user->gender = $r->gender;
+			$user->phone = $r->phone;
+			$user->description = $r->description;
+			$user->save();
+			// Redirect
+			return redirect()->route('users.index')
+				->with('success', 'អ្នកប្រើប្រាស់បានបញ្ចូលដោយជោគជ័យ: ' . $r->name);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 
-		// Insert to Table
-		$user = new users;
-		$user->name = $r->name;
-		$user->email = $r->email;
-		$user->password = Hash::make($r->password);
-		$user->position = $r->position;
-		$user->salary = $r->salary;
-		$user->gender = $r->gender;
-		$user->phone = $r->phone;
-		$user->description = $r->description;
-		$user->save();
-
-		// Redirect
-		return redirect()->route('users.index')
-			->with('success', 'អ្នកប្រើប្រាស់បានបញ្ចូលដោយជោគជ័យ: ' . $r->name);
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  \App\Models\Users  $users
-	 * @return \Illuminate\Http\Response
-	 */
+
 	public function show(Users $users)
 	{
 		//
 	}
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  \App\Models\Users  $users
-	 * @return \Illuminate\Http\Response
-	 */
+
 	public function edit(Users $users, $id)
 	{
 		$this->data+=[
 			'user' => Users::find($id),
 			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('users.index') .'"><i class="fa fa-user-friends"></i> អ្នកប្រើប្រាស់</a></li><li class="active"><i class="fa fa-pencil"></i> កែប្រែ៖ '. Users::find($id)->name.'</li>',
 		];
-		return view('users.edit',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('users.edit',$this->data) : view('errors.permission',$this->data) );
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $r
-	 * @param  \App\Models\Users  $users
-	 * @return \Illuminate\Http\Response
-	 */
+
 	public function update(Request $r, Users $users, $id)
 	{
 		// Validate Post Data
@@ -153,19 +125,22 @@ class usersController extends Controller
 				->withErrors($validator)
 				->withInput();
 		}
-		// Update Item
-		$user = Users::find($id);
-		$user->name = $r->name;
-		$user->email = $r->email;
-		$user->salary = $r->salary;
-		$user->gender = $r->gender;
-		$user->position = $r->position;
-		$user->phone = $r->phone;
-		$user->description = $r->description;
-		$user->save();
-		// redirect
-		return redirect()->route('users.index')
-			->with('success', 'អ្នកប្រើប្រាស់បានកែប្រែដោយជោគជ័យ៖ ' . $r->name);
+
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// Update Item
+			$user = Users::find($id);
+			$user->name = $r->name;
+			$user->email = $r->email;
+			$user->gender = $r->gender;
+			$user->phone = $r->phone;
+			$user->description = $r->description;
+			$user->save();
+			// redirect
+			return redirect()->route('users.index')
+				->with('success', 'អ្នកប្រើប្រាស់បានកែប្រែដោយជោគជ័យ៖ ' . $r->name);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 
 	public function image(Users $users, $id)
@@ -265,24 +240,60 @@ class usersController extends Controller
 			->with('success', 'ដំណើរការគណនីបានកែប្រែដោយជោគជ័យ៖ ' . $name);
 	}
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  \App\Models\Users  $users
-	 * @return \Illuminate\Http\Response
-	 */
+	public function role(users $users, $id)
+	{
+		$this->data+=[
+			'user' => Users::find($id),
+			'roles' => user_roles::orderBy('id', 'asc')->get(),
+			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><a href="'. route('users.index') .'"><i class="fa fa-user-friends"></i> អ្នកប្រើប្រាស់</a></li><li class="active"><i class="fa fa-pencil"></i> កែប្រែ៖ '. Users::find($id)->name.'</li>',
+		];
+		// return view('users.role',$this->data);
+		return (($this->globalNotitfy->permission($this->module)=='true')? view('users.role',$this->data) : view('errors.permission',$this->data) );
+	}
+
+	public function role_update(Request $r, users $users, $id)
+	{
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// Validate Post Data
+			$validator = Validator::make($r->all(), [
+				'user_role_id' => 'required',
+			]);
+			if ($validator->fails()) {
+				return redirect()->back()
+					->withErrors($validator)
+					->withInput();
+			}
+
+			// Update Item
+			$user = Users::find($id);
+			$user->user_role_id = $r->user_role_id;
+			$user->save();
+
+			// redirect
+			return redirect()->route('users.index')
+				->with('success', 'ឋានៈបានកែប្រែដោយជោគជ័យ៖ ' . $r->name);
+		}else{
+			return redirect(route('errors.permission'));
+		}
+	}
+
+
 	public function destroy(Users $users, $id)
 	{
-		// delete
-		$user = Users::find($id);
-		$name = $user->name;
-		$image = $user->image;
-		$user->delete();
-		if ($image!='default_user.png') {
-			File::delete($this->path.$image);
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// delete
+			$user = Users::find($id);
+			$name = $user->name;
+			$image = $user->image;
+			$user->delete();
+			if ($image!='default_user.png') {
+				File::delete($this->path.$image);
+			}
+			// redirect
+			return redirect()->route('users.index')
+				->with('success', 'អ្នកប្រើប្រាស់បានលុបចោលដោយជោគជ័យ៖ '. $name);
+		}else{
+			return redirect(route('errors.permission'));
 		}
-		// redirect
-		return redirect()->route('users.index')
-			->with('success', 'អ្នកប្រើប្រាស់បានលុបចោលដោយជោគជ័យ៖ '. $name);
 	}
 }

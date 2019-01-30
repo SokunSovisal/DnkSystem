@@ -41,34 +41,78 @@
 						</h4>
 					</div>
 
-					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+					<div class="panel-group" id="accordion-report" role="tablist" aria-multiselectable="true">
 
-						<!-- ========== Companies and Business Objectives -->
+						<div class="sidebar-divider"></div>
+						<!-- ========== Manage Income -->
 						<div class="panel">
 							<div class="panel-heading" role="tab" id="sidebar-processing-heading">
 								<h4 class="panel-title">
-									<a class="collapsed waves-effect" role="button" data-toggle="collapse" data-parent="#accordion" href="#sidebar-processing" aria-expanded="false" aria-controls="sidebar-processing">
-										<i class="fa fa-handshake sidebar-icon"></i> <span class="sidebar-text">គ្រប់គ្រងការងារ <span class="badge badge-danger animated {{(($appNotify->appointNotify())>0)?'animated flash':''}} {{($appNotify->appointNotify()<=0)?'sr-only':''}}">{{$appNotify->appointNotify()}}</span><i class="fa fa-angle-down pull-right mt-05"></i></span>
+									<a class="collapsed waves-effect" role="button" data-toggle="collapse" data-parent="#accordion-report" href="#sidebar-processing" aria-expanded="false" aria-controls="sidebar-processing">
+										<i class="fa fa-funnel-dollar sidebar-icon"></i> <span class="sidebar-text">គ្រប់គ្រងចំណូល  <span class="badge badge-danger animated {{($appNotify>0)?'animated flash':''}} {{($appNotify<=0)?'sr-only':''}}">{{$appNotify}}</span><i class="fa fa-angle-down pull-right mt-05"></i></span>
 									</a>
 								</h4>
 							</div>
-							<div id="sidebar-processing" class="panel-collapse collapse <?=((@$m=='manage_processing')?'in':'collapse')?>" role="tabpanel" aria-labelledby="sidebar-processing-heading">
+							<div id="sidebar-processing" class="panel-collapse collapse <?=((@$m=='manage_income')?'in':'collapse')?>" role="tabpanel" aria-labelledby="sidebar-processing-heading">
 								<div class="panel-body">
 									<ul class="nav">
-										<li class="<?=((@$sm=='appointments')?'active':'')?> {{($appNotify->appointNotify()>0)?'animated bounceInLeft':''}}"><a href="{{route('appointments.index')}}" class="waves-effect"><i class="fa fa-comments sidebar-sub-icon"></i> <span class="sidebar-text">កាណាត់ជួប</span> <span class="badge badge-danger {{($appNotify->appointNotify()<=0)?'sr-only':''}}">{{$appNotify->appointNotify()}}</span></a></li>
-										<li class="<?=((@$sm=='quotations')?'active':'')?>"><a class="waves-effect" href="{{route('quotations.index')}}"><i class="fa fa-file-alt sidebar-sub-icon"></i> <span class="sidebar-text">សម្រង់តម្លៃ</span></a></li>
-										<li class="<?=((@$sm=='invoices')?'active':'')?>"><a class="waves-effect" href="{{route('invoices.index')}}"><i class="fa fa-file-invoice sidebar-sub-icon"></i> <span class="sidebar-text">វិក្កយបត្រ</span></a></li>
-										<li class="<?=((@$sm=='receipts')?'active':'')?>"><a class="waves-effect" href="{{route('receipts.index')}}"><i class="fa fa-receipt sidebar-sub-icon"></i> <span class="sidebar-text">ប័ណ្ណទទួលប្រាក់</span></a></li>
+										<li class="<?=((@$sm=='2')?'active':'')?> {{($appNotify>0)?'animated bounceInLeft':''}}"><a href="{{route('appointments.index')}}" class="waves-effect"><i class="fa fa-comments sidebar-sub-icon"></i> <span class="sidebar-text">កាណាត់ជួប</span> <span class="badge badge-danger {{($appNotify<=0)?'sr-only':''}}">{{$appNotify}}</span></a></li>
+										<li class="<?=((@$sm=='3')?'active':'')?>"><a class="waves-effect" href="{{route('quotations.index')}}"><i class="fa fa-file-alt sidebar-sub-icon"></i> <span class="sidebar-text">សម្រង់តម្លៃ</span></a></li>
+										<li class="<?=((@$sm=='4')?'active':'')?>"><a class="waves-effect" href="{{route('invoices.index')}}"><i class="fa fa-file-invoice sidebar-sub-icon"></i> <span class="sidebar-text">វិក្កយបត្រចំណូល</span></a></li>
+										<li class="<?=((@$sm=='5')?'active':'')?>"><a class="waves-effect" href="{{route('receipts.index')}}"><i class="fa fa-receipt sidebar-sub-icon"></i> <span class="sidebar-text">ប័ណ្ណទទួលប្រាក់</span></a></li>
 									</ul>
 								</div>
 							</div>
 						</div>
 
+						<!-- ========== Manage expense -->
+						<div class="panel">
+							<div class="panel-heading" role="tab" id="sidebar-expense-heading">
+								<h4 class="panel-title">
+									<a class="collapsed waves-effect" role="button" data-toggle="collapse" data-parent="#accordion-report" href="#sidebar-expense" aria-expanded="false" aria-controls="sidebar-expense">
+										<i class="fa fa-money-check-alt sidebar-icon"></i> <span class="sidebar-text">គ្រប់គ្រងចំណាយ <i class="fa fa-angle-down pull-right mt-05"></i></span>
+									</a>
+								</h4>
+							</div>
+							<div id="sidebar-expense" class="panel-collapse collapse <?=((@$m=='manage_expense')?'in':'collapse')?>" role="tabpanel" aria-labelledby="sidebar-expense-heading">
+								<div class="panel-body">
+									<ul class="nav">
+										<li class="<?=((@$sm=='6')?'active':'')?>"><a class="waves-effect" href="{{route('billsreceived.index')}}"><i class="fa fa-file-invoice sidebar-sub-icon"></i> <span class="sidebar-text">វិក្កយបត្រចំណាយ</span></a></li>
+										<li class="<?=((@$sm=='7')?'active':'')?>"><a class="waves-effect" href="{{route('accountpayables.index')}}"><i class="fa fa-file-invoice-dollar sidebar-sub-icon"></i> <span class="sidebar-text">ការទូទាត់ប្រាក់</span></a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<!-- ========== Manage report -->
+						<div class="panel">
+							<div class="panel-heading" role="tab" id="sidebar-report-heading">
+								<h4 class="panel-title">
+									<a class="collapsed waves-effect" role="button" data-toggle="collapse" data-parent="#accordion-report" href="#sidebar-report" aria-expanded="false" aria-controls="sidebar-report">
+										<i class="fa fa-copy sidebar-icon"></i> <span class="sidebar-text">របាយការណ៍ <i class="fa fa-angle-down pull-right mt-05"></i></span>
+									</a>
+								</h4>
+							</div>
+							<div id="sidebar-report" class="panel-collapse collapse <?=((@$m=='manage_reports')?'in':'collapse')?>" role="tabpanel" aria-labelledby="sidebar-report-heading">
+								<div class="panel-body">
+									<ul class="nav">
+										<li class="<?=((@$sm=='8')?'active':'')?>"><a class="waves-effect" href="{{route('ARReport.index')}}"><i class="fa fa-donate sidebar-sub-icon"></i> <span class="sidebar-text">ប្រាក់មិនទាន់ទទួល</span></a></li>
+										<li class="<?=((@$sm=='9')?'active':'')?>"><a class="waves-effect" href="{{route('APReport.index')}}"><i class="fa fa-hand-holding-usd sidebar-sub-icon"></i> <span class="sidebar-text">ប្រាក់មិនទាន់បង់</span></a></li>
+										<li class="<?=((@$sm=='10')?'active':'')?>"><a class="waves-effect" href="{{route('incomereport.index')}}"><i class="fa fa-file-import sidebar-sub-icon"></i> <span class="sidebar-text">ចំណូល</span></a></li>
+										<li class="<?=((@$sm=='11')?'active':'')?>"><a class="waves-effect" href="{{route('expensereport.index')}}"><i class="fa fa-file-export sidebar-sub-icon"></i> <span class="sidebar-text">ចំណាយ</span></a></li>
+										<li class="<?=((@$sm=='12')?'active':'')?>"><a class="waves-effect" href="{{route('profitloss.index')}}"><i class="fa fa-chart-line sidebar-sub-icon"></i> <span class="sidebar-text">ចំណេញ-ខាត</span></a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="sidebar-divider"></div>
+					<div class="panel-group" id="accordion-basic" role="tablist" aria-multiselectable="true">
 						<!-- ========== Companies and Business Objectives -->
 						<div class="panel">
 							<div class="panel-heading" role="tab" id="sidebar-company-heading">
 								<h4 class="panel-title">
-									<a class="collapsed waves-effect" role="button" data-toggle="collapse" data-parent="#accordion" href="#sidebar-company" aria-expanded="false" aria-controls="sidebar-company">
+									<a class="collapsed waves-effect" role="button" data-toggle="collapse" data-parent="#accordion-basic" href="#sidebar-company" aria-expanded="false" aria-controls="sidebar-company">
 										<i class="fa fa-building sidebar-icon"></i> <span class="sidebar-text">គ្រប់គ្រងក្រុមហ៊ុន<i class="fa fa-angle-down pull-right mt-05"></i></span>
 									</a>
 								</h4>
@@ -76,20 +120,19 @@
 							<div id="sidebar-company" class="panel-collapse collapse <?=((@$m=='manage_companies')?'in':'collapse')?>" role="tabpanel" aria-labelledby="sidebar-company-heading">
 								<div class="panel-body">
 									<ul class="nav">
-										<li class="<?=((@$sm=='objectives')?'active':'')?>"><a  class="waves-effect" href="{{route('objectives.index')}}"><i class="fa fa-database sidebar-sub-icon"></i> <span class="sidebar-text">សកម្មភាពអាជីវភាព</span></a></li>
-										<li class="<?=((@$sm=='companies')?'active':'')?>"><a  class="waves-effect" href="{{route('companies.index')}}"><i class="fa fa-building sidebar-sub-icon"></i> <span class="sidebar-text">ក្រុមហ៊ុន</span></a></li>
-										<li class="<?=((@$sm=='filecategories')?'active':'')?>"><a  class="waves-effect" href="{{route('filecategories.index')}}"><i class="fa fa-file sidebar-sub-icon"></i> <span class="sidebar-text">ផ្នែកឯកសារ</span></a></li>
-										<li class="<?=((@$sm=='files')?'active':'')?>"><a  class="waves-effect" href="{{route('files.index')}}"><i class="far fa-file-alt sidebar-sub-icon"></i> <span class="sidebar-text">ឯកសារ</span></a></li>
+										<li class="<?=((@$sm=='13')?'active':'')?>"><a  class="waves-effect" href="{{route('objectives.index')}}"><i class="fa fa-database sidebar-sub-icon"></i> <span class="sidebar-text">សកម្មភាពអាជីវភាព</span></a></li>
+										<li class="<?=((@$sm=='14')?'active':'')?>"><a  class="waves-effect" href="{{route('companies.index')}}"><i class="fa fa-building sidebar-sub-icon"></i> <span class="sidebar-text">ក្រុមហ៊ុន</span></a></li>
+										<li class="<?=((@$sm=='15')?'active':'')?>"><a  class="waves-effect" href="{{route('filecategories.index')}}"><i class="fa fa-file sidebar-sub-icon"></i> <span class="sidebar-text">ផ្នែកឯកសារ</span></a></li>
+										<li class="<?=((@$sm=='16')?'active':'')?>"><a  class="waves-effect" href="{{route('files.index')}}"><i class="far fa-file-alt sidebar-sub-icon"></i> <span class="sidebar-text">ឯកសារ</span></a></li>
 									</ul>
 								</div>
 							</div>
 						</div>
-						
 						<!-- ========== Services and Main Services -->
 						<div class="panel">
 							<div class="panel-heading" role="tab" id="sidebar-services-head">
 								<h4 class="panel-title">
-									<a class="collapsed waves-effect" role="button" data-toggle="collapse" data-parent="#accordion" href="#sidebar-services-body" aria-expanded="false" aria-controls="sidebar-services-body">
+									<a class="collapsed waves-effect" role="button" data-toggle="collapse" data-parent="#accordion-basic" href="#sidebar-services-body" aria-expanded="false" aria-controls="sidebar-services-body">
 										<i class="fa fa-concierge-bell sidebar-icon"></i> <span class="sidebar-text">គ្រប់គ្រងសេវាកម្ម<i class="fa fa-angle-down pull-right mt-05"></i></span>
 									</a>
 								</h4>
@@ -97,18 +140,18 @@
 							<div id="sidebar-services-body" class="panel-collapse <?=((@$m=='services')?'in':'collapse')?>" role="tabpanel" aria-labelledby="sidebar-services-head">
 								<div class="panel-body">
 									<ul class="nav">
-										<li class="<?=((@$sm=='mainservices')?'active':'')?>"><a class="waves-effect" href="{{ route('mainservices.index') }}"><i class="far fa-heart sidebar-sub-icon"></i> <span class="sidebar-text">សេវាកម្មធំៗ</span></a></li>
-										<li class="<?=((@$sm=='services')?'active':'')?>"><a class="waves-effect" href="{{ route('services.index') }}"><i class="fa fa-heart sidebar-sub-icon"></i> <span class="sidebar-text">សេវាកម្មទាំងអស់</span></a></li>
+										<li class="<?=((@$sm=='17')?'active':'')?>"><a class="waves-effect" href="{{ route('mainservices.index') }}"><i class="far fa-heart sidebar-sub-icon"></i> <span class="sidebar-text">សេវាកម្មធំៗ</span></a></li>
+										<li class="<?=((@$sm=='24')?'active':'')?>"><a class="waves-effect" href="{{ route('services.index') }}"><i class="fa fa-heart sidebar-sub-icon"></i> <span class="sidebar-text">សេវាកម្មទាំងអស់</span></a></li>
 									</ul>
 								</div>
 							</div>
 						</div>
 
 						<!-- ========== User -->
-						<div class="panel <?=((Auth::user()->user_role_id!=1 && Auth::user()->user_role_id!=2)?'sr-only':'')?>">
+						<div class="panel">
 							<div class="panel-heading" role="tab" id="sidebar-user-heading">
 								<h4 class="panel-title">
-									<a class="collapsed waves-effect" role="button" data-toggle="collapse" data-parent="#accordion" href="#sidebar-user" aria-expanded="false" aria-controls="sidebar-user">
+									<a class="collapsed waves-effect" role="button" data-toggle="collapse" data-parent="#accordion-basic" href="#sidebar-user" aria-expanded="false" aria-controls="sidebar-user">
 										<i class="fa fa-users sidebar-icon"></i> <span class="sidebar-text">គ្រប់គ្រងបុគ្គលិក<i class="fa fa-angle-down pull-right mt-05"></i></span>
 									</a>
 								</h4>
@@ -116,8 +159,10 @@
 							<div id="sidebar-user" class="panel-collapse <?=((@$m=='manage_users')?'in':'collapse')?>" role="tabpanel" aria-labelledby="sidebar-user-heading">
 								<div class="panel-body">
 									<ul class="nav">
-										<li class="<?=(($sm==='users')?'active':'')?>"><a class="waves-effect" href="{{route('users.index')}}"><i class="fa fa-user sidebar-sub-icon"></i> <span class="sidebar-text">អ្នកប្រើប្រាស់</span></a></li>
-										<li class="<?=(($sm==='user_roles')?'active':'')?> <?=((Auth::user()->user_role_id!=1)?'sr-only':'')?>"><a class="waves-effect" href="{{route('roles.index')}}"><i class="fa fa-user-cog sidebar-sub-icon"></i> <span class="sidebar-text">ឋានៈអ្នកគ្រប់គ្រង</span></a></li>
+										<li class="<?=(($sm==='18')?'active':'')?>"><a class="waves-effect" href="{{route('staffs.index')}}"><i class="fa fa-user-friends sidebar-sub-icon"></i> <span class="sidebar-text">បុគ្គលិក</span></a></li>
+										<li class="<?=(($sm==='19')?'active':'')?>"><a class="waves-effect" href="{{route('users.index')}}"><i class="fa fa-user sidebar-sub-icon"></i> <span class="sidebar-text">អ្នកប្រើប្រាស់</span></a></li>
+										<li class="<?=(($sm==='21')?'active':'')?>"><a class="waves-effect" href="{{route('permissions.index')}}"><i class="fa fa-user-graduate sidebar-sub-icon"></i> <span class="sidebar-text">សិទ្ធិអ្នកគ្រប់គ្រង</span></a></li>
+										<li class="<?=(($sm==='20')?'active':'')?>"><a class="waves-effect" href="{{route('roles.index')}}"><i class="fa fa-user-cog sidebar-sub-icon"></i> <span class="sidebar-text">ឋានៈអ្នកគ្រប់គ្រង</span></a></li>
 									</ul>
 								</div>
 							</div>
@@ -127,7 +172,7 @@
 						<div class="panel">
 							<div class="panel-heading" role="tab" id="sidebar-location-heading">
 								<h4 class="panel-title">
-									<a class="collapsed waves-effect" role="button" data-toggle="collapse" data-parent="#accordion" href="#sidebar-location" aria-expanded="false" aria-controls="sidebar-location">
+									<a class="collapsed waves-effect" role="button" data-toggle="collapse" data-parent="#accordion-basic" href="#sidebar-location" aria-expanded="false" aria-controls="sidebar-location">
 										<i class="fa fa-map sidebar-icon"></i> <span class="sidebar-text">គ្រប់គ្រងទីតាំង<i class="fa fa-angle-down pull-right mt-05"></i></span>
 									</a>
 								</h4>
@@ -135,16 +180,17 @@
 							<div id="sidebar-location" class="panel-collapse <?=((@$m=='manage_location')?'in':'collapse')?>" role="tabpanel" aria-labelledby="sidebar-location-heading">
 								<div class="panel-body">
 									<ul class="nav">
-										<li class="<?=(($sm==='provinces')?'active':'')?>"><a class="waves-effect" href="{{route('provinces.index')}}"><i class="fa fa-location-arrow sidebar-sub-icon"></i> <span class="sidebar-text">ខេត្ត/ក្រុង</span></a></li>
-										<li class="<?=(($sm==='districts')?'active':'')?>"><a class="waves-effect" href="{{route('districts.index')}}"><i class="fa fa-thumbtack sidebar-sub-icon"></i> <span class="sidebar-text">ស្រុក/ខណ្ឌ</span></a></li>
+										<li class="<?=(($sm==='22')?'active':'')?>"><a class="waves-effect" href="{{route('provinces.index')}}"><i class="fa fa-location-arrow sidebar-sub-icon"></i> <span class="sidebar-text">ខេត្ត/ក្រុង</span></a></li>
+										<li class="<?=(($sm==='23')?'active':'')?>"><a class="waves-effect" href="{{route('districts.index')}}"><i class="fa fa-thumbtack sidebar-sub-icon"></i> <span class="sidebar-text">ស្រុក/ខណ្ឌ</span></a></li>
 									</ul>
 								</div>
 							</div>
 						</div>
 
 					</div>
-
-
+				<br/>
+				<br/>
+				<br/>
 				</div>
 			</nav>
 		</div>
@@ -154,7 +200,7 @@
 					<div class="row">
 						<div class="col-xs-8">
 							<ul class="list-inline">
-								<li><span id="sidebar-toggle" class="mt-5 mb-2"><i class="fas fa-ellipsis-v"></i></span></li>
+								<li><span id="sidebar-toggle" class="mt-5 mb-2"><i class="fas fa-list-ul"></i></span></li>
 								<li>
 									<ol class="breadcrumb">
 										 <?=@$breadcrumb?>
@@ -166,13 +212,12 @@
 							<div class="dropdown pull-right mt-3 mb-3">
 							  <button class="waves-effect" id="account-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background: url('/images/user/{{Auth::user()->image}}') center center no-repeat; background-size: cover;"></button>
 							  <ul class="dropdown-menu" aria-labelledby="account-dropdown">
-									<li class="mt-2"><a href="/user/?action=edit&u_id="><i class="fas fa-pencil-alt"></i> Edit Me</a></li>
-									<li><a href="#"><i class="fas fa-cogs"></i> Setting</a></li>
+									<li class="mt-2"><a href="{{ route('users.index') }}"><i class="fas fa-user-friends"></i> &nbsp;&nbsp;អ្នប្រើប្រាស់</a></li>
+									<li class="mt-2"><a href="{{ route('users.edit', Auth::id()) }}"><i class="fas fa-pencil-alt"></i> &nbsp;&nbsp;កែប្រែព័ត៌មានខ្ញុំ</a></li>
+									<!-- <li><a href="#"><i class="fas fa-cogs"></i> Setting</a></li> -->
 							<li role="separator" class="divider"></li>
 									<li>
-										<a href="{{ route('logout') }}" onclick="event.preventDefault();  document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i> 
-                        {{ __('Logout') }}
-                    </a>
+										<a href="{{ route('logout') }}" onclick="event.preventDefault();  document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i> &nbsp;&nbsp;ចាកចេញ</a>
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf

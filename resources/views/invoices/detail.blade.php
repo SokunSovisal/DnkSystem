@@ -223,7 +223,7 @@
               $('#invd_service_id').val('').trigger('change.select2');
               $('#quotations').val('');
               CKEDITOR.instances['invd_description'].setData('');
-              $('#invd_qty').val('');
+              $('#invd_qty').val('1');
               $('#invd_price').val('0');
               $('#invd_origin_price').val('0');
             }

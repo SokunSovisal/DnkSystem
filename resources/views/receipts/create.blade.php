@@ -60,11 +60,18 @@
 								</select>
 							</div>
 						</div>
+						<div class="col-sm-12">
+							<div class="form-group">
+								<label class="control-label">បរិយាយ <small>*</small></label>
+								<input class="form-control nbr" type="text" value="{{ ((count($errors) > 0) ? old('rec_description') : '') }}" placeholder="description" name="rec_description" autocomplete="off"/>
+							</div>
+						</div>
+					</div><!-- /.column -->
 
+					<div class="col-sm-6">
 						<div class="col-sm-12">
 							<div class="form-group">
 								<label class="control-label">លក់ជូនក្រុមហ៊ុន <small>*</small></label>
-								<input type="hidden" id="rec_company_id" name="rec_company_id" value="" />
 								<select name="company_id" id="company_id" class="form-control nbr select2" required disabled>
 									<option value="">-- ជ្រើសរើសក្រុមហ៊ុន --</option>
 									@foreach($companies as $i => $com)
@@ -73,31 +80,22 @@
 								</select>
 							</div>
 						</div>
-					</div><!-- /.column -->
-
-					<div class="col-sm-6">
 						<div class="col-sm-12">
-							<div class="form-group {{(($errors->has('rec_full_ammount'))?'has-error':'')}}">
+							<div class="form-group {{(($errors->has('rec_full_amount'))?'has-error':'')}}">
 								<label class="control-label">ទឹកប្រាក់សរុប <small>*</small></label>
-								<input class="form-control nbr" type="text" id="rec_full_ammount" name="rec_full_ammount" value="{{ ((count($errors) > 0) ? old('rec_full_ammount') : '') }}" autocomplete="off" required />
+								<input class="form-control nbr" type="text" id="rec_full_amount" name="rec_full_amount" value="{{ ((count($errors) > 0) ? old('rec_full_amount') : '') }}" autocomplete="off" readonly />
 							</div>
 						</div>
 						<div class="col-sm-12">
-							<div class="form-group {{(($errors->has('rec_received_ammount'))?'has-error':'')}}">
+							<div class="form-group {{(($errors->has('rec_received_amount'))?'has-error':'')}}">
 								<label class="control-label">ទឹកប្រាក់ទទួលបាន <small>*</small></label>
-								<input class="form-control nbr" type="text" id="rec_received_ammount" name="rec_received_ammount" value="{{ ((count($errors) > 0) ? old('rec_received_ammount') : '') }}" autocomplete="off" required />
+								<input class="form-control nbr" type="text" id="rec_received_amount" name="rec_received_amount" value="{{ ((count($errors) > 0) ? old('rec_received_amount') : '') }}" autocomplete="off" required />
 							</div>
 						</div>
 						<div class="col-sm-12">
 							<div class="form-group">
 								<label class="control-label">ទឹកប្រាក់នៅសល់ <small>*</small></label>
-								<input class="form-control nbr" type="text" name="rec_balance" id="rec_balance" value="{{ ((count($errors) > 0) ? old('rec_balance') : '') }}" autocomplete="off" required />
-							</div>
-						</div>
-						<div class="col-sm-12">
-							<div class="form-group">
-								<label class="control-label">បរិយាយ <small>*</small></label>
-								<input class="form-control nbr" type="text" value="{{ ((count($errors) > 0) ? old('rec_description') : '') }}" placeholder="description" name="rec_description" autocomplete="off"/>
+								<input class="form-control nbr" type="text" name="rec_balance" id="rec_balance" value="{{ ((count($errors) > 0) ? old('rec_balance') : '') }}" autocomplete="off" readonly />
 							</div>
 						</div>
 					</div><!-- /.column -->
@@ -120,13 +118,13 @@
 
 		$(document).ready(function() {
 
-			$('#rec_received_ammount').keyup( function(){
-				var full_ammount = parseFloat($('#rec_full_ammount').val());
-				var received_ammount = parseFloat($(this).val());
-				if ($.isNumeric( received_ammount ) && $.isNumeric( full_ammount )) {
-					if ( full_ammount >= received_ammount && $('#rec_full_ammount').val() != '') {
-						$('#rec_balance').val(full_ammount - received_ammount);
-					}else if ($('#rec_full_ammount').val() == 0) {
+			$('#rec_received_amount').keyup( function(){
+				var full_amount = parseFloat($('#rec_full_amount').val());
+				var received_amount = parseFloat($(this).val());
+				if ($.isNumeric( received_amount ) && $.isNumeric( full_amount )) {
+					if ( full_amount >= received_amount && $('#rec_full_amount').val() != '') {
+						$('#rec_balance').val(full_amount - received_amount);
+					}else if ($('#rec_full_amount').val() == 0) {
 						$(this).val($(this).val().slice(0, -1));
 					}else{
 						$(this).val($(this).val().slice(0, -1));
@@ -147,15 +145,13 @@
 						data: {id:id, _token:_token},
 						success: function(result){
 							var data = result.split(":");
-              $('#rec_company_id').val(data[0]);
               $('#company_id').val(data[0]).trigger('change.select2');
-							$('#rec_full_ammount').val(data[1]);
-
+							$('#rec_full_amount').val(data[1] - data[2]);
 						}
 					});
 				}else{
               $('#rec_company_id').val('').trigger('change.select2');
-							$('#rec_full_ammount').val(0);
+							$('#rec_full_amount').val(0);
 				}
 			});
 		});
