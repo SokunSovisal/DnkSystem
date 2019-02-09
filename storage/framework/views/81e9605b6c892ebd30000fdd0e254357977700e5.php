@@ -41,9 +41,28 @@
 						</h4>
 					</div>
 
+					<div class="sidebar-divider"></div>
+
+					<div class="panel-heading">
+						<h4 class="panel-title <?=((@$sm=='28')?'active':'')?>">
+							<a href="<?php echo e(route('alertmanagement.index')); ?>" class="mb-0 waves-effect">
+								<i class="fa fa-bell sidebar-icon"></i> <span class="sidebar-text">ការជូនដំណឹង</span>
+							</a>
+						</h4>
+					</div>
+
+					<div class="panel-heading">
+						<h4 class="panel-title <?=((@$sm=='27')?'active':'')?>">
+							<a href="<?php echo e(route('projectprocess.index')); ?>" class="mb-0 waves-effect">
+								<i class="fa fa-project-diagram sidebar-icon"></i> <span class="sidebar-text">ដំណើរការគម្រោង</span>
+							</a>
+						</h4>
+					</div>
+
+					<div class="sidebar-divider"></div>
+
 					<div class="panel-group" id="accordion-report" role="tablist" aria-multiselectable="true">
 
-						<div class="sidebar-divider"></div>
 						<!-- ========== Manage Income -->
 						<div class="panel">
 							<div class="panel-heading" role="tab" id="sidebar-processing-heading">
@@ -142,6 +161,8 @@
 									<ul class="nav">
 										<li class="<?=((@$sm=='17')?'active':'')?>"><a class="waves-effect" href="<?php echo e(route('mainservices.index')); ?>"><i class="far fa-heart sidebar-sub-icon"></i> <span class="sidebar-text">សេវាកម្មធំៗ</span></a></li>
 										<li class="<?=((@$sm=='24')?'active':'')?>"><a class="waves-effect" href="<?php echo e(route('services.index')); ?>"><i class="fa fa-heart sidebar-sub-icon"></i> <span class="sidebar-text">សេវាកម្មទាំងអស់</span></a></li>
+										<li class="<?=((@$sm=='25')?'active':'')?>"><a class="waves-effect" href="<?php echo e(route('checklist.index')); ?>"><i class="fa fa-clipboard-check sidebar-sub-icon"></i> <span class="sidebar-text">ឯកសារតម្រូវ</span></a></li>
+										<li class="<?=((@$sm=='26')?'active':'')?>"><a class="waves-effect" href="<?php echo e(route('process.index')); ?>"><i class="fa fa-shoe-prints sidebar-sub-icon"></i> <span class="sidebar-text">ដំណើរការការងារ</span></a></li>
 									</ul>
 								</div>
 							</div>
@@ -198,7 +219,7 @@
 			<main id="main" class="col-md-12">
 				<header id="body-header">
 					<div class="row">
-						<div class="col-xs-8">
+						<div class="col-xs-2 col-sm-6">
 							<ul class="list-inline">
 								<li><span id="sidebar-toggle" class="mt-5 mb-2"><i class="fas fa-list-ul"></i></span></li>
 								<li>
@@ -208,22 +229,118 @@
 								</li>
 							</ul>
 						</div>
-						<div class="col-xs-4">
-							<div class="dropdown pull-right mt-3 mb-3">
-							  <button class="waves-effect" id="account-dropdown" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background: url('/images/user/<?php echo e(Auth::user()->image); ?>') center center no-repeat; background-size: cover;"></button>
-							  <ul class="dropdown-menu" aria-labelledby="account-dropdown">
-									<li class="mt-2"><a href="<?php echo e(route('users.index')); ?>"><i class="fas fa-user-friends"></i> &nbsp;&nbsp;អ្នប្រើប្រាស់</a></li>
-									<li class="mt-2"><a href="<?php echo e(route('users.edit', Auth::id())); ?>"><i class="fas fa-pencil-alt"></i> &nbsp;&nbsp;កែប្រែព័ត៌មានខ្ញុំ</a></li>
-									<!-- <li><a href="#"><i class="fas fa-cogs"></i> Setting</a></li> -->
-							<li role="separator" class="divider"></li>
-									<li>
-										<a href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();  document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i> &nbsp;&nbsp;ចាកចេញ</a>
+						<div class="col-xs-10 col-sm-6">
+							<ul class="navbar-right list-inline">
+					      <li class="dropdown" id="notifications">
+					        <a href="#notification" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+					          <i class="fa fa-bell">
+					            <span class="badge badge-danger">11</span>
+					          </i>
+					          ការជូនដំណឹង
+					        </a>
+				          <ul class="dropdown-menu notify-drop nbr">
+				            <div class="notify-drop-title">
+				            	ការជួនដំណឹង (<b>2</b>)
+				            </div>
+				            <!-- end notify title -->
+				            <!-- notify content -->
+				            <ul class="drop-content nav">
 
-                    <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
-                        <?php echo csrf_field(); ?>
-                    </form>
-							  </ul>
-							</div>
+					          	<li class="notify-item">
+					          		<a href="#" class="notify-link">
+					          			<div class="row" style="max-width: 100%;margin-left: 0px;">
+						            		<div class="col-xs-3" style="padding: 0;">
+						            			<div class="notify-icon">
+																<i class="fa fa-project-diagram"></i>
+							            		</div>
+							            	</div>
+						            		<div class="col-xs-9" style="padding: 0;">
+						            			<div class="notify-text">
+							            			<div>Title name document haha testing....</div>
+							            			<p class="time" style="margin-bottom: 0 !important;">10-Apr-2019</p>
+						            			</div>
+						            		</div>
+					          			</div>
+					          		</a>
+					          	</li>
+
+					          	<li class="notify-item">
+					          		<a href="#" class="notify-link">
+					          			<div class="row" style="max-width: 100%;margin-left: 0px;">
+						            		<div class="col-xs-3" style="padding: 0;">
+						            			<div class="notify-icon">
+																<i class="fa fa-comments"></i>
+							            		</div>
+							            	</div>
+						            		<div class="col-xs-9" style="padding: 0;">
+						            			<div class="notify-text">
+							            			<div>Title name document haha testing....</div>
+							            			<p class="time" style="margin-bottom: 0 !important;">10-Apr-2019</p>
+						            			</div>
+						            		</div>
+					          			</div>
+					          		</a>
+					          	</li>
+
+					          	<li class="notify-item">
+					          		<a href="#" class="notify-link">
+					          			<div class="row" style="max-width: 100%;margin-left: 0px;">
+						            		<div class="col-xs-3" style="padding: 0;">
+						            			<div class="notify-icon">
+																<i class="fa fa-bell"></i>
+							            		</div>
+							            	</div>
+						            		<div class="col-xs-9" style="padding: 0;">
+						            			<div class="notify-text">
+							            			<div>Title name document haha testing....</div>
+							            			<p class="time" style="margin-bottom: 0 !important;">10-Apr-2019</p>
+						            			</div>
+						            		</div>
+					          			</div>
+					          		</a>
+					          	</li>
+
+					          	<li class="notify-item">
+					          		<a href="#" class="notify-link">
+					          			<div class="row" style="max-width: 100%;margin-left: 0px;">
+						            		<div class="col-xs-3" style="padding: 0;">
+						            			<div class="notify-icon">
+																<i class="fa fa-bell"></i>
+							            		</div>
+							            	</div>
+						            		<div class="col-xs-9" style="padding: 0;">
+						            			<div class="notify-text">
+							            			<div>Title name document haha testing....</div>
+							            			<p class="time" style="margin-bottom: 0 !important;">10-Apr-2019</p>
+						            			</div>
+						            		</div>
+					          			</div>
+					          		</a>
+					          	</li>
+
+				            </ul>
+				            <div class="notify-drop-footer text-center">
+				            	<a href=""><i class="fa fa-eye"></i> បង្ហាញទាំងអស់</a>
+				            </div>
+				          </ul>
+				        </li>
+
+								<li class="dropdown" id="account">
+								  <a href="#account" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="background: url('/images/user/<?php echo e(Auth::user()->image); ?>') center center no-repeat; background-size: cover;"></a>
+								  <ul class="dropdown-menu nbr" aria-labelledby="account-dropdown">
+										<li class="mt-2"><a href="<?php echo e(route('users.index')); ?>"><i class="fas fa-user-friends"></i> &nbsp;&nbsp;អ្នប្រើប្រាស់</a></li>
+										<li class="mt-2"><a href="<?php echo e(route('users.edit', Auth::id())); ?>"><i class="fas fa-pencil-alt"></i> &nbsp;&nbsp;កែប្រែព័ត៌មានខ្ញុំ</a></li>
+										<!-- <li><a href="#"><i class="fas fa-cogs"></i> Setting</a></li> -->
+										<li role="separator" class="divider"></li>
+										<li>
+											<a href="<?php echo e(route('logout')); ?>" onclick="event.preventDefault();  document.getElementById('logout-form').submit();"><i class="fas fa-sign-out-alt"></i> &nbsp;&nbsp;ចាកចេញ</a>
+
+	                    <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+	                        <?php echo csrf_field(); ?>
+	                    </form>
+								  </ul>
+								</li>
+				      </ul>
 						</div>
 					</div>
 				</header>
@@ -236,6 +353,11 @@
 		</div>
 	</div>
 	<!-- Javascript -->
+	<style>
+    $(function () {
+		  $('[data-tooltip="tooltip"]').tooltip()
+		});
+	</style>
 	<?php echo $__env->yieldContent('js'); ?>
 </body>
 </html>

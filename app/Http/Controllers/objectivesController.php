@@ -119,13 +119,7 @@ class objectivesController extends Controller
 		return (($this->globalNotitfy->permission($this->module)=='true')? view('objectives.edit',$this->data) : view('errors.permission',$this->data) );
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $r
-	 * @param  \App\Models\Objectives  $objectives
-	 * @return \Illuminate\Http\Response
-	 */
+
 	public function update(Request $r, Objectives $objectives, $id)
 	{
 		// Validate Post Data

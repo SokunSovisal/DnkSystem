@@ -31,6 +31,20 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
 	Route::get('', 'HomeController@index')->name('home');
 	Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
 
+	//============== Project Processing
+	Route::resource('projectprocess', 'projectProcessController');
+	Route::post('projectprocess/ajaxinvoice', 'projectProcessController@ajaxinvoice')->name('projectprocess.ajaxinvoice');
+	Route::post('projectprocess/ajaxstoretp', 'projectProcessController@ajaxstoretp')->name('projectprocess.ajaxstoretp');
+	Route::post('projectprocess/ajaxupdatetp', 'projectProcessController@ajaxupdatetp')->name('projectprocess.ajaxupdatetp');
+	Route::post('projectprocess/ajaxtp', 'projectProcessController@ajaxtp')->name('projectprocess.ajaxtp');
+	Route::post('projectprocess/ajaxfindtp', 'projectProcessController@ajaxfindtp')->name('projectprocess.ajaxfindtp');
+	Route::resource('checklist', 'ChecklistController');
+	Route::resource('process', 'ProcessController');
+	
+	//============== Alert Management
+	Route::resource('alertmanagement', 'AlertManagementController');
+
+	Route::resource('appointments', 'appointmentsController');
 	// Manage Work Income
 	//============== Appointments
 	Route::resource('appointments', 'appointmentsController');
@@ -116,9 +130,9 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
 	Route::get('users/{id}/role', 'usersController@role')->name('users.role');
 	Route::put('users/{id}/role_update', 'usersController@role_update')->name('users.role_update');
 	//============== Staffs
-	Route::get('permissions', 'userPermissionsController@index')->name('permissions.index');
-	Route::post('permissions/set_permission', 'userPermissionsController@set_permission')->name('permissions.set_permission');
-	Route::post('permissions/update_permission', 'userPermissionsController@update_permission')->name('permissions.update_permission');
+	Route::get('permissions', 'PermissionController@index')->name('permissions.index');
+	Route::post('permissions/set_permission', 'PermissionController@set_permission')->name('permissions.set_permission');
+	Route::post('permissions/update_permission', 'PermissionController@update_permission')->name('permissions.update_permission');
 
 	// Manage Location
 	//============== provinces

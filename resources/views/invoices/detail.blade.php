@@ -110,11 +110,10 @@
               {!! $invd->invd_description !!}
             </td>
             <td class="action">
-              <span data-toggle="modal" data-target="#invd" style="cursor: pointer;" title="Edit" class="text-success edit" data-invdid="{{$invd->id}}"><i class="fa fa-pencil-alt"></i></span>
-              /
+              <span data-toggle="modal" data-target="#invd" style="cursor: pointer;" title="Edit" class="btn btn-sm btn-success edit" data-invdid="{{$invd->id}}"><i class="fa fa-pencil-alt"></i></span>
               {{Form::open(['url'=>route('invoicedetail.destroy',$invd->id)])}}
                 {{Form::hidden('_method','DELETE')}}
-                <button type="button" title="លុបសេវាកម្មពីក្នុងសម្រង់តម្លៃ" class="delete text-danger" data-text="តើអ្នកសម្រេចចិត្តច្បាស់ថាចង់លុបសេវាកម្មពីក្នុងសម្រង់តម្លៃនេះមែនទេ?" data-type="warning" data-rstitle="ជោគជ័យ" data-rstext="សេវាកម្មពីក្នុងសម្រង់តម្លៃត្រូវបានលុប."><i class="fa fa-trash-alt"></i>
+                <button type="button" title="លុបសេវាកម្មពីក្នុងសម្រង់តម្លៃ" class="btn btn-sm btn-danger delete" data-text="តើអ្នកសម្រេចចិត្តច្បាស់ថាចង់លុបសេវាកម្មពីក្នុងសម្រង់តម្លៃនេះមែនទេ?" data-type="warning" data-rstitle="ជោគជ័យ" data-rstext="សេវាកម្មពីក្នុងសម្រង់តម្លៃត្រូវបានលុប."><i class="fa fa-trash-alt"></i>
                 </button>
                 <button type="submit" class="sub_delete sr-only"></button>
               {{Form::close()}}

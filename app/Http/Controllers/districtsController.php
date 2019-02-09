@@ -30,7 +30,7 @@ class districtsController extends Controller
 	public function index()
 	{
 		$this->data += [
-			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li class="active"><i class="fa fa-heart"></i> ទីតាំងស្រុក</li>',
+			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li class="active"><i class="fa fa-thumbtack"></i> ទីតាំងស្រុក</li>',
 
 			// Select Data From Table
 			'districts' => Districts::orderBy('dist_province_id', 'asc')->get(),
@@ -47,7 +47,7 @@ class districtsController extends Controller
 	public function create()
 	{
 		$this->data+=[
-			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('districts.index') .'"><i class="fa fa-heart"></i> ទីតាំងស្រុក</a></li><li class="active"><i class="fa fa-plus"></i> បន្ថែមថ្មី</li>',
+			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('districts.index') .'"><i class="fa fa-thumbtack"></i> ទីតាំងស្រុក</a></li><li class="active"><i class="fa fa-plus"></i> បន្ថែមថ្មី</li>',
 			'provinces' => Provinces::orderBy('pro_description', 'asc')->get(),
 		];
 		// return view('districts.create',$this->data);
@@ -115,7 +115,7 @@ class districtsController extends Controller
 		$this->data+=[
 			'dist' => Districts::find($id),
 			'provinces' => Provinces::orderBy('pro_description', 'asc')->get(),
-			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('districts.index') .'"><i class="fa fa-heart"></i> ទីតាំងស្រុក</a></li><li class="active"><i class="fa fa-pencil"></i> កែប្រែ៖ '. Districts::find($id)->dist_name.'</li>',
+			'breadcrumb'=>'<li><a href="'. route('home') .'"><i class="fa fa-home"></i> ផ្ទាំងដើម</a></li><li><a href="'. route('districts.index') .'"><i class="fa fa-thumbtack"></i> ទីតាំងស្រុក</a></li><li class="active"><i class="fa fa-pencil"></i> កែប្រែ៖ '. Districts::find($id)->dist_name.'</li>',
 		];
 		// return view('districts.edit',$this->data);
 		return (($this->globalNotitfy->permission($this->module)=='true')? view('districts.edit',$this->data) : view('errors.permission',$this->data) );

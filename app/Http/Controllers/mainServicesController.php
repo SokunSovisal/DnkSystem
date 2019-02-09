@@ -53,12 +53,7 @@ class mainServicesController extends Controller
 		return (($this->globalNotitfy->permission($this->module)=='true')? view('mainservices.create',$this->data) : view('errors.permission',$this->data) );
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @return \Illuminate\Http\Response
-	 */
+
 	public function store(Request $r)
 	{
 		// Validate Post Data
@@ -88,23 +83,13 @@ class mainServicesController extends Controller
 		}
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  \App\Models\Mainservices  $mainservices
-	 * @return \Illuminate\Http\Response
-	 */
+
 	public function show(Mainservices $mainservices)
 	{
 		//
 	}
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  \App\Models\Mainservices  $mainservices
-	 * @return \Illuminate\Http\Response
-	 */
+
 	public function edit(Mainservices $mainservices, $id)
 	{
 		$this->data+=[

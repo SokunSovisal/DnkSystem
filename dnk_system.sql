@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 30, 2019 at 09:37 AM
+-- Generation Time: Feb 09, 2019 at 05:00 AM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.4
 
@@ -99,6 +99,23 @@ INSERT INTO `bills` (`id`, `br_date`, `br_number`, `br_total`, `br_description`,
 (5, '2019-03-01', '0423143', 1200.00, NULL, 1, 3, 5, 5, '2019-01-28 02:40:45', '2019-01-28 02:41:50'),
 (6, '2020-04-15', '098983', 2100.00, NULL, 0, 3, 5, 5, '2019-01-28 04:00:16', '2019-01-28 04:00:16'),
 (7, '2020-08-06', '02348972394', 3100.00, NULL, 0, 3, 5, 5, '2019-01-28 04:00:46', '2019-01-28 04:00:46');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `checklists`
+--
+
+CREATE TABLE `checklists` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `ch_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `ch_description` text COLLATE utf8_unicode_ci,
+  `ch_service_id` int(10) UNSIGNED NOT NULL,
+  `created_by` int(10) UNSIGNED NOT NULL,
+  `updated_by` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -563,7 +580,12 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (35, '2019_01_16_113453_create_payment_transitions_table', 8),
 (36, '2019_01_24_102733_create_staffs_table', 9),
 (39, '2019_01_25_090703_create_modules_table', 11),
-(41, '2019_01_24_111139_create_permissions_table', 12);
+(41, '2019_01_24_111139_create_permissions_table', 12),
+(44, '2019_01_31_140921_create_checklist_table', 13),
+(45, '2019_01_31_140948_create_process_table', 13),
+(46, '2019_01_31_141054_create_transactions_table', 13),
+(47, '2019_01_31_141118_create_transaction_checklist_table', 13),
+(48, '2019_01_31_141134_create_transaction_process_table', 13);
 
 -- --------------------------------------------------------
 
@@ -604,7 +626,10 @@ INSERT INTO `modules` (`id`, `m_name`, `m_url`) VALUES
 (21, 'សិទ្ធិអ្នកប្រើប្រាស់', 'permissions'),
 (22, 'ខេត្ត', 'provinces'),
 (23, 'ស្រុក', 'districts'),
-(24, 'សេវាកម្ម', 'services');
+(24, 'សេវាកម្ម', 'services'),
+(25, 'ឯកសារតម្រូវ', 'checklist'),
+(26, 'ដំណើរការការងារ', 'process'),
+(27, 'ដំណើរការគម្រោង', 'projectprocess');
 
 -- --------------------------------------------------------
 
@@ -689,31 +714,59 @@ CREATE TABLE `permissions` (
 
 INSERT INTO `permissions` (`id`, `p_view`, `p_create`, `p_edit`, `p_delete`, `p_module_id`, `p_role_id`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, 1, 1, 21, 12, NULL, NULL),
-(43, 1, 1, 1, 1, 2, 12, '2019-01-28 02:08:23', '2019-01-28 02:16:10'),
-(44, 0, 0, 0, 0, 2, 13, '2019-01-28 02:15:46', '2019-01-28 02:16:06'),
-(45, 0, 0, 0, 0, 3, 13, '2019-01-28 02:15:52', '2019-01-28 02:16:06'),
-(46, 0, 0, 0, 0, 4, 13, '2019-01-28 02:15:53', '2019-01-28 02:16:05'),
-(47, 1, 1, 1, 1, 3, 12, '2019-01-28 02:16:11', '2019-01-28 02:16:13'),
-(48, 1, 1, 1, 1, 4, 12, '2019-01-28 02:16:14', '2019-01-28 02:16:26'),
-(49, 1, 1, 1, 1, 5, 12, '2019-01-28 02:16:14', '2019-01-28 02:16:26'),
-(50, 1, 1, 1, 1, 6, 12, '2019-01-28 02:16:14', '2019-01-28 02:16:26'),
-(51, 1, 1, 1, 1, 7, 12, '2019-01-28 02:16:15', '2019-01-28 02:16:27'),
-(52, 1, 1, 1, 1, 8, 12, '2019-01-28 02:16:16', '2019-01-28 02:16:27'),
-(53, 1, 1, 1, 1, 9, 12, '2019-01-28 02:16:16', '2019-01-28 02:16:28'),
-(54, 1, 1, 1, 1, 10, 12, '2019-01-28 02:16:16', '2019-01-28 02:16:30'),
-(55, 1, 1, 1, 1, 11, 12, '2019-01-28 02:16:17', '2019-01-28 02:16:29'),
-(56, 1, 1, 1, 1, 12, 12, '2019-01-28 02:16:32', '2019-01-28 02:16:54'),
-(57, 1, 1, 1, 1, 13, 12, '2019-01-28 02:16:33', '2019-01-28 02:16:54'),
-(58, 1, 1, 1, 1, 14, 12, '2019-01-28 02:16:33', '2019-01-28 02:16:55'),
-(59, 1, 1, 1, 1, 15, 12, '2019-01-28 02:16:34', '2019-01-28 02:16:55'),
-(60, 1, 1, 1, 1, 16, 12, '2019-01-28 02:16:34', '2019-01-28 02:16:56'),
-(61, 1, 1, 1, 1, 17, 12, '2019-01-28 02:16:35', '2019-01-28 02:16:56'),
-(62, 1, 1, 1, 1, 18, 12, '2019-01-28 02:16:36', '2019-01-28 02:16:57'),
-(63, 1, 1, 1, 1, 19, 12, '2019-01-28 02:16:36', '2019-01-28 02:16:58'),
-(64, 1, 1, 1, 1, 20, 12, '2019-01-28 02:16:37', '2019-01-28 02:16:58'),
-(65, 1, 1, 1, 1, 24, 12, '2019-01-28 02:17:00', '2019-01-28 02:17:06'),
-(66, 1, 1, 1, 1, 23, 12, '2019-01-28 02:17:00', '2019-01-28 02:17:05'),
-(67, 1, 1, 1, 1, 22, 12, '2019-01-28 02:17:01', '2019-01-28 02:17:05');
+(68, 1, 1, 1, 1, 2, 12, '2019-01-31 04:52:12', '2019-01-31 06:37:43'),
+(69, 1, 1, 1, 1, 3, 12, '2019-01-31 04:52:22', '2019-01-31 04:52:25'),
+(70, 1, 1, 1, 1, 4, 12, '2019-01-31 04:52:25', '2019-01-31 04:52:39'),
+(71, 1, 1, 1, 1, 5, 12, '2019-01-31 04:52:26', '2019-01-31 04:52:40'),
+(72, 1, 1, 1, 1, 6, 12, '2019-01-31 04:52:26', '2019-01-31 04:52:41'),
+(73, 1, 1, 1, 1, 7, 12, '2019-01-31 04:52:27', '2019-01-31 04:52:42'),
+(74, 1, 1, 1, 1, 8, 12, '2019-01-31 04:52:27', '2019-01-31 04:52:42'),
+(75, 1, 1, 1, 1, 9, 12, '2019-01-31 04:52:29', '2019-01-31 04:52:43'),
+(76, 1, 1, 1, 1, 10, 12, '2019-01-31 04:52:29', '2019-01-31 04:52:43'),
+(77, 1, 1, 1, 1, 11, 12, '2019-01-31 04:52:30', '2019-01-31 04:52:44'),
+(78, 1, 1, 1, 1, 12, 12, '2019-01-31 04:52:47', '2019-01-31 04:53:04'),
+(79, 1, 1, 1, 1, 13, 12, '2019-01-31 04:52:48', '2019-01-31 04:53:04'),
+(80, 1, 1, 1, 1, 14, 12, '2019-01-31 04:52:48', '2019-01-31 04:53:05'),
+(81, 1, 1, 1, 1, 15, 12, '2019-01-31 04:52:49', '2019-01-31 04:53:05'),
+(82, 1, 1, 1, 1, 16, 12, '2019-01-31 04:52:49', '2019-01-31 04:53:06'),
+(83, 1, 1, 1, 1, 17, 12, '2019-01-31 04:52:50', '2019-01-31 04:53:06'),
+(84, 1, 1, 1, 1, 18, 12, '2019-01-31 04:52:50', '2019-01-31 04:53:07'),
+(85, 1, 1, 1, 1, 19, 12, '2019-01-31 04:52:52', '2019-01-31 04:53:07'),
+(86, 1, 1, 1, 1, 20, 12, '2019-01-31 04:52:52', '2019-01-31 04:53:08'),
+(87, 1, 1, 1, 1, 22, 12, '2019-01-31 04:53:10', '2019-01-31 04:53:16'),
+(88, 1, 1, 1, 1, 23, 12, '2019-01-31 04:53:11', '2019-01-31 04:53:16'),
+(89, 1, 1, 1, 1, 24, 12, '2019-01-31 04:53:11', '2019-01-31 04:53:17'),
+(90, 1, 1, 1, 1, 2, 13, '2019-01-31 06:37:24', '2019-01-31 06:37:52'),
+(91, 0, 0, 0, 0, 3, 13, '2019-01-31 06:37:55', '2019-01-31 06:37:55'),
+(92, 1, 1, 1, 1, 25, 12, '2019-02-05 01:24:47', '2019-02-05 01:24:51'),
+(93, 1, 1, 1, 1, 26, 12, '2019-02-05 01:24:48', '2019-02-05 01:24:51'),
+(94, 1, 1, 1, 1, 27, 12, '2019-02-05 04:14:39', '2019-02-05 04:14:41');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `process`
+--
+
+CREATE TABLE `process` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `pr_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `pr_description` text COLLATE utf8_unicode_ci,
+  `pr_service_id` int(10) UNSIGNED NOT NULL,
+  `created_by` int(10) UNSIGNED NOT NULL,
+  `updated_by` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `process`
+--
+
+INSERT INTO `process` (`id`, `pr_name`, `pr_description`, `pr_service_id`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 'សាល្បង ១១១', '123123', 78, 5, 5, '2019-02-06 02:05:40', '2019-02-06 02:05:40'),
+(2, 'Testing 222', 'qweqwe', 78, 5, 5, '2019-02-06 02:05:54', '2019-02-06 02:05:54'),
+(3, 'asdf', 'asdf', 78, 5, 5, '2019-02-06 05:12:05', '2019-02-06 05:12:05');
 
 -- --------------------------------------------------------
 
@@ -850,7 +903,9 @@ INSERT INTO `receipts` (`id`, `rec_date`, `rec_number`, `rec_received_amount`, `
 (8, '2019-01-19', '000006', 450.00, NULL, 6, 5, 5, '2019-01-19 05:09:17', '2019-01-19 05:09:17'),
 (9, '2019-01-30', '000007', 8000.00, NULL, 9, 5, 5, '2019-01-30 09:46:19', '2019-01-30 09:46:19'),
 (10, '2019-01-29', '000008', 1255.00, NULL, 7, 5, 5, '2019-01-29 03:00:15', '2019-01-29 03:00:15'),
-(11, '2019-01-30', '000009', 300.00, NULL, 9, 5, 5, '2019-01-30 07:10:00', '2019-01-30 07:11:20');
+(11, '2019-01-30', '000009', 300.00, NULL, 9, 5, 5, '2019-01-30 07:10:00', '2019-01-30 07:11:20'),
+(12, '2019-01-31', '000010', 250.00, NULL, 10, 5, 5, '2019-01-31 04:30:34', '2019-01-31 04:30:34'),
+(13, '2019-01-31', '000011', 1000.00, NULL, 10, 5, 5, '2019-01-31 04:31:00', '2019-01-31 04:31:00');
 
 -- --------------------------------------------------------
 
@@ -992,6 +1047,84 @@ INSERT INTO `staffs` (`id`, `st_name`, `st_email`, `st_image`, `st_phone`, `st_p
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `transactions`
+--
+
+CREATE TABLE `transactions` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `tr_start_date` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `tr_date_alert` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `tr_date_count` int(11) NOT NULL,
+  `tr_invoice_id` int(11) DEFAULT NULL,
+  `tr_description` text COLLATE utf8_unicode_ci,
+  `tr_company_id` int(10) UNSIGNED NOT NULL,
+  `tr_service_id` int(10) UNSIGNED NOT NULL,
+  `tr_verify_by` int(10) UNSIGNED NOT NULL,
+  `created_by` int(10) UNSIGNED NOT NULL,
+  `updated_by` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `transactions`
+--
+
+INSERT INTO `transactions` (`id`, `tr_start_date`, `tr_date_alert`, `tr_date_count`, `tr_invoice_id`, `tr_description`, `tr_company_id`, `tr_service_id`, `tr_verify_by`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, '2019-02-05', '2019-02-28', 0, 3, '123', 2, 78, 5, 5, 5, '2019-02-05 09:28:38', '2019-02-05 09:53:35'),
+(3, '2019-02-01', '2019-02-28', 35, 10, 'qwe11', 2, 78, 5, 5, 5, '2019-02-07 01:52:34', '2019-02-07 01:55:01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transaction_checklists`
+--
+
+CREATE TABLE `transaction_checklists` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `tch_start_date` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `tch_date_alert` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `tch_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `tch_description` text COLLATE utf8_unicode_ci,
+  `tch_checklist_id` int(10) UNSIGNED NOT NULL,
+  `tch_transaction_id` int(10) UNSIGNED NOT NULL,
+  `created_by` int(10) UNSIGNED NOT NULL,
+  `updated_by` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transaction_process`
+--
+
+CREATE TABLE `transaction_process` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `tp_start_date` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `tp_description` text COLLATE utf8_unicode_ci,
+  `tp_process_id` int(10) UNSIGNED NOT NULL,
+  `tp_transaction_id` int(10) UNSIGNED NOT NULL,
+  `tp_status` tinyint(1) NOT NULL DEFAULT '0',
+  `created_by` int(10) UNSIGNED NOT NULL,
+  `updated_by` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `transaction_process`
+--
+
+INSERT INTO `transaction_process` (`id`, `tp_start_date`, `tp_description`, `tp_process_id`, `tp_transaction_id`, `tp_status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(6, '2019-02-01', '<p><strong>Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 1, 1, 1, 5, 5, '2019-02-06 04:22:46', '2019-02-07 09:26:53'),
+(7, '2019-02-06', '<p><strong>Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&#39;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>', 2, 1, 0, 5, 5, '2019-02-06 05:08:24', '2019-02-07 09:27:13'),
+(8, '2019-02-06', '<p>Hello</p>', 3, 1, 0, 5, 5, '2019-02-06 09:59:11', '2019-02-07 00:52:02');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -1017,7 +1150,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `image`, `phone`, `gender`, `status`, `description`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `user_role_id`) VALUES
-(5, 'Sokun Sovisal', 'vs@gl.com', '1544517697_5.jpg', '098794286', 1, 1, 'Sovisal', NULL, '$2y$10$/SasYs5RiuoMpe0ywx3ZHOgUNgJD/BGyuK0dLusAi90cpVMmJiLJe', 'ajLXanIGCZSm5R38LsqndbEntJDX29Q0aiS4JPGlp7TvWlV8oRHZhMu6uf1M', '2018-12-10 18:38:46', '2019-01-25 04:01:40', 12),
+(5, 'Sokun Sovisal', 'vs@gl.com', '1544517697_5.jpg', '098794286', 1, 1, 'Sovisal', NULL, '$2y$10$/SasYs5RiuoMpe0ywx3ZHOgUNgJD/BGyuK0dLusAi90cpVMmJiLJe', 'kD68on6lOjJLqdrBpMmu12YYyWnkCQjBuLdHHgb8swNljQLXMyyMq3QnsQH8', '2018-12-10 18:38:46', '2019-01-25 04:01:40', 12),
 (7, 'sovisal', 'sovisal@gmail.com', 'default_user.png', '09', 1, 1, NULL, NULL, '$2y$10$Cyz13bhe9qVQ9PP5tTzji.jOxTGmScruFie5re5JuzbEUiJBkP3tu', NULL, '2019-01-25 05:21:03', '2019-01-28 05:20:13', 14);
 
 -- --------------------------------------------------------
@@ -1074,6 +1207,15 @@ ALTER TABLE `bills`
   ADD KEY `bills_br_company_id_foreign` (`br_company_id`),
   ADD KEY `bills_br_created_by_foreign` (`br_created_by`),
   ADD KEY `bills_br_updated_by_foreign` (`br_updated_by`);
+
+--
+-- Indexes for table `checklists`
+--
+ALTER TABLE `checklists`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `checklist_ch_service_id_foreign` (`ch_service_id`),
+  ADD KEY `checklist_created_by_foreign` (`created_by`),
+  ADD KEY `checklist_updated_by_foreign` (`updated_by`);
 
 --
 -- Indexes for table `companies`
@@ -1174,6 +1316,15 @@ ALTER TABLE `permissions`
   ADD KEY `permissions_p_role_id_foreign` (`p_role_id`);
 
 --
+-- Indexes for table `process`
+--
+ALTER TABLE `process`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `process_pr_service_id_foreign` (`pr_service_id`),
+  ADD KEY `process_created_by_foreign` (`created_by`),
+  ADD KEY `process_updated_by_foreign` (`updated_by`);
+
+--
 -- Indexes for table `provinces`
 --
 ALTER TABLE `provinces`
@@ -1224,6 +1375,37 @@ ALTER TABLE `staffs`
   ADD KEY `staffs_st_updated_by_foreign` (`st_updated_by`);
 
 --
+-- Indexes for table `transactions`
+--
+ALTER TABLE `transactions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `transactions_tr_company_id_foreign` (`tr_company_id`),
+  ADD KEY `transactions_tr_service_id_foreign` (`tr_service_id`),
+  ADD KEY `transactions_tr_verify_by_foreign` (`tr_verify_by`),
+  ADD KEY `transactions_created_by_foreign` (`created_by`),
+  ADD KEY `transactions_updated_by_foreign` (`updated_by`);
+
+--
+-- Indexes for table `transaction_checklists`
+--
+ALTER TABLE `transaction_checklists`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `transaction_checklist_tch_checklist_id_foreign` (`tch_checklist_id`),
+  ADD KEY `transaction_checklist_tch_transaction_id_foreign` (`tch_transaction_id`),
+  ADD KEY `transaction_checklist_created_by_foreign` (`created_by`),
+  ADD KEY `transaction_checklist_updated_by_foreign` (`updated_by`);
+
+--
+-- Indexes for table `transaction_process`
+--
+ALTER TABLE `transaction_process`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `transaction_process_tp_process_id_foreign` (`tp_process_id`),
+  ADD KEY `transaction_process_tp_transaction_id_foreign` (`tp_transaction_id`),
+  ADD KEY `transaction_process_created_by_foreign` (`created_by`),
+  ADD KEY `transaction_process_updated_by_foreign` (`updated_by`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -1258,6 +1440,12 @@ ALTER TABLE `appointments`
 --
 ALTER TABLE `bills`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `checklists`
+--
+ALTER TABLE `checklists`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `companies`
@@ -1305,13 +1493,13 @@ ALTER TABLE `mainservices`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `modules`
 --
 ALTER TABLE `modules`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `objectives`
@@ -1329,7 +1517,13 @@ ALTER TABLE `payment_transitions`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+
+--
+-- AUTO_INCREMENT for table `process`
+--
+ALTER TABLE `process`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `provinces`
@@ -1353,7 +1547,7 @@ ALTER TABLE `quotation_services`
 -- AUTO_INCREMENT for table `receipts`
 --
 ALTER TABLE `receipts`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `services`
@@ -1366,6 +1560,24 @@ ALTER TABLE `services`
 --
 ALTER TABLE `staffs`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `transactions`
+--
+ALTER TABLE `transactions`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `transaction_checklists`
+--
+ALTER TABLE `transaction_checklists`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `transaction_process`
+--
+ALTER TABLE `transaction_process`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -1407,6 +1619,14 @@ ALTER TABLE `bills`
   ADD CONSTRAINT `bills_br_company_id_foreign` FOREIGN KEY (`br_company_id`) REFERENCES `companies` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `bills_br_created_by_foreign` FOREIGN KEY (`br_created_by`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `bills_br_updated_by_foreign` FOREIGN KEY (`br_updated_by`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `checklists`
+--
+ALTER TABLE `checklists`
+  ADD CONSTRAINT `checklist_ch_service_id_foreign` FOREIGN KEY (`ch_service_id`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `checklist_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `checklist_updated_by_foreign` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `companies`
@@ -1476,6 +1696,14 @@ ALTER TABLE `permissions`
   ADD CONSTRAINT `permissions_p_role_id_foreign` FOREIGN KEY (`p_role_id`) REFERENCES `user_roles` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
+-- Constraints for table `process`
+--
+ALTER TABLE `process`
+  ADD CONSTRAINT `process_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `process_pr_service_id_foreign` FOREIGN KEY (`pr_service_id`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `process_updated_by_foreign` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Constraints for table `quotations`
 --
 ALTER TABLE `quotations`
@@ -1510,6 +1738,34 @@ ALTER TABLE `services`
 ALTER TABLE `staffs`
   ADD CONSTRAINT `staffs_st_created_by_foreign` FOREIGN KEY (`st_created_by`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `staffs_st_updated_by_foreign` FOREIGN KEY (`st_updated_by`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `transactions`
+--
+ALTER TABLE `transactions`
+  ADD CONSTRAINT `transactions_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `transactions_tr_company_id_foreign` FOREIGN KEY (`tr_company_id`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `transactions_tr_service_id_foreign` FOREIGN KEY (`tr_service_id`) REFERENCES `services` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `transactions_tr_verify_by_foreign` FOREIGN KEY (`tr_verify_by`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `transactions_updated_by_foreign` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `transaction_checklists`
+--
+ALTER TABLE `transaction_checklists`
+  ADD CONSTRAINT `transaction_checklist_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `transaction_checklist_tch_checklist_id_foreign` FOREIGN KEY (`tch_checklist_id`) REFERENCES `checklists` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `transaction_checklist_tch_transaction_id_foreign` FOREIGN KEY (`tch_transaction_id`) REFERENCES `process` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `transaction_checklist_updated_by_foreign` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `transaction_process`
+--
+ALTER TABLE `transaction_process`
+  ADD CONSTRAINT `transaction_process_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `transaction_process_tp_process_id_foreign` FOREIGN KEY (`tp_process_id`) REFERENCES `process` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `transaction_process_tp_transaction_id_foreign` FOREIGN KEY (`tp_transaction_id`) REFERENCES `process` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `transaction_process_updated_by_foreign` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `users`

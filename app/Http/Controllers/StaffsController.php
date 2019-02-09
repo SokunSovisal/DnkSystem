@@ -141,8 +141,19 @@ class StaffsController extends Controller
 	}
 
 
-	public function destroy(Staffs $staffs)
+	public function destroy(Staffs $staffs, $id)
 	{
-		//
+		if ($this->globalNotitfy->permission($this->module)=='true') {
+			// delete
+			$staff = Staffs::find($id);
+			$st_name = $staff->st_name;
+			$staff->delete();
+
+			// redirect
+				return redirect()->route('staffs.index')
+					->with('success', 'បុគ្គលិកបានលុបចោលដោយជោគជ័យ៖ '. $st_name);
+		}else{
+			return redirect(route('errors.permission'));
+		}
 	}
 }

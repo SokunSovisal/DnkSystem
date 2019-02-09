@@ -89,6 +89,7 @@
 				type: 'post',
 				data: {ur_id:ur_id, m_id:m_id, _token:_token},
 				success: function(result){
+					// alert(result);
 					$('.permission-model-body').html(result);
 			    $('#per_dataTable').DataTable( {
 				    "fnDrawCallback": function( oSettings ) {
@@ -118,12 +119,13 @@
 					type: 'post',
 					data: {ur_id:ur_id, m_id:m_id, p_type:p_type, _token:_token},
 					success: function(result){
+						// alert(result);
 						if(result=='success'){
 							$('#notify-permission').addClass('bounceInDown').removeClass('sr-only bounceOutUp').delay(2000).queue(function(next){
 							    $(this).addClass('bounceOutUp').removeClass('bounceInDown');
 							    next();
 							});
-							// $('#notify-permission').delay( 3000 ).addClass('sr-only').removeClass('bounceInDown');
+							$('#notify-permission').delay( 3000 ).addClass('sr-only').removeClass('bounceInDown');
 						}
 					}
 				});
